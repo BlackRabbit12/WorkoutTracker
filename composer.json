@@ -1,0 +1,16 @@
+{
+  "name": "bblack/328/WorkoutTracker",
+  "authors": [
+    {
+      "name": "Bridget Black",
+      "email": "bblack4@mail.greenriver.edu"
+    },
+    {
+      "name": "Chad Drennan",
+      "email": "cdrennan@mail.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}

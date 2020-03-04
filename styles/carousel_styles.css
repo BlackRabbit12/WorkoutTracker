@@ -1,0 +1,15 @@
+/**
+ * Description:
+ *     CSS for home cards.
+ * Last Updated: 2020-03-03
+ */
+
+#carouselExampleIndicators {
+    margin: 10%;
+}
+
+.carousel-control-next,
+.carousel-control-prev,
+.carousel-indicators {
+    filter: invert(100%);
+}

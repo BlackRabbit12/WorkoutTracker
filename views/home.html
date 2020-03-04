@@ -7,7 +7,7 @@
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-02-17
+ * Last Updated: 2020-03-03
  * File Name: home.html
  * File Associations:
  */
@@ -22,26 +22,248 @@
     <!-- Bootstrap cdn -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/carousel_styles.css">
     <title>Workout Tracker</title>
 </head>
 <body>
-    <h1>Welcome to the workout tracker</h1>
+    <!-- Navbar from /views/header.html -->
+    <include href="/views/header.html" with="Hello"></include>
 
-    <main class="container">
-        <div class="card">
-            <div class="card-header">
-                <h2>Sunday</h2>
+    <!-- Carousel -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+        </ol>
+
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <div id="card-seven" class="card">
+                    <div class="card-header">
+                        <h2>Today</h2>
+                    </div>
+                    <ul class="list-group list-group-flush ml-4">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="btn btn-primary rounded-circle">➕</a>
+                    </div>
+                </div>
             </div>
-            <ul class="list-group list-group-flush ml-4">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
-            <div class="card-body text-center">
-                <a href="#" class="btn btn-primary rounded-circle">➕</a>
+
+            <div class="carousel-item">
+                <div id="card-six" class="card">
+                    <div class="card-header">
+                        <h2>Yesterday</h2>
+                    </div>
+                    <ul class="list-group list-group-flush ml-4">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="btn btn-primary rounded-circle">➕</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </main>
+
+            <div class="carousel-item">
+                <div id="card-five" class="card">
+                    <div class="card-header">
+                        <h2>2 Days Ago</h2>
+                    </div>
+                    <ul class="list-group list-group-flush ml-4">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="btn btn-primary rounded-circle">➕</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div id="card-four" class="card">
+                    <div class="card-header">
+                        <h2>3 Days Ago</h2>
+                    </div>
+                    <ul class="list-group list-group-flush ml-4">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="btn btn-primary rounded-circle">➕</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div id="card-three" class="card">
+                    <div class="card-header">
+                        <h2>4 Days Ago</h2>
+                    </div>
+                    <ul class="list-group list-group-flush ml-4">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="btn btn-primary rounded-circle">➕</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div id="card-two" class="card">
+                    <div class="card-header">
+                        <h2>5 Days Ago</h2>
+                    </div>
+                    <ul class="list-group list-group-flush ml-4">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="btn btn-primary rounded-circle">➕</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item active">
+                <div id="card-one" class="card">
+                    <div class="card-header">
+                        <h2>6 Days Ago</h2>
+                    </div>
+                    <ul class="list-group list-group-flush ml-4">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a href="#" class="btn btn-primary rounded-circle">➕</a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end: <div class="carousel-inner"> -->
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div> <!-- end: <div id="carouselExampleIndicators"... -->
+
+    <!-- Cards -->
+<!--    <main id="card-div" class="container row">-->
+<!--        <div id="card-one" class="card col">-->
+<!--            <div class="card-header">-->
+<!--                <h2>Day One</h2>-->
+<!--            </div>-->
+<!--            <ul class="list-group list-group-flush ml-4">-->
+<!--                <li class="list-group-item">Cras justo odio</li>-->
+<!--                <li class="list-group-item">Dapibus ac facilisis in</li>-->
+<!--                <li class="list-group-item">Vestibulum at eros</li>-->
+<!--            </ul>-->
+<!--            <div class="card-body text-center">-->
+<!--                <a href="#" class="btn btn-primary rounded-circle">➕</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div id="card-two" class="card col">-->
+<!--            <div class="card-header">-->
+<!--                <h2>Day Two</h2>-->
+<!--            </div>-->
+<!--            <ul class="list-group list-group-flush ml-4">-->
+<!--                <li class="list-group-item">Cras justo odio</li>-->
+<!--                <li class="list-group-item">Dapibus ac facilisis in</li>-->
+<!--                <li class="list-group-item">Vestibulum at eros</li>-->
+<!--            </ul>-->
+<!--            <div class="card-body text-center">-->
+<!--                <a href="#" class="btn btn-primary rounded-circle">➕</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div id="card-three" class="card col">-->
+<!--            <div class="card-header">-->
+<!--                <h2>Day Three</h2>-->
+<!--            </div>-->
+<!--            <ul class="list-group list-group-flush ml-4">-->
+<!--                <li class="list-group-item">Cras justo odio</li>-->
+<!--                <li class="list-group-item">Dapibus ac facilisis in</li>-->
+<!--                <li class="list-group-item">Vestibulum at eros</li>-->
+<!--            </ul>-->
+<!--            <div class="card-body text-center">-->
+<!--                <a href="#" class="btn btn-primary rounded-circle">➕</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div id="card-four" class="card col">-->
+<!--            <div class="card-header">-->
+<!--                <h2>Day Four</h2>-->
+<!--            </div>-->
+<!--            <ul class="list-group list-group-flush ml-4">-->
+<!--                <li class="list-group-item">Cras justo odio</li>-->
+<!--                <li class="list-group-item">Dapibus ac facilisis in</li>-->
+<!--                <li class="list-group-item">Vestibulum at eros</li>-->
+<!--            </ul>-->
+<!--            <div class="card-body text-center">-->
+<!--                <a href="#" class="btn btn-primary rounded-circle">➕</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div id="card-five" class="card col">-->
+<!--            <div class="card-header">-->
+<!--                <h2>Day Five</h2>-->
+<!--            </div>-->
+<!--            <ul class="list-group list-group-flush ml-4">-->
+<!--                <li class="list-group-item">Cras justo odio</li>-->
+<!--                <li class="list-group-item">Dapibus ac facilisis in</li>-->
+<!--                <li class="list-group-item">Vestibulum at eros</li>-->
+<!--            </ul>-->
+<!--            <div class="card-body text-center">-->
+<!--                <a href="#" class="btn btn-primary rounded-circle">➕</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div id="card-six" class="card col">-->
+<!--            <div class="card-header">-->
+<!--                <h2>Day Six</h2>-->
+<!--            </div>-->
+<!--            <ul class="list-group list-group-flush ml-4">-->
+<!--                <li class="list-group-item">Cras justo odio</li>-->
+<!--                <li class="list-group-item">Dapibus ac facilisis in</li>-->
+<!--                <li class="list-group-item">Vestibulum at eros</li>-->
+<!--            </ul>-->
+<!--            <div class="card-body text-center">-->
+<!--                <a href="#" class="btn btn-primary rounded-circle">➕</a>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div id="card-seven" class="card col">-->
+<!--            <div class="card-header">-->
+<!--                <h2>Today</h2>-->
+<!--            </div>-->
+<!--            <ul class="list-group list-group-flush ml-4">-->
+<!--                <li class="list-group-item">Cras justo odio</li>-->
+<!--                <li class="list-group-item">Dapibus ac facilisis in</li>-->
+<!--                <li class="list-group-item">Vestibulum at eros</li>-->
+<!--            </ul>-->
+<!--            <div class="card-body text-center">-->
+<!--                <a href="#" class="btn btn-primary rounded-circle">➕</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </main>-->
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

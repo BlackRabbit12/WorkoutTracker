@@ -1,0 +1,35 @@
+/**
+ * Description:
+ *     CSS for login and for sign-up forms.
+ * Last Updated: 2020-03-03
+ */
+
+body {
+    background-image: url("../images/freeWeights.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    background-color: black;
+}
+
+#form-div {
+    background-color: white;
+    opacity: 0.9;
+    border: 1px solid black;
+}
+
+#body-div {
+    margin-top: 10%;
+    padding: 15px;
+}
+
+#login-form, #formatted-login {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-image: url("../images/freeWeights2.jpg");
+    }
+}

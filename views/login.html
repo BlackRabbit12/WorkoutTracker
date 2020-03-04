@@ -7,7 +7,7 @@
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-02-17
+ * Last Updated: 2020-03-03
  * File Name: login.html
  * File Associations:
  */
@@ -22,11 +22,42 @@
     <!-- Bootstrap cdn -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/header_styles.css">
     <title>Workout Tracker Login</title>
 </head>
 <body>
+    <!-- Navbar from /views/header.html -->
+    <include href="/views/header.html" with="Hello"></include>
 
+    <!-- body content -->
+    <div id="body-div" class="container row">
+        <div class="col-3"></div>
+        <div id="form-div" class="col-4">
 
+            <!-- Formatted Username input field -->
+            <form id="formatted-login" class="form-inline">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            </form>
+
+            <!-- Non-formatted Username input field -->
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="user_name">User Name:</label>
+                    <input id="user_name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input id="password" class="form-control">
+                </div>
+                <button id="login-btn" class="btn-dark" type="submit" action="post">Login</button>
+            </form>
+        </div>
+    </div>
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

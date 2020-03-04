@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+a.rounded-circle {
+    font-size: 20px;
+    width: 52px;
+    padding: 10px;
+}
+
+.card {
+    min-width: 200px;
+}
+
+.card > .list-group {
+    padding: 0 8px;
+}
+
+.card-header {
+    text-align: center;
+    padding: 12px;
+}
+
+#day-plans {
+
+}
+
+#workout-options {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 10px;
+}
+
+/* Small devices (landscape phones, 576px)*/
+@media (max-width: 576px) {
+    .card {
+        margin: 20px 40px;
+    }
+}
+
+/* Medium devices (tablets, 768px) */
+@media (max-width: 768px) { }
+
+/* Large devices (desktops, 992px) */
+@media (max-width: 992px) { }
+
+/* Extra large devices (large desktops, 1200px) */
+@media (max-width: 1200px) { }

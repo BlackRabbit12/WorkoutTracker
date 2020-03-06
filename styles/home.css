@@ -9,7 +9,7 @@ a.rounded-circle {
 }
 
 .card {
-    min-width: 200px;
+    min-width: 193px;
 }
 
 .card > .list-group {
@@ -22,7 +22,35 @@ a.rounded-circle {
 }
 
 #day-plans {
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    grid-gap: 10px;
+    grid-template-areas: '. . today today . .'
+                         'yesterday two-days three-days four-days five-days six-days';
+}
 
+#five-days {
+    grid-area: five-days;
+}
+
+#four-days {
+    grid-area: four-days;
+}
+
+#six-days {
+    grid-area: six-days;
+}
+
+#three-days {
+    grid-area: three-days;
+}
+
+#today {
+    grid-area: today;
+}
+
+#two-days {
+    grid-area: two-days;
 }
 
 #workout-options {
@@ -31,18 +59,36 @@ a.rounded-circle {
     grid-gap: 10px;
 }
 
+#yesterday {
+    grid-area: yesterday;
+}
+
 /* Small devices (landscape phones, 576px)*/
 @media (max-width: 576px) {
-    .card {
-        margin: 20px 40px;
+    body > main > #day-plans {
+        grid-template-columns: auto;
+        grid-template-areas: 'today' 'yesterday' 'two-days' 'three-days' 'four-days' 'five-days' 'six-days';
     }
 }
 
 /* Medium devices (tablets, 768px) */
-@media (max-width: 768px) { }
+@media (max-width: 768px) {
+    main > #day-plans {
+        grid-template-columns: auto auto;
+        grid-template-areas: 'today today' 'yesterday two-days' 'three-days four-days' 'five-days six-days';
+    }
+}
 
 /* Large devices (desktops, 992px) */
-@media (max-width: 992px) { }
+@media (max-width: 992px) {
+}
 
 /* Extra large devices (large desktops, 1200px) */
-@media (max-width: 1200px) { }
+@media (max-width: 1200px) {
+    #day-plans {
+        grid-template-columns: auto auto auto;
+        grid-template-areas: '. today .'
+                             'yesterday two-days three-days'
+                             'four-days five-days six-days';
+    }
+}

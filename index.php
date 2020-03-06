@@ -31,5 +31,11 @@ $f3->route('GET /', function () {
     echo $view->render('views/home.html');
 });
 
+//Define Login route
+$f3->route('GET /login', function () {
+    $view = new Template();
+    echo $view->render('views/login.html');
+});
+
 //Run FatFree Framework
 $f3->run();

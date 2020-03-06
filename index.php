@@ -24,9 +24,13 @@ require_once('vendor/autoload.php');
 
 //Create instance of FatFree Framework
 $f3 = Base::instance();
+$f3->set('DEBUG',3);
+
+$db = new Database();
 
 //Define default route
 $f3->route('GET /', function () {
+    $workouts = $GLOBALS['db']->getAllWorkouts();
     $view = new Template();
     echo $view->render('views/home.html');
 });

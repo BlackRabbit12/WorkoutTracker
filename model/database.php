@@ -26,3 +26,19 @@ class Database
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+
+/* INSERTS
+ *  INSERT INTO `workout` (`workout_id`, `workout_name`) VALUES
+    (1, 'Push Ups'),
+    (2, 'Sit Ups'),
+    (3, 'Bench Press'),
+    (4, 'Cleans'),
+    (5, 'Curls'),
+    (6, 'Jogging'),
+    (7, 'Running'),
+    (8, 'Rowing'),
+    (9, 'Military Press'),
+    (10, 'Squats'),
+    (11, 'Lunges');
+ *
+ */

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Database class interactions with database and workout tracker. TODO: improve description.
+ *
+ * @author Bridget Black
+ * @author Chad Drennan
+ * 2020-03-11
+ * Last Updated: 2020-03-11
+ */
+
 //require_once('/home/cdrennan/config-workout.php');
 require_once('/home/bblackgr/config-workout.php');
 
@@ -7,6 +16,9 @@ class Database
 {
     private $_dbh;
 
+    /**
+     * Database constructor.
+     */
     function __construct()
     {
         try {
@@ -17,13 +29,21 @@ class Database
         }
     }
 
-
+    /**
+     * Collect all values in the 'workout_name' column of the 'workout' table.
+     * Values are displayed inside a modal on a user's home page.
+     * @return array
+     */
     function getAllWorkouts() {
-        $sql = 'SELECT workout_name
-                FROM workout';
-        
+        //define the query
+        $sql = 'SELECT workout_name FROM workout';
+        //prepare the statement
         $statement = $this->_dbh->prepare($sql);
+        //no params to bind
+
+        //execute the statement
         $statement->execute();
+        //return the result
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }

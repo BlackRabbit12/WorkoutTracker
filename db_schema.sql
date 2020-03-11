@@ -176,6 +176,7 @@ ALTER TABLE `workout`
 ALTER TABLE `workout_log`
   MODIFY `workout_log_id` int(11) NOT NULL AUTO_INCREMENT;
 
+
 --
 -- Constraints for dumped tables
 --
@@ -204,3 +205,22 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+/*
+INSERT INTO `muscle_group` (`muscle_group_id`, `muscle_group_name`) VALUES (NULL, 'Arms');
+INSERT INTO `muscle_group` (`muscle_group_id`, `muscle_group_name`) VALUES (NULL, 'Legs');
+INSERT INTO `muscle_group` (`muscle_group_id`, `muscle_group_name`) VALUES (NULL, 'Core');
+
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Push Ups");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Sit Ups");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Bench Press");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Cleans");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Curls");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Jogging");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Running");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Rowing");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Military Press");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Squats");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Lunges");
+ */

@@ -43,5 +43,10 @@ $f3->route('GET /login', function () {
     echo $view->render('views/login.html');
 });
 
+//Define Registration route
+$f3->route('GET /register', function () {
+   echo \Template::instance()->render('views/registration.html');
+});
+
 //Run FatFree Framework
 $f3->run();

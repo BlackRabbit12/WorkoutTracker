@@ -31,8 +31,25 @@ $db = new Database();
 //Define default route
 $f3->route('GET /', function ($f3) {
     $workouts = $GLOBALS['db']->getAllWorkouts();
+    $workoutMuscleGroups = [];
+
+    foreach ($workouts as $currWorkout) {
+        $muscleGroupsResults = $GLOBALS['db']->getWorkoutMuscleGroups($currWorkout['workout_id']);
+
+        if ($muscleGroupsResults) {
+            $muscleGroups = '[';
+
+            foreach ($muscleGroupsResults as $currMuscleGroupResult) {
+                $muscleGroups .= "'{$currMuscleGroupResult['muscle_group_name']}', ";
+            }
+            $muscleGroups = rtrim($muscleGroups, ', ') . ']';
+            $workoutMuscleGroups[$currWorkout['workout_id']] = $muscleGroups;
+        }
+    }
 
     $f3->set('workouts', $workouts);
+    $f3->set('workoutMuscleGroups', $workoutMuscleGroups);
+
     $view = new Template();
     echo $view->render('views/home.html');
 });

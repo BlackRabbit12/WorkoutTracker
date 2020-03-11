@@ -166,7 +166,9 @@
                     <hr>
                     <div id="workout-options">
                         <repeat group="{{ @workouts }}" value="{{ @currWorkout }}">
-                            <button class="btn btn-secondary btn-sm">{{ @currWorkout['workout_name'] }}</button>
+                            <button class="btn btn-secondary btn-sm" data-muscle-groups="{{ @workoutMuscleGroups }}">
+                                {{ @currWorkout['workout_name'] }}
+                            </button>
                         </repeat>
                     </div>
                 </div>

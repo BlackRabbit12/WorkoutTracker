@@ -1,18 +1,15 @@
 <?php
 
 /**
+ * Workout Tracker Web Site Project. Allow a user to register and login/out Users can use the site to keep track
+ * of their previous six days of logged workouts, log the current day, and upgraded users can TODO: insert upgrade
  *
  * @author Bridget Black
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-02-17
- * File Name: index.php
- * File Associations:
+ * Last Updated: 2020-03-11
  */
-
-//Start a session
-session_start();
 
 //Error reporting
 ini_set('display_errors', 1);
@@ -20,32 +17,33 @@ error_reporting(E_ALL);
 
 //Require file
 require_once('vendor/autoload.php');
-//require('model/validate.php');
+
+//Start a session
+session_start();
 
 //Create instance of FatFree Framework
 $f3 = Base::instance();
+
+//Set Debugger
 $f3->set('DEBUG',3);
 
+//Instantiate Database and Controller
 $db = new Database();
+$controller = new WorkoutController($f3);
 
-//Define default route
-$f3->route('GET /', function ($f3) {
-    $workouts = $GLOBALS['db']->getAllWorkouts();
-
-    $f3->set('workouts', $workouts);
-    $view = new Template();
-    echo $view->render('views/home.html');
+//Default/Home route
+$f3->route('GET /', function () {
+    $GLOBALS['controller']->homeRoute();
 });
 
-//Define Login route
+//Login route
 $f3->route('GET /login', function () {
-    $view = new Template();
-    echo $view->render('views/login.html');
+    $GLOBALS['controller']->loginRoute();
 });
 
-//Define Registration route
+//Registration route
 $f3->route('GET /register', function () {
-   echo \Template::instance()->render('views/registration.html');
+    $GLOBALS['controller']->registerRoute();
 });
 
 //Run FatFree Framework

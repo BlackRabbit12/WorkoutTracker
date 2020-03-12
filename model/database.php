@@ -1,5 +1,8 @@
 <?php
 
+//require_once('/home/cdrennan/config-workout.php');
+require_once('/home/bblackgr/config-workout.php');
+
 /**
  * Database class interactions with database and workout tracker. TODO: improve description.
  *
@@ -8,10 +11,6 @@
  * 2020-03-11
  * Last Updated: 2020-03-11
  */
-
-//require_once('/home/cdrennan/config-workout.php');
-require_once('/home/bblackgr/config-workout.php');
-
 class Database
 {
     private $_dbh;

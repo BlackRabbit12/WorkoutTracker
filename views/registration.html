@@ -7,36 +7,81 @@
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-02-17
- * File Name: registration.html
- * File Associations:
+ * Last Updated: 2020-03-11
  */
 -->
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Bootstrap cdn -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Workout Tracker</title>
+<!-- CSS include header -->
+<include href="/views/header.html"></include>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles/login_register_styles.css">
+    <title>Workout Tracker Register</title>
 </head>
 <body>
-<h1>Registration</h1>
+    <h1>Registration</h1>
 
-<!-- JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+    <!-- body content -->
+    <div id="body-div" class="container row">
+        <div class="col-3"></div>
+        <div id="form-div" class="col-4">
+
+            <!-- Formatted Username input field -->
+            <form id="formatted-login" class="form-inline">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            </form>
+
+            <!-- appending -->
+            <div class="form-group">
+                <label class="control-label" for="email">
+                    Email
+                </label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        @
+                    </div>
+                    <input class="form-control" id="email" name="email" type="text"/>
+                </div>
+            </div>
+
+            <!-- glyphicon -->
+            <div class="form-group ">
+                <label class="control-label " for="email">
+                    Email
+                </label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                    </div>
+                    <input class="form-control" id="emailGlyph" name="email" type="text"/>
+                </div>
+            </div>
+
+            <!-- example add on -->
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+                <span class="input-group-addon" id="basic-addon2">@example.com</span>
+            </div>
+
+            <!-- Non-formatted Username input field -->
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="user_name">User Name:</label>
+                    <input id="user_name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input id="password" class="form-control">
+                </div>
+                <button id="login-btn" class="btn-dark" type="submit" action="post">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JS include footer -->
+    <include href="/views/footer.html"></include>

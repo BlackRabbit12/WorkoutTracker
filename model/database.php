@@ -59,7 +59,7 @@ class Database
                 FROM workout
                     INNER JOIN workout_muscle_group ON workout.workout_id = workout_muscle_group.workout_id
                     INNER JOIN muscle_group ON workout_muscle_group.muscle_group_id = muscle_group.muscle_group_id
-                WHERE workout.workout_id = :workoutId';
+                WHERE workout.workout_id = :workout_id';
         //prepare statement
         $statement = $this->_dbh->prepare($sql);
         //bind parameters

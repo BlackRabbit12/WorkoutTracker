@@ -13,7 +13,7 @@ class User
     //all Users have:
     private $_firstName;
     private $_lastName;
-    private $_email;
+    private $_userName;
     private $_password;
 
 
@@ -21,14 +21,14 @@ class User
      * User constructor.
      * @param $firstName
      * @param $lastName
-     * @param $email
+     * @param $userName
      * @param $password
      */
-    function __construct($firstName, $lastName, $email, $password)
+    function __construct($firstName = "first", $lastName = "last", $userName = "user", $password = "password")
     {
         $this->_firstName = $firstName;
         $this->_lastName = $lastName;
-        $this->_email = $email;
+        $this->_userName = $userName;
         $this->_password = $password;
     }
 
@@ -41,14 +41,10 @@ class User
         return $this->_firstName." ".$this->_lastName;
     }
 
-    /**
-     * Get the user's email address.
-     * @return mixed
-     */
-    function getEmail()
-    {
-        return $this->_email;
-    }
+   function getUserName()
+   {
+       return $this->_userName;
+   }
 
     /**
      * Get the user's password.
@@ -60,10 +56,28 @@ class User
     }
 
     /**
-     * Reset the user's password.
+     * Set the user's first name.
+     * @param $newFirstName
+     */
+    function setFirstName($newFirstName)
+    {
+        $this->_firstName = $newFirstName;
+    }
+
+    /**
+     * Set the user's last name.
+     * @param $newLastName
+     */
+    function setLastName($newLastName)
+    {
+        $this->_lastName = $newLastName;
+    }
+
+    /**
+     * Set the user's password.
      * @param $newPassword
      */
-    function setResetPassword($newPassword)
+    function setPassword($newPassword)
     {
         $this->_password = $newPassword;
     }

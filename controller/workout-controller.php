@@ -75,6 +75,75 @@ class WorkoutController
      */
     public function registerRoute()
     {
+        //reset session
+        $_SESSION = array();
+
+        //set to false if there are errors
+        $isValid = true;
+
+        //if the input 'first name' is set, then we can look at everything else
+        if (isset($_POST['first-name'])) {
+            //get the first name
+            $firstName = $_POST['first-name'];
+            //make first name input sticky
+            $this->_f3->set('stickyFirstName', $firstName);
+            //validate first name
+            if ($this->_val->validString($firstName)) {
+                //start creating a user object
+                $_SESSION['userObj']->setFirstName($firstName);
+            }
+            else {
+                $isValid = false;
+                $this->_f3->set("errors['first-name']", "Please enter a valid name");
+            }
+
+            //get last name, repeat steps from above ^^
+            $lastName = $_POST['last-name'];
+            $this->_f3->set("stickyLastName", $lastName);
+            if ($this->_val->validString($lastName)) {
+                $_SESSION['userObj']->setLastName($lastName);
+            }
+            else {
+                $isValid = false;
+                $this->_f3->set("errors['last-name']", "Please enter a valid name");
+            }
+
+            //get username, repeat steps from above ^^
+            $userName = $_POST['user-name'];
+            $this->_f3->set("stickyUserName", $userName);
+            if ($this->_val->validString($userName)) {
+                $_SESSION['userObj']->setUserName();
+            }
+            else {
+                $isValid = false;
+                $this->_f3->set("errors['user-name']", "Please enter a valid username");
+            }
+
+            //get password, repeat steps from above ^^
+            $password = $_POST['password'];
+            $this->_f3->set("stickyPassword", $password);
+            if ($this->_val->validString($password)) {
+                $_SESSION['userObj']->setPassword();
+            }
+            else {
+                $isValid = false;
+                $this->_f3->set("errors['password']", "Please enter a valid password");
+            }
+
+            //confirm password
+            $passwordConfirmation = $_POST['password-confirmation'];
+            if (!($this->_val->passwordMatch($passwordConfirmation))){
+                $isValid = false;
+                $this->_f3->set("errors['password-confirmation']", "Passwords do not match");
+            }
+
+            //if all of the inputs had valid data, reroute new user to home page
+            if ($isValid) {
+                $this->_f3->reroute('/');
+            }
+        }
+
+        //go back to registration if user input was not validated and rerouted
         echo \Template::instance()->render('views/registration.html');
     }
 }

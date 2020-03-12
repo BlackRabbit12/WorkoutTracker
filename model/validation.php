@@ -12,5 +12,18 @@
 
 class UserValidator
 {
-    //eventually functions for stringValid() and phoneValid()
+    /**
+     * Test if the string is valid, not empty or only spaces.
+     * @param $str
+     * @return bool
+     */
+    function validString($str)
+    {
+        return !empty(trim($str));
+    }
+
+    function passwordMatch($confirmation)
+    {
+        return strcmp($this->_val->getPassword(), $confirmation) == 0;
+    }
 }

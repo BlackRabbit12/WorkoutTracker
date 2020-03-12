@@ -34,6 +34,27 @@ class WorkoutController
         $workouts = $GLOBALS['db']->getAllWorkouts();
         $this->_f3->set('workouts', $workouts);
 
+        //muscle group workout javascript array
+        $workoutMuscleGroups = [];
+        //for all workouts,
+        foreach ($workouts as $currWorkout) {
+            //gets the muscle groups from database
+            $muscleGroupsResults = $GLOBALS['db']->getWorkoutMuscleGroups($currWorkout['workout_id']);
+
+            //if there were query results
+            if ($muscleGroupsResults) {
+                $muscleGroups = '[';
+                //concat them into a string
+                foreach ($muscleGroupsResults as $currMuscleGroupResult) {
+                    $muscleGroups .= "'{$currMuscleGroupResult['muscle_group_name']}', ";
+                }
+                //trim extra chars on end of string
+                $muscleGroups = rtrim($muscleGroups, ', ') . ']';
+                $workoutMuscleGroups[$currWorkout['workout_id']] = $muscleGroups;
+            }
+        }
+        $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
+
 
         $view = new Template();
         echo $view->render('views/home.html');

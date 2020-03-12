@@ -157,21 +157,10 @@
                     <hr>
                     <div id="workout-options">
                         <repeat group="{{ @workouts }}" value="{{ @currWorkout }}">
-                            <button class="btn btn-secondary btn-sm">{{ @currWorkout['workout_name'] }}</button>
+                            <button class="btn btn-secondary btn-sm" data-muscle-groups="{{ @workoutMuscleGroups }}">
+                                {{ @currWorkout['workout_name'] }}
+                            </button>
                         </repeat>
-<!--                        <button class="btn btn-secondary btn-sm">Bench press</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Cleans</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Curls</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Jogging</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Running</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Rowing</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Jogging</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Military press</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Sit-ups</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Push-ups</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Squats</button>-->
-<!--                        <button class="btn btn-secondary btn-sm">Lunges</button>-->
-
                     </div>
                 </div>
                 <div class="modal-footer">

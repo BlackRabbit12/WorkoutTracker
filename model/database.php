@@ -1,7 +1,7 @@
 <?php
 
-//require_once('/home/cdrennan/config-workout.php');
-require_once('/home/bblackgr/config-workout.php');
+require_once('/home/cdrennan/config-workout.php');
+//require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. TODO: improve description.
@@ -35,7 +35,7 @@ class Database
      */
     function getAllWorkouts() {
         //query database
-        $sql = 'SELECT workout_name
+        $sql = 'SELECT *
                 FROM workout
                 ORDER BY workout_name';
         //prepare statement

@@ -150,14 +150,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-around">
-                        <button class="btn btn-outline-primary">Arms</button>
-                        <button class="btn btn-outline-primary">Legs</button>
-                        <button class="btn btn-outline-primary">Core</button>
+                        <button class="muscle-group btn btn-outline-primary">All</button>
+                        <button class="muscle-group btn btn-outline-primary">Arms</button>
+                        <button class="muscle-group btn btn-outline-primary">Legs</button>
+                        <button class="muscle-group btn btn-outline-primary">Core</button>
                     </div>
                     <hr>
                     <div id="workout-options">
                         <repeat group="{{ @workouts }}" value="{{ @currWorkout }}">
-                            <button class="btn btn-secondary btn-sm" data-muscle-groups="{{ @workoutMuscleGroups }}">
+                            <button class="workout btn btn-secondary btn-sm"
+                                    data-muscle-groups='{{ @workoutMuscleGroups[@currWorkout["workout_id"]] }}'>
                                 {{ @currWorkout['workout_name'] }}
                             </button>
                         </repeat>

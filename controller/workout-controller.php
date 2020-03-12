@@ -46,7 +46,7 @@ class WorkoutController
                 $muscleGroups = '[';
                 //concat them into a string
                 foreach ($muscleGroupsResults as $currMuscleGroupResult) {
-                    $muscleGroups .= "'{$currMuscleGroupResult['muscle_group_name']}', ";
+                    $muscleGroups .= "\"{$currMuscleGroupResult['muscle_group_name']}\", ";
                 }
                 //trim extra chars on end of string
                 $muscleGroups = rtrim($muscleGroups, ', ') . ']';

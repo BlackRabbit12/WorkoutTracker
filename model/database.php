@@ -72,6 +72,37 @@ class Database
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Insert a user into the database.
+     * @param $user
+     * @param $pro
+     */
+    function insertUser($user, $pro)
+    {
+        if ($pro == 1) {
+            //define the query
+            $sql = "INSERT INTO user VALUES (default, :firstName, :lastName, :userName, :password, 1, :membershipEndDate)";
+        }
+        else {
+            //define the query
+            $sql = "INSERT INTO user VALUES (default, :firstName, :lastName, :userName, :password, 0, :membershipEndDate)";
+        }
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind the parameters
+        $statement->bindParam(':firstName', $user->getFirstName());
+        $statement->bindParam(':lastName', $user->getLastName());
+        $statement->bindParam(':userName', $user->getUserName());
+        $statement->bindParam(':password', $user->getPassword());
+        $statement->bindParam(':membershipEndDate', $user->getMembershipEndDate());
+
+        //execute the statement
+        $statement->execute();
+    }
+
+  
     function getAllMuscleGroups()
     {
         $sql = 'SELECT muscle_group_name

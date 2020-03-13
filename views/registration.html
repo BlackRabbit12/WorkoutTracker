@@ -7,7 +7,7 @@
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-03-11
+ * Last Updated: 2020-03-13
  */
 -->
 
@@ -27,58 +27,55 @@
         <div id="form-div" class="col-4">
 
             <!-- Formatted Username input field -->
-            <form id="formatted-login" class="form-inline">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-            </form>
-
-            <!-- appending -->
-            <div class="form-group">
-                <label class="control-label" for="email">
-                    Email
-                </label>
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        @
-                    </div>
-                    <input class="form-control" id="email" name="email" type="text"/>
-                </div>
-            </div>
-
-            <!-- glyphicon -->
-            <div class="form-group ">
-                <label class="control-label " for="email">
-                    Email
-                </label>
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-envelope"></span>
-                    </div>
-                    <input class="form-control" id="emailGlyph" name="email" type="text"/>
-                </div>
-            </div>
-
-            <!-- example add on -->
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
-                <span class="input-group-addon" id="basic-addon2">@example.com</span>
-            </div>
-
-            <!-- Non-formatted Username input field -->
-            <form id="login-form">
+            <form id="formatted-login" method="post" action="#">
+                <!-- first name -->
                 <div class="form-group">
-                    <label for="user_name">User Name:</label>
-                    <input id="user_name" class="form-control">
+                    <check if="{{ isset(@errors['first-name']) }}">
+                        <p>{{ @errors['first-name'] }}</p>
+                    </check>
+                    <label for="first-name">First Name</label>
+                    <input id="first-name" name="first-name" type="text" class="form-control" placeholder="First name" value="{{ @stickyFirstName }}">
                 </div>
+                <!-- last name -->
                 <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input id="password" class="form-control">
+                    <check if="{{ isset(@errors['last-name']) }}">
+                        <p>{{ @errors['last-name'] }}</p>
+                    </check>
+                    <label for="last-name">Last Name</label>
+                    <input id="last-name" name="last-name" type="text" class="form-control" placeholder="Last name" value="{{ @stickyLastName }}">
                 </div>
-                <button id="login-btn" class="btn-dark" type="submit" action="post">Login</button>
+                <!-- username -->
+                <div class="form-group">
+                    <check if="{{ isset(@errors['user-name']) }}">
+                        <p>{{ @errors['user-name'] }}</p>
+                    </check>
+                    <label for="user-name">Username</label>
+                    <input id="user-name" name="user-name" type="text" class="form-control" placeholder="User name" value="{{ @stickyUserName }}">
+                </div>
+                <!-- password first -->
+                <div class="form-group">
+                    <check if="{{ isset(@errors['password']) }}">
+                        <p>{{ @errors['password'] }}</p>
+                    </check>
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="text" class="form-control" placeholder="Password" value="{{ @stickyPassword }}">
+                </div>
+                <!-- password confirmation -->
+                <div class="form-group">
+                    <check if="{{ isset(@errors['password-confirmation']) }}">
+                        <p>{{ @errors['password-confirmation'] }}</p>
+                    </check>
+                    <label for="password-confirmation">Password Confirmation</label>
+                    <input id="password-confirmation" name="password-confirmation" type="text" class="form-control" placeholder="Password confirmation" value="{{ @stickyPasswordConfirmation }}">
+                </div>
+                <!-- is pro -->
+                <div class="form-group">
+                    <input id="is-pro" name="is-pro" type="checkbox" value="pro">
+                    <label for="is-pro">Upgrade to Premium Membership!</label>
+                </div>
+
+                <!-- submit button -->
+                <input id="login-btn" class="btn-dark" type="submit" value="Register">
             </form>
         </div>
     </div>

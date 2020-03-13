@@ -111,9 +111,9 @@ class User
          * TODO: update date
          * href=https://stackoverflow.com/questions/2870295/increment-date-by-one-month
          */
-        $startDate = '2014-06-03'; // select date in Y-m-d format
-        $nMonths = 1; // choose how many months you want to move ahead
-        return $this->endCycle($startDate, $nMonths); // output: 2014-07-02
+        $startDate = date('Y-m-d');
+        $nMonths = 3; // choose how many months you want to move ahead (Membership is $nMonths long)
+        return $this->endCycle($startDate, $nMonths);
     }
 
     function add_months($months, DateTime $dateObject)

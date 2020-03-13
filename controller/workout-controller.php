@@ -30,9 +30,9 @@ class WorkoutController
      */
     public function homeRoute()
     {
-        //collect the 'workout_name' column from the 'workout' table
+        //collect all workout names and muscle group names
         $workouts = $GLOBALS['db']->getAllWorkouts();
-        $this->_f3->set('workouts', $workouts);
+        $allMuscleGroups = $GLOBALS['db']->getAllMuscleGroups();
 
         //muscle group workout javascript array
         $workoutMuscleGroups = [];
@@ -53,6 +53,10 @@ class WorkoutController
                 $workoutMuscleGroups[$currWorkout['workout_id']] = $muscleGroups;
             }
         }
+
+        // Set hive variables
+        $this->_f3->set('workouts', $workouts);
+        $this->_f3->set('muscleGroups', $allMuscleGroups);
         $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
 
 

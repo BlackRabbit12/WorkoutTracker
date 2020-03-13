@@ -151,9 +151,15 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-around">
                         <button class="muscle-group btn btn-outline-primary">All</button>
-                        <button class="muscle-group btn btn-outline-primary">Arms</button>
-                        <button class="muscle-group btn btn-outline-primary">Legs</button>
-                        <button class="muscle-group btn btn-outline-primary">Core</button>
+                        <repeat group="{{ @muscleGroups }}" value="{{ @currMuscleGroup }}">
+                            <button class="muscle-group btn btn-outline-primary">
+                                {{ @currMuscleGroup['muscle_group_name'] }}
+                            </button>
+                        </repeat>
+
+<!--                        <button class="muscle-group btn btn-outline-primary">Arms</button>-->
+<!--                        <button class="muscle-group btn btn-outline-primary">Legs</button>-->
+<!--                        <button class="muscle-group btn btn-outline-primary">Core</button>-->
                     </div>
                     <hr>
                     <div id="workout-options">

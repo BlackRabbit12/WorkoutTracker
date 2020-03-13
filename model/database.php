@@ -1,7 +1,7 @@
 <?php
 
-//require_once('/home/cdrennan/config-workout.php');
-require_once('/home/bblackgr/config-workout.php');
+require_once('/home/cdrennan/config-workout.php');
+//require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. TODO: improve description.
@@ -33,9 +33,10 @@ class Database
      * Values are displayed inside a modal on a user's home page.
      * @return array
      */
-    function getAllWorkouts() {
+    function getAllWorkouts()
+    {
         //query database
-        $sql = 'SELECT workout_name
+        $sql = 'SELECT *
                 FROM workout
                 ORDER BY workout_name';
         //prepare statement
@@ -53,7 +54,8 @@ class Database
      * @param $workoutId
      * @return array
      */
-    function getWorkoutMuscleGroups($workoutId) {
+    function getWorkoutMuscleGroups($workoutId)
+    {
         //query database
         $sql = 'SELECT muscle_group_name
                 FROM workout
@@ -98,6 +100,17 @@ class Database
 
         //execute the statement
         $statement->execute();
+    }
+
+  
+    function getAllMuscleGroups()
+    {
+        $sql = 'SELECT muscle_group_name
+                FROM muscle_group';
+
+        $statement = $this->_dbh->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

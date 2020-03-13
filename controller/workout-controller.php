@@ -54,7 +54,7 @@ class WorkoutController
             }
         }
 
-        $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago', '3 Days Ago',
+        $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago',
                     '4 Days Ago','5 Days Ago', '6 Days Ago'];
 
         // Set hive variables

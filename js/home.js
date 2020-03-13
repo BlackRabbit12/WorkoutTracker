@@ -63,6 +63,9 @@ function filterWorkouts() {
     }).hide();
 }
 
+/**
+ * Toggles a workout selection for a dayplan
+ */
 function addOrRemoveWorkoutToSelection() {
     $(this).toggleClass('selected').toggleClass('btn-primary').toggleClass('btn-secondary');
 }

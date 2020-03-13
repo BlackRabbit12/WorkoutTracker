@@ -29,7 +29,7 @@
         <repeat group="{{ @daysOfWeek }}" value="{{ @currDayOfWeek }}" counter="{{ @ctr }}">
 
 <!--           <div id="{{ strtolower(str_replace(' ', '-', @currDayOfWeek)) }}">-->
-                <div id="day-{{ @ctr - 1 }}">
+            <div id="day-{{ @ctr - 1 }}">
                 <div class="card">
                     <div class="card-header">
                         <h2>{{ @currDayOfWeek }}</h2>
@@ -40,128 +40,21 @@
                         <li class="list-group-item">Running</li>
                     </ul>
                     <div class="card-body text-center">
-                        <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#add-workout"
-                           data-day="{{ @currDayOfWeek }}">➕</a>
+                        <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal"
+                           data-target="#workout-modal"
+                           data-day="{{ @currDayOfWeek }}"
+                           data-day-num="{{ @ctr - 1 }}">
+                            ➕
+                        </a>
                     </div>
                 </div>
             </div>
 
         </repeat>
-
-<!--        <div id="today">-->
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <h2>Today</h2>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item">Curls</li>-->
-<!--                    <li class="list-group-item">Bench press</li>-->
-<!--                    <li class="list-group-item">Running</li>-->
-<!--                </ul>-->
-<!--                <div class="card-body text-center">-->
-<!--                    <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#add-workout"-->
-<!--                       data-day="Today">➕</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div id="yesterday">-->
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <h2>Yesterday</h2>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item">Squats</li>-->
-<!--                </ul>-->
-<!--                <div class="card-body text-center">-->
-<!--                    <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#add-workout"-->
-<!--                       data-day="Yesterday">➕</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div id="two-days">-->
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <h2>2 Days Ago</h2>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item">Military press</li>-->
-<!--                    <li class="list-group-item">Rowing</li>-->
-<!--                    <li class="list-group-item">Sit ups</li>-->
-<!--                </ul>-->
-<!--                <div class="card-body text-center">-->
-<!--                    <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#add-workout"-->
-<!--                       data-day="2 Days Ago">➕</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div id="three-days">-->
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <h2>3 Days Ago</h2>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item">Jogging</li>-->
-<!--                </ul>-->
-<!--                <div class="card-body text-center">-->
-<!--                    <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#add-workout"-->
-<!--                       data-day="3 Days Ago">➕</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div id="four-days">-->
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <h2>4 Days Ago</h2>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item">Push ups</li>-->
-<!--                </ul>-->
-<!--                <div class="card-body text-center">-->
-<!--                    <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#add-workout"-->
-<!--                       data-day="4 Days Ago">➕</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div id="five-days">-->
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <h2>5 Days Ago</h2>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-<!--                    <li class="list-group-item">Lunges</li>-->
-<!--                    <li class="list-group-item">Squats</li>-->
-<!--                    <li class="list-group-item">Cleans</li>-->
-<!--                </ul>-->
-<!--                <div class="card-body text-center">-->
-<!--                    <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#add-workout"-->
-<!--                       data-day="Saturday">➕</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div id="six-days">-->
-<!--            <div class="card">-->
-<!--                <div class="card-header">-->
-<!--                    <h2>6 Days Ago</h2>-->
-<!--                </div>-->
-<!--                <ul class="list-group list-group-flush">-->
-
-<!--                </ul>-->
-<!--                <div class="card-body text-center">-->
-<!--                    <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal" data-target="#add-workout"-->
-<!--                       data-day="6 Days Ago">➕</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
 
     <!-- Add Workout Modal -->
-    <div class="modal fade" id="add-workout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="workout-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -173,7 +66,8 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-around">
 
-                        <button class="muscle-group btn btn-outline-primary">All</button>
+                        <button id="all-muscle-groups" class="muscle-group btn btn-primary">All</button>
+
                         <repeat group="{{ @muscleGroups }}" value="{{ @currMuscleGroup }}">
                             <button class="muscle-group btn btn-outline-primary">
                                 {{ @currMuscleGroup['muscle_group_name'] }}
@@ -194,7 +88,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="add-workouts" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

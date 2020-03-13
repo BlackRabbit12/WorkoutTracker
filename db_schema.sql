@@ -223,4 +223,26 @@ INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Rowing");
 INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Military Press");
 INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Squats");
 INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Lunges");
+INSERT INTO `workout`(`workout_id`, `workout_name`) VALUES (DEFAULT, "Jumping Jacks");
+
+INSERT INTO `workout_muscle_group`(`workout_id`, `muscle_group_id`)
+VALUES
+(1, 1),
+(2, 3),
+(3, 1),
+(4, 2),
+(4, 3),
+(5, 1),
+(6, 2),
+(6, 3),
+(7, 2),
+(7, 3),
+(8, 1),
+(8, 3),
+(9, 1),
+(10, 2),
+(11, 2);
+(12, 1);
+(12, 2);
+(12, 3);
  */

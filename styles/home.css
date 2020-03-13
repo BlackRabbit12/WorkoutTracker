@@ -67,7 +67,7 @@ a.rounded-circle {
 @media (max-width: 576px) {
     body > main > #day-plans {
         grid-template-columns: auto;
-        grid-template-areas: 'today' 'yesterday' 'two-days' 'three-days' 'four-days' 'five-days' 'six-days';
+        grid-template-areas: 'day-0' 'day-1' 'two-days' 'three-days' 'four-days' 'five-days' 'six-days';
     }
 }
 

@@ -54,7 +54,11 @@ class WorkoutController
             }
         }
 
+        $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago', '3 Days Ago',
+                    '4 Days Ago','5 Days Ago', '6 Days Ago'];
+
         // Set hive variables
+        $this->_f3->set('daysOfWeek', $daysOfWeek);
         $this->_f3->set('workouts', $workouts);
         $this->_f3->set('muscleGroups', $allMuscleGroups);
         $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);

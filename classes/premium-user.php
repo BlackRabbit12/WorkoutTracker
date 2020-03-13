@@ -6,28 +6,32 @@
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-11
+ * Last Updated: 2020-03-13
  */
 class PremiumUser extends User
 {
-    //in addition, premium users have:
-    private $_userName;
+    private $_premium;
 
     /**
-     * Get the user's username.
-     * @return mixed
+     * PremiumUser constructor.
+     * @param $firstName
+     * @param $lastName
+     * @param $userName
+     * @param $password
+     * @param $premium
      */
-    function getUserName()
+    function __construct($firstName, $lastName, $userName, $password, $premium)
     {
-        return $this->_userName;
+        parent::__construct($firstName, $lastName, $userName, $password);
+        $this->_premium = $premium;
     }
 
     /**
-     * Reset the user's username.
-     * @param $newUserName
+     * Get user's premium status.
+     * @return mixed
      */
-    function setResetUserName($newUserName)
+    function getPremium()
     {
-        $this->_userName = $newUserName;
+        return $this->_premium;
     }
 }

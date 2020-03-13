@@ -7,7 +7,7 @@
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-03-11
+ * Last Updated: 2020-03-13
  */
 -->
 
@@ -58,7 +58,7 @@
                         <p>{{ @errors['password'] }}</p>
                     </check>
                     <label for="password">Password</label>
-                    <input id="password" name="password" type="text" class="form-control" placeholder="Password" value="{{ @sticky }}">
+                    <input id="password" name="password" type="text" class="form-control" placeholder="Password" value="{{ @stickyPassword }}">
                 </div>
                 <!-- password confirmation -->
                 <div class="form-group">
@@ -66,7 +66,7 @@
                         <p>{{ @errors['password-confirmation'] }}</p>
                     </check>
                     <label for="password-confirmation">Password Confirmation</label>
-                    <input id="password-confirmation" name="password-confirmation" type="text" class="form-control" placeholder="Password confirmation" value="{{ @sticky }}">
+                    <input id="password-confirmation" name="password-confirmation" type="text" class="form-control" placeholder="Password confirmation" value="{{ @stickyPasswordConfirmation }}">
                 </div>
                 <!-- is pro -->
                 <div class="form-group">

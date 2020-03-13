@@ -7,7 +7,7 @@
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-03-11
+ * Last Updated: 2020-03-13
  */
 
 class UserValidator
@@ -22,8 +22,8 @@ class UserValidator
         return !empty(trim($str));
     }
 
-    function passwordMatch($confirmation)
+    function passwordMatch($password, $confirmation)
     {
-        return strcmp($this->_val->getPassword(), $confirmation) == 0;
+        return strcmp($password, $confirmation) == 0;
     }
 }

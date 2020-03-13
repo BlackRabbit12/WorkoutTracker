@@ -6,7 +6,7 @@
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-11
+ * Last Updated: 2020-03-13
  */
 
 class WorkoutController
@@ -90,7 +90,7 @@ class WorkoutController
             //validate first name
             if ($this->_val->validString($firstName)) {
                 //start creating a user object
-                $_SESSION['userObj']->setFirstName($firstName);
+                //$_SESSION['userObj']->setFirstName($firstName);
             }
             else {
                 $isValid = false;
@@ -101,7 +101,7 @@ class WorkoutController
             $lastName = $_POST['last-name'];
             $this->_f3->set("stickyLastName", $lastName);
             if ($this->_val->validString($lastName)) {
-                $_SESSION['userObj']->setLastName($lastName);
+                //$_SESSION['userObj']->setLastName($lastName);
             }
             else {
                 $isValid = false;
@@ -112,7 +112,7 @@ class WorkoutController
             $userName = $_POST['user-name'];
             $this->_f3->set("stickyUserName", $userName);
             if ($this->_val->validString($userName)) {
-                $_SESSION['userObj']->setUserName();
+                //$_SESSION['userObj']->setUserName();
             }
             else {
                 $isValid = false;
@@ -123,7 +123,7 @@ class WorkoutController
             $password = $_POST['password'];
             $this->_f3->set("stickyPassword", $password);
             if ($this->_val->validString($password)) {
-                $_SESSION['userObj']->setPassword();
+                //$_SESSION['userObj']->setPassword();
             }
             else {
                 $isValid = false;
@@ -132,13 +132,30 @@ class WorkoutController
 
             //confirm password
             $passwordConfirmation = $_POST['password-confirmation'];
-            if (!($this->_val->passwordMatch($passwordConfirmation))){
+            $this->_f3->set("stickyPasswordConfirmation", $passwordConfirmation);
+            if (!($this->_val->passwordMatch($password, $passwordConfirmation))) {
                 $isValid = false;
                 $this->_f3->set("errors['password-confirmation']", "Passwords do not match");
             }
 
             //if all of the inputs had valid data, reroute new user to home page
             if ($isValid) {
+                //get if premium
+                if (isset($_POST['is-pro'])) {
+                    if ($_POST['is-pro'] == 'pro') {
+                        $premium = $_POST['is-pro'];
+                        //create a premium-user
+                        $_SESSION['userPremiumObj'] = new PremiumUser($firstName, $lastName, $userName, $password, 1);
+                        $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
+                    }
+                }
+                else {
+                    //create a user
+                    $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $password);
+                    $GLOBALS['db']->insertUser($_SESSION['userObj'], 0);
+                }
+
+                //route to home page
                 $this->_f3->reroute('/');
             }
         }

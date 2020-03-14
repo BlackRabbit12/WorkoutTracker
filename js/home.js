@@ -84,6 +84,13 @@ function addOrRemoveWorkoutToSelection() {
 
 function addWorkouts() {
     $('.selected').each(function() {
+
+        //TODO get userId from session
+        $.post("/log-workout", {userId: 1, workout: $(this).text(), dayAdjustment: selectedDayNum, weight: 200
+                    , reps: 15}, function(result) {
+            //$("#output").html(result);
+        });
+
         $('#day-' + selectedDayNum + " tbody").append(
             `<tr>
                 <th>` + $(this).text() + `</th>
@@ -91,4 +98,6 @@ function addWorkouts() {
                 <td><input name="reps" type="number" class="form-control"></td>
             </tr>`)
     });
+
+
 }

@@ -46,5 +46,9 @@ $f3->route('GET /register', function () {
     $GLOBALS['controller']->registerRoute();
 });
 
+$f3->route('POST /log-workout', function () {
+    $GLOBALS['controller']->logWorkout();
+});
+
 //Run FatFree Framework
 $f3->run();

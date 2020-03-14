@@ -85,4 +85,12 @@ class WorkoutController
     {
         echo \Template::instance()->render('views/registration.html');
     }
+
+    public function logWorkout()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+        }
+    }
 }

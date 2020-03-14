@@ -34,8 +34,17 @@
                     <div class="card-header">
                         <h2>{{ @currDayOfWeek }}</h2>
                     </div>
-                    <ul class="list-group list-group-flush">
-                    </ul>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Workout</th>
+                            <th>Weight</th>
+                            <th>Reps</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                     <div class="card-body text-center">
                         <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal"
                            data-target="#workout-modal"
@@ -111,13 +120,22 @@
                 </div>
 
                 <div id="weights-reps-modal-body" class="modal-body">
-                    <ul class="list-group list-group-flush">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Workout</th>
+                                <th>Weight</th>
+                                <th>Repetions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="modal-footer">
-                    <button id="add-weights-reps" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                    <button id="add-weights-reps" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
 

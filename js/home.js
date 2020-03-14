@@ -3,12 +3,14 @@
  * Authors: Chad Drennan, Bridget Black
  */
 
+let selectedDayNum;
+
 // Event to filter by muscle group
 $('.muscle-group').on('click', filterWorkouts);
 
 $('.workout').on('click', addOrRemoveWorkoutToSelection);
 
-$('#add-workouts').on('click', addWorkouts);
+$('#add-weights-reps').on('click', addWorkouts);
 
 
 /**
@@ -19,13 +21,12 @@ $('#workout-modal').on('show.bs.modal', function (event) {
     // Change modal heading to match day of week selected
     let button = $(event.relatedTarget); // Button that triggered the modal
     let dayOfWeek = button.data('day');
-    let dayNum = button.data('day-num');
+
+    // track day the modal is selecting workouts for
+    selectedDayNum = button.data('day-num');
 
     let modal = $(this);
     modal.find('#workout-modal-title').text('Add a workout for ' + dayOfWeek);
-
-    // Mark Add button with day the modal is selecting workouts for
-    modal.find('#add-workouts').data('day-num', dayNum);
 
     // Unselected all workouts
     $('.selected').toggleClass('btn-primary').toggleClass('btn-secondary').toggleClass('selected');
@@ -40,9 +41,13 @@ $('#workout-modal').on('show.bs.modal', function (event) {
 
 $('#weight-reps-modal').on('show.bs.modal', function (event) {
     $('.selected').each(function() {
-        $('#weights-reps-modal-body > ul').append('<li class="list-group-item">' + $(this).text() + '</li>');
+        $('#weights-reps-modal-body tbody').append(
+            `<tr>
+                <th>` + $(this).text() + `</th>
+                <td><input name="weight" type="number" class="form-control"></td>
+                <td><input name="reps" type="number" class="form-control"></td>
+            </tr>`);
     });
-
 });
 
 /**
@@ -78,9 +83,12 @@ function addOrRemoveWorkoutToSelection() {
 }
 
 function addWorkouts() {
-    let dayNum = $(this).data('day-num');
-
     $('.selected').each(function() {
-        $('#day-' + dayNum + " ul").append('<li class="list-group-item">' + $(this).text() + '</li>')
+        $('#day-' + selectedDayNum + " tbody").append(
+            `<tr>
+                <th>` + $(this).text() + `</th>
+                <td><input name="weight" type="number" class="form-control"></td>
+                <td><input name="reps" type="number" class="form-control"></td>
+            </tr>`)
     });
 }

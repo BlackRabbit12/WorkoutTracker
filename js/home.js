@@ -22,7 +22,7 @@ $('#workout-modal').on('show.bs.modal', function (event) {
     let dayNum = button.data('day-num');
 
     let modal = $(this);
-    modal.find('.modal-title').text('Add a workout for ' + dayOfWeek);
+    modal.find('#workout-modal-title').text('Add a workout for ' + dayOfWeek);
 
     // Mark Add button with day the modal is selecting workouts for
     modal.find('#add-workouts').data('day-num', dayNum);
@@ -37,6 +37,13 @@ $('#workout-modal').on('show.bs.modal', function (event) {
     $('#all-muscle-groups').addClass('btn-primary');
 });
 
+
+$('#weight-reps-modal').on('show.bs.modal', function (event) {
+    $('.selected').each(function() {
+        $('#weights-reps-modal-body > ul').append('<li class="list-group-item">' + $(this).text() + '</li>');
+    });
+
+});
 
 /**
  * Filters all workouts buttons by the muscle group selected

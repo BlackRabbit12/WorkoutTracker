@@ -35,9 +35,6 @@
                         <h2>{{ @currDayOfWeek }}</h2>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Curls</li>
-                        <li class="list-group-item">Bench press</li>
-                        <li class="list-group-item">Running</li>
                     </ul>
                     <div class="card-body text-center">
                         <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal"
@@ -54,15 +51,17 @@
     </div>
 
     <!-- Add Workout Modal -->
-    <div class="modal fade" id="workout-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="workout-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
+
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add a Workout</h5>
+                    <h5 id="workout-modal-title">Add a Workout</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
                     <div class="d-flex justify-content-around">
 
@@ -88,9 +87,40 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="add-workouts" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button id="add-workouts" type="button" class="btn btn-primary" data-dismiss="modal"
+                            data-toggle="modal"
+                            data-target="#weight-reps-modal">
+                        Next
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Weights and Reps Modal -->
+    <div class="modal fade" id="weight-reps-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 id="weights-reps-modal-title">Choose Weight and Repetitions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div id="weights-reps-modal-body" class="modal-body">
+                    <ul class="list-group list-group-flush">
+
+                    </ul>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="add-weights-reps" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+
             </div>
         </div>
     </div>

@@ -29,25 +29,25 @@
         <div id="form-div" class="col-4">
 
             <!-- Formatted Username input field -->
-            <form id="formatted-login" class="form-inline">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            <form id="formatted-login" method="post" action="#">
+                <!-- username -->
+                <div class="form-group">
+                    <check if="{{ isset(@errors['user-name']) }}">
+                        <p>{{ @errors['user-name'] }}</p>
+                    </check>
+                    <label for="user-name">Username</label>
+                    <input id="user-name" name="user-name" type="text" class="form-control" placeholder="User name" value="{{ @stickyUserName }}">
                 </div>
-            </form>
+                <!-- password first -->
+                <div class="form-group">
+                    <check if="{{ isset(@errors['password']) }}">
+                        <p>{{ @errors['password'] }}</p>
+                    </check>
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="text" class="form-control" placeholder="Password" value="{{ @stickyPassword }}">
+                </div>
 
-            <!-- Non-formatted Username input field -->
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="user_name">User Name:</label>
-                    <input id="user_name" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input id="password" class="form-control">
-                </div>
+                <!-- submit button -->
                 <input id="login-btn" class="btn-dark" type="submit" value="Login">
             </form>
         </div>

@@ -108,7 +108,6 @@ class User
          * Create a date user joined and a date their membership expires.
          * Code comes from 'Jason' on Stack Overflow, $startDate is modified from original poster's code to
          * accommodate need of non-hard coded start date.
-         * TODO: update date
          * href=https://stackoverflow.com/questions/2870295/increment-date-by-one-month
          */
         $startDate = date('Y-m-d');

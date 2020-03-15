@@ -70,6 +70,34 @@ class WorkoutController
      */
     public function loginRoute()
     {
+        //reset session
+        $_SESSION = array();
+
+        //set to false if there are errors
+        $isValid = true;
+
+        //if the input 'user name' is set, then we can look at everything else
+        if (isset($_POST['user-name'])) {
+            //get variables
+            $userName = $_POST['user-name'];
+            $userPassword = $_POST['password'];
+
+            //get an array that is filled with the correct username and password, OR get an empty array if they don't
+            //match any in the database
+            $userCred = $GLOBALS['db']->getLoginCredentials($userName, $userPassword);
+
+            if (empty($userCred)) {
+                $isValid = false;
+            }
+
+            //if correct username and password entered
+            if ($isValid) {
+                //route to home page
+                $this->_f3->reroute('/');
+            }
+        }
+
+        //else go back to login until credentials verified
         echo \Template::instance()->render('views/login.html');
     }
 
@@ -93,6 +121,7 @@ class WorkoutController
             $this->_f3->set('stickyFirstName', $firstName);
             //validate first name
             if ($this->_val->validString($firstName)) {
+                //TODO: edit all if statements to !nots
                 //start creating a user object
                 //$_SESSION['userObj']->setFirstName($firstName);
             }
@@ -117,6 +146,15 @@ class WorkoutController
             $this->_f3->set("stickyUserName", $userName);
             if ($this->_val->validString($userName)) {
                 //$_SESSION['userObj']->setUserName();
+                //ensure the username is unique by querying the database to compare
+                $userHandles = $GLOBALS['db']->uniqueUserName($userName);
+
+                //if the array was not empty, then the username is "in use"
+                if (!empty($userHandles)) {
+                        $isValid = false;
+                        $this->_f3->set("errors['user-name']", "Username is already in use, please choose new username.");
+                }
+                //if the array was empty, then the username is unique
             }
             else {
                 $isValid = false;

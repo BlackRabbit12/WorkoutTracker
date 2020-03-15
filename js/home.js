@@ -40,6 +40,10 @@ $('#workout-modal').on('show.bs.modal', function (event) {
 
 
 $('#weight-reps-modal').on('show.bs.modal', function (event) {
+    // Refresh table
+    $('#weights-reps-modal-body tbody').html('');
+
+    // Show each workout and inputs
     $('.selected').each(function() {
         $('#weights-reps-modal-body tbody').append(
             `<tr>
@@ -85,9 +89,7 @@ function addOrRemoveWorkoutToSelection() {
 function addWorkouts() {
     $('.selected').each(function() {
 
-        //TODO get userId from session
-        let workoutLogData = {userId: 1, workout: $(this).text(), dayAdjustment: selectedDayNum, weight: 200, reps: 15};
-
+        let workoutLogData = {workout: $(this).text(), dayAdjustment: selectedDayNum, weight: 200, reps: 15};
 
         $.post('/328/WorkoutTracker/log-workout', workoutLogData, function(result) {
             $("#test").append(result);

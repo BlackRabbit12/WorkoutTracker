@@ -91,7 +91,9 @@ class WorkoutController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //var_dump($_POST);
 
-            $userId = $_POST['userId'];
+            //TODO get userId from session
+            //$userId = $_SESSION['userId'];
+            $userId = 1;
             $workout = trim($_POST['workout']);
             $weight = $_POST['weight'];
             $reps = $_POST['reps'];

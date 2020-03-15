@@ -135,7 +135,7 @@ class Database
     function getLoginCredentials($userName, $userPassword)
     {
         //define query
-        $sql = "SELECT password FROM `user` WHERE handle = :username";
+        $sql = "SELECT * FROM `user` WHERE handle = :username";
 
         //prepare the statement
         $statement = $this->_dbh->prepare($sql);

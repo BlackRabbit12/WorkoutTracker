@@ -30,38 +30,45 @@ class WorkoutController
      */
     public function homeRoute()
     {
-        //collect all workout names and muscle group names
-        $workouts = $GLOBALS['db']->getAllWorkouts();
-        $allMuscleGroups = $GLOBALS['db']->getAllMuscleGroups();
+        //test for if user is already logged in
+        if (isset($_SESSION['userObj']) || isset($_SESSION['userPremiumObj'])) {
+            //collect all workout names and muscle group names
+            $workouts = $GLOBALS['db']->getAllWorkouts();
+            $allMuscleGroups = $GLOBALS['db']->getAllMuscleGroups();
 
-        //muscle group workout javascript array
-        $workoutMuscleGroups = [];
-        //for all workouts,
-        foreach ($workouts as $currWorkout) {
-            //gets the muscle groups from database
-            $muscleGroupsResults = $GLOBALS['db']->getWorkoutMuscleGroups($currWorkout['workout_id']);
+            //muscle group workout javascript array
+            $workoutMuscleGroups = [];
+            //for all workouts,
+            foreach ($workouts as $currWorkout) {
+                //gets the muscle groups from database
+                $muscleGroupsResults = $GLOBALS['db']->getWorkoutMuscleGroups($currWorkout['workout_id']);
 
-            //if there were query results
-            if ($muscleGroupsResults) {
-                $muscleGroups = '[';
-                //concat them into a string
-                foreach ($muscleGroupsResults as $currMuscleGroupResult) {
-                    $muscleGroups .= "\"{$currMuscleGroupResult['muscle_group_name']}\", ";
+                //if there were query results
+                if ($muscleGroupsResults) {
+                    $muscleGroups = '[';
+                    //concat them into a string
+                    foreach ($muscleGroupsResults as $currMuscleGroupResult) {
+                        $muscleGroups .= "\"{$currMuscleGroupResult['muscle_group_name']}\", ";
+                    }
+                    //trim extra chars on end of string
+                    $muscleGroups = rtrim($muscleGroups, ', ') . ']';
+                    $workoutMuscleGroups[$currWorkout['workout_id']] = $muscleGroups;
                 }
-                //trim extra chars on end of string
-                $muscleGroups = rtrim($muscleGroups, ', ') . ']';
-                $workoutMuscleGroups[$currWorkout['workout_id']] = $muscleGroups;
             }
+
+            // Set hive variables
+            $this->_f3->set('workouts', $workouts);
+            $this->_f3->set('muscleGroups', $allMuscleGroups);
+            $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
+
+
+            $view = new Template();
+            echo $view->render('views/home.html');
         }
-
-        // Set hive variables
-        $this->_f3->set('workouts', $workouts);
-        $this->_f3->set('muscleGroups', $allMuscleGroups);
-        $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
-
-
-        $view = new Template();
-        echo $view->render('views/home.html');
+        //if they are not logged in, reroute to login
+        else {
+            $this->_f3->reroute('/login');
+        }
     }
 
     /**
@@ -113,6 +120,15 @@ class WorkoutController
 
                 //if correct username and password entered
                 if ($isValid) {
+                    //create a user object
+                    if ($userCred['isPro'] == 1) {
+                        $_SESSION['userPremiumObj'] = new PremiumUser($userCred['first_name'], $userCred['last_name'],
+                            $userCred['handle'], $userCred['password'], $userCred['isPro']);
+                    }
+                    else {
+                        $_SESSION['userObj'] = new User($userCred['first_name'],
+                            $userCred['last_name'], $userCred['handle'], $userCred['password']);
+                    }
                     //route to home page
                     $this->_f3->reroute('/');
                 }
@@ -213,12 +229,14 @@ class WorkoutController
                         //create a premium-user
                         $_SESSION['userPremiumObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
                         $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
+                        $this->_f3->set("isPremium", "yes");
                     }
                 }
                 else {
                     //create a user
                     $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $hashedPassword);
                     $GLOBALS['db']->insertUser($_SESSION['userObj'], 0);
+                    $this->_f3->set("isPremium", "no");
                 }
 
                 //route to home page

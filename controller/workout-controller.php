@@ -127,11 +127,11 @@ class WorkoutController
                     //create a user object
                     if ($userCred['isPro'] == 1) {
                         $_SESSION['userPremiumObj'] = new PremiumUser($userCred['first_name'], $userCred['last_name'],
-                            $userCred['handle'], $userCred['password'], $userCred['isPro']);
+                            $userCred['handle'], $userCred['password'], $userCred['isPro'], $userCred['user_id']);
                     }
                     else {
                         $_SESSION['userObj'] = new User($userCred['first_name'],
-                            $userCred['last_name'], $userCred['handle'], $userCred['password']);
+                            $userCred['last_name'], $userCred['handle'], $userCred['password'], $userCred['user_id']);
                     }
                     //route to home page
                     $this->_f3->reroute('/');
@@ -231,15 +231,25 @@ class WorkoutController
                     if ($_POST['is-pro'] == 'pro') {
                         $premium = $_POST['is-pro'];
                         //create a premium-user
-                        $_SESSION['userPremiumObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
-                        $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
+                        $premUser = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
+
+                        // Save premium user and retrieve Id
+                        $premUserId = $GLOBALS['db']->insertUser($premUser, 1);
+                        $premUser->setId($premUserId);
+
+                        $_SESSION['userPremiumObj'] = $premUser;
+
                         $this->_f3->set("isPremium", "yes");
                     }
                 }
                 else {
                     //create a user
-                    $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $hashedPassword);
-                    $GLOBALS['db']->insertUser($_SESSION['userObj'], 0);
+                    $user = new User($firstName, $lastName, $userName, $hashedPassword);
+                    $userId = $GLOBALS['db']->insertUser($user, 0);
+                    $user->setId($userId);
+
+                    $_SESSION['userObj'] = $user;
+
                     $this->_f3->set("isPremium", "no");
                 }
 
@@ -255,11 +265,15 @@ class WorkoutController
     public function logWorkout()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //var_dump($_POST);
 
-            //TODO get userId from session
-            //$userId = $_SESSION['userId'];
-            $userId = 1;
+            $userId = -1;
+            if (isset($_SESSION['userPremiumObj'])) {
+                $userId = $_SESSION['userPremiumObj']->getId();
+            }
+            else if (isset($_SESSION['userObj'])){
+                $userId = $_SESSION['userObj']->getId();
+            }
+
             $workout = trim($_POST['workout']);
             $weight = $_POST['weight'];
             $reps = $_POST['reps'];

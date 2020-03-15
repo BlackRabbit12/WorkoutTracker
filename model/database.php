@@ -94,6 +94,7 @@ class Database
      * Insert a user into the database.
      * @param $user
      * @param $pro
+     * @return id of user that was inserted
      */
     function insertUser($user, $pro)
     {
@@ -118,6 +119,8 @@ class Database
 
         //execute the statement
         $statement->execute();
+
+        return $this->_dbh->lastInsertId();
     }
 
 

@@ -1,7 +1,7 @@
 <?php
 
-require_once('/home/cdrennan/config-workout.php');
-//require_once('/home/bblackgr/config-workout.php');
+//require_once('/home/cdrennan/config-workout.php');
+require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. TODO: improve description.
@@ -9,7 +9,7 @@ require_once('/home/cdrennan/config-workout.php');
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-11
+ * Last Updated: 2020-03-14
  */
 class Database
 {

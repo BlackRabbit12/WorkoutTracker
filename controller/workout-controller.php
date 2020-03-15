@@ -77,23 +77,37 @@ class WorkoutController
         $isValid = true;
 
         //if the input 'user name' is set, then we can look at everything else
-        if (isset($_POST['user-name'])) {
+        if (isset($_POST['user-name']) && isset($_POST['password'])) {
             //get variables
             $userName = $_POST['user-name'];
             $userPassword = $_POST['password'];
 
-            //get an array that is filled with the correct username and password, OR get an empty array if they don't
-            //match any in the database
-            $userCred = $GLOBALS['db']->getLoginCredentials($userName, $userPassword);
+            //see if username and password are valid inputs
+            if ($this->_val->validString($userName) && $this->_val->validString($userPassword)) {
+                //get an array that is filled with the correct username and password, OR get an
+                // empty array if they don't match any in the database
+                $userCred = $GLOBALS['db']->getLoginCredentials($userName, $userPassword);
 
-            if (empty($userCred)) {
-                $isValid = false;
-            }
+                //the username entered doesn't match any in the database
+                if (empty($userCred)) {
+                    $isValid = false;
+                    $this->_f3->set("errors['password']", "Username or password did not match a user");
+                }
+                //the username entered matched one in the database
+                else {
+                    //if the passwords do not match, then we do not have a user
+                    if (!password_verify($userPassword, $userCred['password'])) {
+                        $isValid = false;
+                        $this->_f3->set("errors['password']", "Password incorrect");
+                    }
+                }
 
-            //if correct username and password entered
-            if ($isValid) {
-                //route to home page
-                $this->_f3->reroute('/');
+                //if correct username and password entered
+                if ($isValid) {
+                    //route to home page
+                    $this->_f3->reroute('/');
+                }
+
             }
         }
 
@@ -166,6 +180,7 @@ class WorkoutController
             $this->_f3->set("stickyPassword", $password);
             if ($this->_val->validString($password)) {
                 //$_SESSION['userObj']->setPassword();
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             }
             else {
                 $isValid = false;
@@ -187,13 +202,13 @@ class WorkoutController
                     if ($_POST['is-pro'] == 'pro') {
                         $premium = $_POST['is-pro'];
                         //create a premium-user
-                        $_SESSION['userPremiumObj'] = new PremiumUser($firstName, $lastName, $userName, $password, 1);
+                        $_SESSION['userPremiumObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
                         $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
                     }
                 }
                 else {
                     //create a user
-                    $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $password);
+                    $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $hashedPassword);
                     $GLOBALS['db']->insertUser($_SESSION['userObj'], 0);
                 }
 

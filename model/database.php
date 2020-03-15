@@ -135,20 +135,19 @@ class Database
     function getLoginCredentials($userName, $userPassword)
     {
         //define query
-        $sql = "SELECT handle, password FROM `user` WHERE handle = :username AND password = :password";
+        $sql = "SELECT password FROM `user` WHERE handle = :username";
 
         //prepare the statement
         $statement = $this->_dbh->prepare($sql);
 
         //bind the parameters
         $statement->bindParam(':username', $userName);
-        $statement->bindParam(':password', $userPassword);
 
         //execute statement
         $statement->execute();
 
         //return the query
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetch();
     }
 }
 

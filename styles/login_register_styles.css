@@ -37,4 +37,8 @@ p {
     body {
         background-image: url("../images/freeWeights2.jpg");
     }
+
+    .spacers {
+        display: none;
+    }
 }

@@ -45,11 +45,14 @@ $('#weight-reps-modal').on('show.bs.modal', function (event) {
 
     // Show each workout and inputs
     $('.selected').each(function() {
+        let workout = $(this).text().trim();
+        let workoutIdFormat = workout.toLowerCase().replace(' ', '-');
+
         $('#weights-reps-modal-body tbody').append(
             `<tr>
-                <th>` + $(this).text() + `</th>
-                <td><input name="weight" type="number" class="form-control"></td>
-                <td><input name="reps" type="number" class="form-control"></td>
+                <th>` + workout + `</th>
+                <td><input id="` + workoutIdFormat + `-weight" type="number" class="form-control"></td>
+                <td><input id="` + workoutIdFormat + `-reps" type="number" class="form-control"></td>
             </tr>`);
     });
 });
@@ -88,8 +91,13 @@ function addOrRemoveWorkoutToSelection() {
 
 function addWorkouts() {
     $('.selected').each(function() {
+        let workout = $(this).text().trim();
+        let workoutIdFormat = workout.toLowerCase().replace(' ', '-');
 
-        let workoutLogData = {workout: $(this).text(), dayAdjustment: selectedDayNum, weight: 200, reps: 15};
+        let weight = $('#' + workoutIdFormat + '-weight').val();
+        let reps = $('#' + workoutIdFormat + '-reps').val();
+
+        let workoutLogData = {workout: workout, dayAdjustment: selectedDayNum, weight: weight, reps: reps};
 
         $.post('/328/WorkoutTracker/log-workout', workoutLogData, function(result) {
             $("#test").append(result);
@@ -97,11 +105,9 @@ function addWorkouts() {
 
         $('#day-' + selectedDayNum + ' tbody').append(
             `<tr>
-                <th>` + $(this).text() + `</th>
-                <td><input name="weight" type="number" class="form-control"></td>
-                <td><input name="reps" type="number" class="form-control"></td>
+                <th>` + workout + `</th>
+                <td>` + weight + `</td>
+                <td>` + reps + `</td>
             </tr>`)
     });
-
-
 }

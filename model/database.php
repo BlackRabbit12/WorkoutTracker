@@ -1,7 +1,7 @@
 <?php
 
-require_once('/home/cdrennan/config-workout.php');
-//require_once('/home/bblackgr/config-workout.php');
+//require_once('/home/cdrennan/config-workout.php');
+require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. TODO: improve description.
@@ -72,6 +72,55 @@ class Database
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function uniqueUserName($desiredUserName)
+    {
+        //query database
+        $sql = 'SELECT * FROM `user` WHERE handle = :username';
+
+        //prepare statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind parameter
+        $statement->bindParam(':username', $desiredUserName);
+
+        //execute the statement
+        $statement->execute();
+
+        //return the result
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Insert a user into the database.
+     * @param $user
+     * @param $pro
+     */
+    function insertUser($user, $pro)
+    {
+        if ($pro == 1) {
+            //define the query
+            $sql = "INSERT INTO user VALUES (default, :firstName, :lastName, :userName, :password, 1, :membershipEndDate)";
+        }
+        else {
+            //define the query
+            $sql = "INSERT INTO user VALUES (default, :firstName, :lastName, :userName, :password, 0, :membershipEndDate)";
+        }
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind the parameters
+        $statement->bindParam(':firstName', $user->getFirstName());
+        $statement->bindParam(':lastName', $user->getLastName());
+        $statement->bindParam(':userName', $user->getUserName());
+        $statement->bindParam(':password', $user->getPassword());
+        $statement->bindParam(':membershipEndDate', $user->getMembershipEndDate());
+
+        //execute the statement
+        $statement->execute();
+    }
+
+
     function getAllMuscleGroups()
     {
         $sql = 'SELECT muscle_group_name
@@ -81,6 +130,26 @@ class Database
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    function getLoginCredentials($userName, $userPassword)
+    {
+        //define query
+        $sql = "SELECT * FROM `user` WHERE handle = :username";
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind the parameters
+        $statement->bindParam(':username', $userName);
+
+        //execute statement
+        $statement->execute();
+
+        //return the query
+        return $statement->fetch();
+    }
+}
 
     function getWorkoutIdByName($workoutName)
     {

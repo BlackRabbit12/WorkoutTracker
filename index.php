@@ -37,12 +37,12 @@ $f3->route('GET /', function () {
 });
 
 //Login route
-$f3->route('GET /login', function () {
+$f3->route('GET|POST /login', function () {
     $GLOBALS['controller']->loginRoute();
 });
 
 //Registration route
-$f3->route('GET /register', function () {
+$f3->route('GET|POST /register', function () {
     $GLOBALS['controller']->registerRoute();
 });
 

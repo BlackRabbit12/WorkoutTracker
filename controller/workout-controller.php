@@ -89,8 +89,20 @@ class WorkoutController
     public function logWorkout()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //var_dump($_POST);
 
+            $userId = $_POST['userId'];
+            $workout = trim($_POST['workout']);
+            $weight = $_POST['weight'];
+            $reps = $_POST['reps'];
 
+            // Get date of day plan
+            $dayAdjustment = $_POST['dayAdjustment'];
+            $dt = new DateTime();
+            $dt->modify('-' . $dayAdjustment . ' day');
+            $date = $dt->format('Y-m-d');
+
+            $GLOBALS['db']->insertWorkoutLog($userId, $workout, $date, $weight, $reps);
         }
     }
 }

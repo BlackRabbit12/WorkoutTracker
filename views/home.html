@@ -22,13 +22,11 @@
 <!-- Navbar from /views/header.html -->
 <include href="/views/navbar.html"></include>
 <main>
-
-    <!--    <div id="day-plans" class="d-flex flex-column flex-sm-row justify-content-around align-items-sm-start mt-5">-->
+    <div id="test"></div>
     <div id="day-plans" class="mt-5">
 
         <repeat group="{{ @daysOfWeek }}" value="{{ @currDayOfWeek }}" counter="{{ @ctr }}">
 
-<!--           <div id="{{ strtolower(str_replace(' ', '-', @currDayOfWeek)) }}">-->
             <div id="day-{{ @ctr - 1 }}">
                 <div class="card">
                     <div class="card-header">
@@ -125,7 +123,7 @@
                             <tr>
                                 <th>Workout</th>
                                 <th>Weight</th>
-                                <th>Repetions</th>
+                                <th>Repetitions</th>
                             </tr>
                         </thead>
                         <tbody>

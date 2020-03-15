@@ -86,12 +86,14 @@ function addWorkouts() {
     $('.selected').each(function() {
 
         //TODO get userId from session
-        $.post("/log-workout", {userId: 1, workout: $(this).text(), dayAdjustment: selectedDayNum, weight: 200
-                    , reps: 15}, function(result) {
-            //$("#output").html(result);
+        let workoutLogData = {userId: 1, workout: $(this).text(), dayAdjustment: selectedDayNum, weight: 200, reps: 15};
+
+
+        $.post('/328/WorkoutTracker/log-workout', workoutLogData, function(result) {
+            $("#test").append(result);
         });
 
-        $('#day-' + selectedDayNum + " tbody").append(
+        $('#day-' + selectedDayNum + ' tbody').append(
             `<tr>
                 <th>` + $(this).text() + `</th>
                 <td><input name="weight" type="number" class="form-control"></td>

@@ -127,8 +127,9 @@ class Database
     {
         // Get workout Id
         $workoutIdResult = $this->getWorkoutIdByName($workoutName);
-
+        echo '|' . $workoutName . '|';
         if (empty($workoutIdResult)) {
+            echo "test 2";
             return false;
         }
         $workoutId = $workoutIdResult['workout_id'];
@@ -144,7 +145,7 @@ class Database
         else {
             $dayPlanId = $dayPlanId['day_plan_id'];
         }
-
+        echo "test 3";
         $sql = 'INSERT INTO workout_log (day_plan_id, workout_id, weight, repetitions)
                 VALUES (:dayPlanId, :workoutId, :weight, :reps)';
 
@@ -156,5 +157,7 @@ class Database
         $statement->bindParam(':reps', $reps);
 
         $statement->execute();
+
+        echo "test 4";
     }
 }

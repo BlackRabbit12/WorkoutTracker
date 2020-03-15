@@ -265,11 +265,15 @@ class WorkoutController
     public function logWorkout()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //var_dump($_POST);
 
-            //TODO get userId from session
-            //$userId = $_SESSION['userId'];
-            $userId = 1;
+            $userId = -1;
+            if (isset($_SESSION['userPremiumObj'])) {
+                $userId = $_SESSION['userPremiumObj']->getId();
+            }
+            else if (isset($_SESSION['userObj'])){
+                $userId = $_SESSION['userObj']->getId();
+            }
+
             $workout = trim($_POST['workout']);
             $weight = $_POST['weight'];
             $reps = $_POST['reps'];

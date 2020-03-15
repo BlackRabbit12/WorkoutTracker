@@ -100,7 +100,6 @@ function addWorkouts() {
         let workoutLogData = {workout: workout, dayAdjustment: selectedDayNum, weight: weight, reps: reps};
 
         $.post('/328/WorkoutTracker/log-workout', workoutLogData, function(result) {
-            $("#test").append(result);
         });
 
         $('#day-' + selectedDayNum + ' tbody').append(

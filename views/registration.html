@@ -18,56 +18,67 @@
     <link rel="stylesheet" href="styles/login_register_styles.css">
     <title>Workout Tracker Register</title>
 </head>
-<body>
-    <h1>Registration</h1>
-
+<body class="pl-5 pt-5 pb-5 pr-4">
     <!-- body content -->
     <div id="body-div" class="container row">
-        <div class="col-3"></div>
-        <div id="form-div" class="col-4">
+        <div class="spacers col-3"></div>
 
-            <!-- Formatted Username input field -->
+        <div id="form-div" class="col-sm-12 col-md-6">
+            <!-- Form -->
             <form id="formatted-login" method="post" action="#">
                 <!-- first name -->
-                <div class="form-group">
+                <div class="form-group row">
+                    <label for="first-name" class="col-4">First Name</label>
+                    <div class="col-8">
+                    <input id="first-name" name="first-name" type="text" class="form-control" value="{{ @stickyFirstName }}">
                     <check if="{{ isset(@errors['first-name']) }}">
                         <p>{{ @errors['first-name'] }}</p>
                     </check>
-                    <label for="first-name">First Name</label>
-                    <input id="first-name" name="first-name" type="text" class="form-control" placeholder="First name" value="{{ @stickyFirstName }}">
+                    </div>
                 </div>
                 <!-- last name -->
-                <div class="form-group">
+                <div class="form-group row">
+                    <label for="last-name" class="col-4">Last Name</label>
+                    <div class="col-8">
+                    <input id="last-name" name="last-name" type="text" class="form-control" value="{{ @stickyLastName }}">
                     <check if="{{ isset(@errors['last-name']) }}">
                         <p>{{ @errors['last-name'] }}</p>
                     </check>
-                    <label for="last-name">Last Name</label>
-                    <input id="last-name" name="last-name" type="text" class="form-control" placeholder="Last name" value="{{ @stickyLastName }}">
+                    </div>
                 </div>
                 <!-- username -->
-                <div class="form-group">
+                <div class="form-group row">
+                    <label for="user-name" class="col-4">Username</label>
+                    <div class="col-8">
+                    <input id="user-name" name="user-name" type="text" class="form-control" value="{{ @stickyUserName }}">
                     <check if="{{ isset(@errors['user-name']) }}">
                         <p>{{ @errors['user-name'] }}</p>
                     </check>
-                    <label for="user-name">Username</label>
-                    <input id="user-name" name="user-name" type="text" class="form-control" placeholder="User name" value="{{ @stickyUserName }}">
+                    </div>
                 </div>
                 <!-- password first -->
-                <div class="form-group">
+                <div class="form-group row">
+                    <label for="password" class="col-4">Password</label>
+                    <div class="col-8">
+                    <input id="password" name="password" type="password" class="form-control" value="{{ @stickyPassword }}">
                     <check if="{{ isset(@errors['password']) }}">
                         <p>{{ @errors['password'] }}</p>
                     </check>
-                    <label for="password">Password</label>
-                    <input id="password" name="password" type="text" class="form-control" placeholder="Password" value="{{ @stickyPassword }}">
+                    </div>
                 </div>
                 <!-- password confirmation -->
-                <div class="form-group">
+                <div class="form-group row">
+                    <label for="password-confirmation" class="col-4">Password Confirmation</label>
+                    <div class="col-8">
+                    <input id="password-confirmation" name="password-confirmation" type="password" class="form-control" value="{{ @stickyPasswordConfirmation }}">
                     <check if="{{ isset(@errors['password-confirmation']) }}">
                         <p>{{ @errors['password-confirmation'] }}</p>
                     </check>
-                    <label for="password-confirmation">Password Confirmation</label>
-                    <input id="password-confirmation" name="password-confirmation" type="text" class="form-control" placeholder="Password confirmation" value="{{ @stickyPasswordConfirmation }}">
+                    </div>
                 </div>
+                <!-- show password -->
+                <input id="show-password" type="checkbox" onclick="passwordToggle()">
+                <label for="show-password">Show Password</label>
                 <!-- is pro -->
                 <div class="form-group">
                     <input id="is-pro" name="is-pro" type="checkbox" value="pro">
@@ -75,9 +86,11 @@
                 </div>
 
                 <!-- submit button -->
-                <input id="login-btn" class="btn-dark" type="submit" value="Register">
+                <input id="register-btn" class="btn-dark" type="submit" value="Register">
             </form>
         </div>
+
+        <div class="spacers col-3"></div>
     </div>
 
     <!-- JS include footer -->

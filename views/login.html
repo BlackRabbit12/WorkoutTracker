@@ -20,37 +20,41 @@
     <link rel="stylesheet" href="styles/login_register_styles.css">
     <title>Workout Tracker Login</title>
 </head>
-<body>
-    <h1>LOGIN</h1>
-
+<body class="pl-5 pt-5 pb-5 pr-4">
     <!-- body content -->
     <div id="body-div" class="container row">
-        <div class="col-3"></div>
-        <div id="form-div" class="col-4">
+        <div class="spacers col-3"></div>
 
+        <div id="form-div" class="col-sm-12 col-md-6">
             <!-- Formatted Username input field -->
-            <form id="formatted-login" class="form-inline">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">@</span>
+            <form id="formatted-login" method="post" action="#">
+                <!-- username -->
+                <div class="form-group row">
+                    <label for="user-name" class="col-3">Username</label>
+                    <div class="col-9">
+                        <input id="user-name" name="user-name" type="text" class="form-control" value="{{ @stickyUserName }}">
                     </div>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
-            </form>
-
-            <!-- Non-formatted Username input field -->
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="user_name">User Name:</label>
-                    <input id="user_name" class="form-control">
+                <!-- password first -->
+                <div class="form-group row">
+                    <label for="password" class="col-3">Password</label>
+                    <div class="col-9">
+                        <input id="password" name="password" type="password" class="form-control" value="{{ @stickyPassword }}">
+                        <check if="{{ isset(@errors['password-login']) }}">
+                            <p>{{ @errors['password-login'] }}</p>
+                        </check>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input id="password" class="form-control">
-                </div>
+                <!-- show password -->
+                <input id="show-password" type="checkbox" onclick="loginPasswordToggle()">
+                <label for="show-password">Show Password</label>
+                <br>
+                <!-- submit button -->
                 <input id="login-btn" class="btn-dark" type="submit" value="Login">
             </form>
         </div>
+
+        <div class="spacers col-3"></div>
     </div>
 
     <!-- JS include footer -->

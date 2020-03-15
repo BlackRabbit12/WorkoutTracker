@@ -1,7 +1,7 @@
 <?php
 
-require_once('/home/cdrennan/config-workout.php');
-//require_once('/home/bblackgr/config-workout.php');
+//require_once('/home/cdrennan/config-workout.php');
+require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. TODO: improve description.
@@ -72,6 +72,24 @@ class Database
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function uniqueUserName($desiredUserName)
+    {
+        //query database
+        $sql = 'SELECT * FROM `user` WHERE handle = :username';
+
+        //prepare statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind parameter
+        $statement->bindParam(':username', $desiredUserName);
+
+        //execute the statement
+        $statement->execute();
+
+        //return the result
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     /**
      * Insert a user into the database.
      * @param $user
@@ -111,6 +129,25 @@ class Database
         $statement = $this->_dbh->prepare($sql);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    function getLoginCredentials($userName, $userPassword)
+    {
+        //define query
+        $sql = "SELECT password FROM `user` WHERE handle = :username";
+
+        //prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //bind the parameters
+        $statement->bindParam(':username', $userName);
+
+        //execute statement
+        $statement->execute();
+
+        //return the query
+        return $statement->fetch();
     }
 }
 

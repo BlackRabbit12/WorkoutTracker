@@ -70,6 +70,57 @@ class WorkoutController
      */
     public function loginRoute()
     {
+        //reset session
+        $_SESSION = array();
+
+        //set to false if there are errors
+        $isValid = true;
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            //get variables
+            $userName = $_POST['user-name'];
+            $this->_f3->set("stickyUserName", $userName);
+            $userPassword = $_POST['password'];
+            $this->_f3->set("stickyPassword", $userPassword);
+
+            if ($this->_val->validString($userName) == false && $this->_val->validString($userPassword) == false) {
+                $this->_f3->set("errors['password-login']", "Username and password empty");
+            }
+            else if ($this->_val->validString($userName) == false) {
+                $this->_f3->set("errors['password-login']", "Username empty");
+            }
+            else if ($this->_val->validString($userPassword) == false) {
+                $this->_f3->set("errors['password-login']", "password empty");
+            }
+            else {
+                //get an array that is filled with the correct username and password, OR get an
+                // empty array if they don't match any in the database
+                $userCred = $GLOBALS['db']->getLoginCredentials($userName, $userPassword);
+
+                //the username entered doesn't match any in the database
+                if (empty($userCred)) {
+                    $isValid = false;
+                    $this->_f3->set("errors['password-login']", "Username or password did not match a user");
+                }
+                //the username entered matched one in the database
+                else {
+                    //if the passwords do not match, then we do not have a user
+                    if (!password_verify($userPassword, $userCred['password'])) {
+                        $isValid = false;
+                        $this->_f3->set("errors['password-login']", "Password incorrect");
+                    }
+                }
+
+                //if correct username and password entered
+                if ($isValid) {
+                    //route to home page
+                    $this->_f3->reroute('/');
+                }
+
+             }
+        }
+
+        //else go back to login until credentials verified
         echo \Template::instance()->render('views/login.html');
     }
 
@@ -93,6 +144,7 @@ class WorkoutController
             $this->_f3->set('stickyFirstName', $firstName);
             //validate first name
             if ($this->_val->validString($firstName)) {
+                //TODO: edit all if statements to !nots
                 //start creating a user object
                 //$_SESSION['userObj']->setFirstName($firstName);
             }
@@ -117,6 +169,15 @@ class WorkoutController
             $this->_f3->set("stickyUserName", $userName);
             if ($this->_val->validString($userName)) {
                 //$_SESSION['userObj']->setUserName();
+                //ensure the username is unique by querying the database to compare
+                $userHandles = $GLOBALS['db']->uniqueUserName($userName);
+
+                //if the array was not empty, then the username is "in use"
+                if (!empty($userHandles)) {
+                        $isValid = false;
+                        $this->_f3->set("errors['user-name']", "Username is already in use, please choose new username.");
+                }
+                //if the array was empty, then the username is unique
             }
             else {
                 $isValid = false;
@@ -128,6 +189,7 @@ class WorkoutController
             $this->_f3->set("stickyPassword", $password);
             if ($this->_val->validString($password)) {
                 //$_SESSION['userObj']->setPassword();
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             }
             else {
                 $isValid = false;
@@ -149,13 +211,13 @@ class WorkoutController
                     if ($_POST['is-pro'] == 'pro') {
                         $premium = $_POST['is-pro'];
                         //create a premium-user
-                        $_SESSION['userPremiumObj'] = new PremiumUser($firstName, $lastName, $userName, $password, 1);
+                        $_SESSION['userPremiumObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
                         $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
                     }
                 }
                 else {
                     //create a user
-                    $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $password);
+                    $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $hashedPassword);
                     $GLOBALS['db']->insertUser($_SESSION['userObj'], 0);
                 }
 

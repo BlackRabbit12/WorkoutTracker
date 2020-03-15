@@ -1,7 +1,7 @@
 /**
  * Description:
  *     CSS for login and for sign-up forms.
- * Last Updated: 2020-03-03
+ * Last Updated: 2020-03-14
  */
 
 body {
@@ -12,18 +12,23 @@ body {
     background-color: black;
 }
 
-#form-div {
-    background-color: white;
-    opacity: 0.9;
-    border: 1px solid black;
+p {
+    color: darkred;
+    font-size: small;
+    text-transform: capitalize;
 }
 
 #body-div {
-    margin-top: 10%;
+    margin-top: 5%;
     padding: 15px;
 }
 
-#login-form, #formatted-login {
+#form-div {
+    background-color: white;
+    border: 1px solid black;
+}
+
+#formatted-login, #login-form {
     padding-top: 15px;
     padding-bottom: 15px;
 }

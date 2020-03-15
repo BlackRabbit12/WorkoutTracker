@@ -76,14 +76,23 @@ class WorkoutController
         //set to false if there are errors
         $isValid = true;
 
-        //if the input 'user name' is set, then we can look at everything else
-        if (isset($_POST['user-name']) && isset($_POST['password'])) {
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             //get variables
             $userName = $_POST['user-name'];
+            $this->_f3->set("stickyUserName", $userName);
             $userPassword = $_POST['password'];
+            $this->_f3->set("stickyPassword", $userPassword);
 
-            //see if username and password are valid inputs
-            if ($this->_val->validString($userName) && $this->_val->validString($userPassword)) {
+            if ($this->_val->validString($userName) == false && $this->_val->validString($userPassword) == false) {
+                $this->_f3->set("errors['password-login']", "Username and password empty");
+            }
+            else if ($this->_val->validString($userName) == false) {
+                $this->_f3->set("errors['password-login']", "Username empty");
+            }
+            else if ($this->_val->validString($userPassword) == false) {
+                $this->_f3->set("errors['password-login']", "password empty");
+            }
+            else {
                 //get an array that is filled with the correct username and password, OR get an
                 // empty array if they don't match any in the database
                 $userCred = $GLOBALS['db']->getLoginCredentials($userName, $userPassword);
@@ -91,14 +100,14 @@ class WorkoutController
                 //the username entered doesn't match any in the database
                 if (empty($userCred)) {
                     $isValid = false;
-                    $this->_f3->set("errors['password']", "Username or password did not match a user");
+                    $this->_f3->set("errors['password-login']", "Username or password did not match a user");
                 }
                 //the username entered matched one in the database
                 else {
                     //if the passwords do not match, then we do not have a user
                     if (!password_verify($userPassword, $userCred['password'])) {
                         $isValid = false;
-                        $this->_f3->set("errors['password']", "Password incorrect");
+                        $this->_f3->set("errors['password-login']", "Password incorrect");
                     }
                 }
 
@@ -108,7 +117,7 @@ class WorkoutController
                     $this->_f3->reroute('/');
                 }
 
-            }
+             }
         }
 
         //else go back to login until credentials verified

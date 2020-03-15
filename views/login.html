@@ -21,8 +21,6 @@
     <title>Workout Tracker Login</title>
 </head>
 <body>
-    <h1>LOGIN</h1>
-
     <!-- body content -->
     <div id="body-div" class="container row">
         <div class="col-3"></div>
@@ -31,22 +29,26 @@
             <!-- Formatted Username input field -->
             <form id="formatted-login" method="post" action="#">
                 <!-- username -->
-                <div class="form-group">
-                    <check if="{{ isset(@errors['user-name']) }}">
-                        <p>{{ @errors['user-name'] }}</p>
-                    </check>
-                    <label for="user-name">Username</label>
-                    <input id="user-name" name="user-name" type="text" class="form-control" placeholder="User name" value="{{ @stickyUserName }}">
+                <div class="form-group row">
+                    <label for="user-name" class="col-3">Username</label>
+                    <div class="col-9">
+                        <input id="user-name" name="user-name" type="text" class="form-control" value="{{ @stickyUserName }}">
+                    </div>
                 </div>
                 <!-- password first -->
-                <div class="form-group">
-                    <check if="{{ isset(@errors['password']) }}">
-                        <p>{{ @errors['password'] }}</p>
-                    </check>
-                    <label for="password">Password</label>
-                    <input id="password" name="password" type="text" class="form-control" placeholder="Password" value="{{ @stickyPassword }}">
+                <div class="form-group row">
+                    <label for="password" class="col-3">Password</label>
+                    <div class="col-9">
+                        <input id="password" name="password" type="password" class="form-control" value="{{ @stickyPassword }}">
+                        <check if="{{ isset(@errors['password-login']) }}">
+                            <p>{{ @errors['password-login'] }}</p>
+                        </check>
+                    </div>
                 </div>
-
+                <!-- show password -->
+                <input id="show-password" type="checkbox" onclick="loginPasswordToggle()">
+                <label for="show-password">Show Password</label>
+                <br>
                 <!-- submit button -->
                 <input id="login-btn" class="btn-dark" type="submit" value="Login">
             </form>

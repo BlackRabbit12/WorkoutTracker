@@ -1,7 +1,7 @@
 <?php
 
-//require_once('/home/cdrennan/config-workout.php');
-require_once('/home/bblackgr/config-workout.php');
+require_once('/home/cdrennan/config-workout.php');
+//require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. TODO: improve description.
@@ -61,11 +61,11 @@ class Database
                 FROM workout
                     INNER JOIN workout_muscle_group ON workout.workout_id = workout_muscle_group.workout_id
                     INNER JOIN muscle_group ON workout_muscle_group.muscle_group_id = muscle_group.muscle_group_id
-                WHERE workout.workout_id = :workout_id';
+                WHERE workout.workout_id = :workoutId';
         //prepare statement
         $statement = $this->_dbh->prepare($sql);
         //bind parameters
-        $statement->bindParam(':workout_id', $workoutId);
+        $statement->bindParam(':workoutId', $workoutId);
         //execute the statement
         $statement->execute();
         //return the result
@@ -120,7 +120,7 @@ class Database
         $statement->execute();
     }
 
-  
+
     function getAllMuscleGroups()
     {
         $sql = 'SELECT muscle_group_name
@@ -149,20 +149,80 @@ class Database
         //return the query
         return $statement->fetch();
     }
-}
 
-/* INSERTS
- *  INSERT INTO `workout` (`workout_id`, `workout_name`) VALUES
-    (1, 'Push Ups'),
-    (2, 'Sit Ups'),
-    (3, 'Bench Press'),
-    (4, 'Cleans'),
-    (5, 'Curls'),
-    (6, 'Jogging'),
-    (7, 'Running'),
-    (8, 'Rowing'),
-    (9, 'Military Press'),
-    (10, 'Squats'),
-    (11, 'Lunges');
- *
- */
+    function getWorkoutIdByName($workoutName)
+    {
+        $sql = 'SELECT workout_id
+                FROM workout
+                WHERE workout_name = :workoutName';
+
+        $statement = $this->_dbh->prepare($sql);
+
+        $statement->bindParam(':workoutName', $workoutName);
+
+        $statement->execute();
+        return $statement->fetch();
+    }
+
+    function getDayPlanId($userId, $date) {
+        $sql = 'SELECT day_plan_id
+                FROM day_plan
+                WHERE `date` = :date AND user_id = :userId';
+
+        $statement = $this->_dbh->prepare($sql);
+
+        $statement->bindParam(':userId', $userId);
+        $statement->bindParam(':date', $date);
+
+        $statement->execute();
+        return $statement->fetch();
+    }
+
+    function insertDayPlan($userId, $date)
+    {
+        $sql = 'INSERT INTO day_plan (user_id, `date`)
+                VALUES (:userId, :date)';
+
+        $statement = $this->_dbh->prepare($sql);
+
+        $statement->bindParam(':userId', $userId);
+        $statement->bindParam(':date', $date);
+
+        $statement->execute();
+    }
+
+    function insertWorkoutLog($userId, $workoutName, $date, $weight, $reps)
+    {
+        // Get workout Id
+        $workoutIdResult = $this->getWorkoutIdByName($workoutName);
+
+        if (empty($workoutIdResult)) {
+            return false;
+        }
+        $workoutId = $workoutIdResult['workout_id'];
+
+        // Get day plan Id
+        $dayPlanId = $this->getDayPlanId($userId, $date);
+
+        // Insert new day plan if one does not exist
+        if (empty($dayPlanId)) {
+            $this->insertDayPlan($userId, $date);
+            $dayPlanId = $this->_dbh->lastInsertId();
+        }
+        else {
+            $dayPlanId = $dayPlanId['day_plan_id'];
+        }
+
+        $sql = 'INSERT INTO workout_log (day_plan_id, workout_id, weight, repetitions)
+                VALUES (:dayPlanId, :workoutId, :weight, :reps)';
+
+        $statement = $this->_dbh->prepare($sql);
+
+        $statement->bindParam(':dayPlanId', $dayPlanId);
+        $statement->bindParam(':workoutId', $workoutId);
+        $statement->bindParam(':weight', $weight);
+        $statement->bindParam(':reps', $reps);
+
+        $statement->execute();
+    }
+}

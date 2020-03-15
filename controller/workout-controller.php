@@ -56,10 +56,14 @@ class WorkoutController
                 }
             }
 
-            // Set hive variables
-            $this->_f3->set('workouts', $workouts);
-            $this->_f3->set('muscleGroups', $allMuscleGroups);
-            $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
+        $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago',
+                    '4 Days Ago','5 Days Ago', '6 Days Ago'];
+
+        // Set hive variables
+        $this->_f3->set('daysOfWeek', $daysOfWeek);
+        $this->_f3->set('workouts', $workouts);
+        $this->_f3->set('muscleGroups', $allMuscleGroups);
+        $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
 
 
             $view = new Template();
@@ -246,5 +250,27 @@ class WorkoutController
 
         //go back to registration if user input was not validated and rerouted
         echo \Template::instance()->render('views/registration.html');
+    }
+
+    public function logWorkout()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            //var_dump($_POST);
+
+            //TODO get userId from session
+            //$userId = $_SESSION['userId'];
+            $userId = 1;
+            $workout = trim($_POST['workout']);
+            $weight = $_POST['weight'];
+            $reps = $_POST['reps'];
+
+            // Get date of day plan
+            $dayAdjustment = $_POST['dayAdjustment'];
+            $dt = new DateTime();
+            $dt->modify('-' . $dayAdjustment . ' day');
+            $date = $dt->format('Y-m-d');
+
+            $GLOBALS['db']->insertWorkoutLog($userId, $workout, $date, $weight, $reps);
+        }
     }
 }

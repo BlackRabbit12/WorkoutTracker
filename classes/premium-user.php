@@ -19,8 +19,9 @@ class PremiumUser extends User
      * @param $userName
      * @param $password
      * @param $premium
+     * @param $id
      */
-    function __construct($firstName, $lastName, $userName, $password, $premium)
+    function __construct($firstName, $lastName, $userName, $password, $premium, $id = -1)
     {
         parent::__construct($firstName, $lastName, $userName, $password);
         $this->_premium = $premium;

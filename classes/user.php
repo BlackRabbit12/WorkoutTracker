@@ -11,6 +11,7 @@
 class User
 {
     //all Users have:
+    private $_id;
     private $_firstName;
     private $_lastName;
     private $_userName;
@@ -24,14 +25,34 @@ class User
      * @param $lastName
      * @param $userName
      * @param $password
+     * @param $id
      */
-    function __construct($firstName, $lastName, $userName, $password)
+    function __construct($firstName, $lastName, $userName, $password, $id = -1)
     {
         $this->_firstName = $firstName;
         $this->_lastName = $lastName;
         $this->_userName = $userName;
         $this->_password = $password;
+        $this->_id = $id;
         //$this->_date = $this->getMembershipEndDate();
+    }
+
+    /**
+     * Get the user's database id
+     * @return int Id of user
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * Set user's database id
+     * @param int $id to set for user
+     */
+    public function setId($id)
+    {
+        $this->_id = $id;
     }
 
     /**

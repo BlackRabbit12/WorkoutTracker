@@ -15,6 +15,7 @@ class User
     private $_lastName;
     private $_userName;
     private $_password;
+    private $_id;
     //private $_date;
 
 
@@ -24,14 +25,42 @@ class User
      * @param $lastName
      * @param $userName
      * @param $password
+     * @param $id
      */
-    function __construct($firstName, $lastName, $userName, $password)
+    function __construct($firstName, $lastName, $userName, $password, $id = -1)
     {
         $this->_firstName = $firstName;
         $this->_lastName = $lastName;
         $this->_userName = $userName;
         $this->_password = $password;
         //$this->_date = $this->getMembershipEndDate();
+    }
+
+    /**
+     * Set the user's ID with a value from the database.
+     * @param $id
+     */
+    function setID($id)
+    {
+        $this->_id = $id;
+    }
+
+    /**
+     * Get the user's ID.
+     * @return mixed
+     */
+    function getID()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * Gets if the user is a "premium" or "normal" user.
+     * @return string
+     */
+    function typeOfMember()
+    {
+        return "normal";
     }
 
     /**

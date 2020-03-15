@@ -31,7 +31,7 @@ class WorkoutController
     public function homeRoute()
     {
         //test for if user is already logged in
-        if (isset($_SESSION['userObj']) || isset($_SESSION['userPremiumObj'])) {
+        if (isset($_SESSION['userObj'])) {
             //collect all workout names and muscle group names
             $workouts = $GLOBALS['db']->getAllWorkouts();
             $allMuscleGroups = $GLOBALS['db']->getAllMuscleGroups();
@@ -126,12 +126,12 @@ class WorkoutController
                 if ($isValid) {
                     //create a user object
                     if ($userCred['isPro'] == 1) {
-                        $_SESSION['userPremiumObj'] = new PremiumUser($userCred['first_name'], $userCred['last_name'],
+                        $_SESSION['userObj'] = new PremiumUser($userCred['first_name'], $userCred['last_name'],
                             $userCred['handle'], $userCred['password'], $userCred['isPro']);
                     }
                     else {
-                        $_SESSION['userObj'] = new User($userCred['first_name'],
-                            $userCred['last_name'], $userCred['handle'], $userCred['password']);
+                        $_SESSION['userObj'] = new User($userCred['first_name'], $userCred['last_name'],
+                            $userCred['handle'], $userCred['password']);
                     }
                     //route to home page
                     $this->_f3->reroute('/');
@@ -231,16 +231,18 @@ class WorkoutController
                     if ($_POST['is-pro'] == 'pro') {
                         $premium = $_POST['is-pro'];
                         //create a premium-user
-                        $_SESSION['userPremiumObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
-                        $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
-                        $this->_f3->set("isPremium", "yes");
+                        $_SESSION['userObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
+                        //get user's database id from query
+                        $userID = $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
+                        $_SESSION['userObj']->setID($userID);
                     }
                 }
                 else {
                     //create a user
                     $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $hashedPassword);
-                    $GLOBALS['db']->insertUser($_SESSION['userObj'], 0);
-                    $this->_f3->set("isPremium", "no");
+                    //get user's database id from query
+                    $userID = $GLOBALS['db']->insertUser($_SESSION['userObj'], 0);
+                    $_SESSION['userObj']->setID($userID);
                 }
 
                 //route to home page

@@ -118,6 +118,8 @@ class Database
 
         //execute the statement
         $statement->execute();
+
+        return $this->_dbh->lastInsertId();
     }
 
 

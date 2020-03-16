@@ -1,7 +1,7 @@
 <?php
 
-//require_once('/home/cdrennan/config-workout.php');
-require_once('/home/bblackgr/config-workout.php');
+require_once('/home/cdrennan/config-workout.php');
+///require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. Handles all database queries.
@@ -271,7 +271,7 @@ class Database
 
     function getWorkoutLogsForDayPlan($dayPlanId)
     {
-        $sql = 'SELECT workout_name, workout_log.workout_id, weight, repetitions
+        $sql = 'SELECT workout_log_id, workout_name, workout_log.workout_id, weight, repetitions
                 FROM workout_log
                     INNER JOIN workout ON workout_log.workout_id = workout.workout_id
                 WHERE day_plan_id = :dayPlanId';
@@ -314,5 +314,21 @@ class Database
             }
         }
         return $dayPlans;
+    }
+
+    function updateWorkoutLog($workoutLogId, $weight, $reps)
+    {
+        $sql = 'UPDATE workout_log
+                SET weight = :weight,
+                    repetitions = :reps
+                WHERE workout_log_id = :workoutLogId';
+
+        $statement = $this->_dbh->prepare($sql);
+
+        $statement->bindParam(':workoutLogId', $workoutLogId);
+        $statement->bindParam(':weight', $weight);
+        $statement->bindParam(':reps', $reps);
+
+        $statement->execute();
     }
 }

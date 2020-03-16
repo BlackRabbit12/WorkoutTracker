@@ -35,6 +35,7 @@ p {
 
 .reg-log-links {
     color: black;
+    text-transform: none;
 }
 
 

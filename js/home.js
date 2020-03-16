@@ -97,8 +97,8 @@ $('#edit-workout-modal').on('show.bs.modal', function (event) {
         tBody.append(
             `<tr data-log-id="` + workoutLogId + `">
                 <th>` + workout + `</th>
-                <td><input type="number" class="form-control" value="` + weight + `"></td>
-                <td><input type="number" class="form-control" value="` + reps + `"></td>
+                <td><input type="number" class="form-control weight" value="` + weight + `"></td>
+                <td><input type="number" class="form-control reps" value="` + reps + `"></td>
             </tr>`
         );
     });
@@ -157,7 +157,8 @@ function addWorkouts() {
                 <th>` + workout + `</th>
                 <td>` + weight + `</td>
                 <td>` + reps + `</td>
-            </tr>`)
+            </tr>`
+        );
     });
 }
 
@@ -165,6 +166,18 @@ function editWorkouts() {
     let rows = $('#edit-workout-modal tbody>tr');
 
     rows.each(function() {
+        let currRow = $(this);
+        let workoutLogId = currRow.data('log-id');
+        let weight = currRow.find('.weight').val();
+        let reps = currRow.find('.reps').val();
 
+        let workoutLogData = {workoutLogId: workoutLogId, weight: weight, reps: reps};
+
+        $.post('/328/WorkoutTracker/edit-workout', workoutLogData, function(result) {
+        });
+
+        let workoutLog = $('#day-' + selectedDayNum + ' [data-log-id="' + workoutLogId + '"]');
+        workoutLog.find(".weight").text(weight);
+        workoutLog.find(".reps").text(reps);
     });
 }

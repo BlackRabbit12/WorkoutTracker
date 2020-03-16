@@ -38,10 +38,7 @@ class WorkoutController
             $allMuscleGroups = $GLOBALS['db']->getAllMuscleGroups();
 
             $userId = -1;
-            if (isset($_SESSION['userPremiumObj'])) {
-                $userId = $_SESSION['userPremiumObj']->getId();
-            }
-            else if (isset($_SESSION['userObj'])){
+            if (isset($_SESSION['userObj'])) {
                 $userId = $_SESSION['userObj']->getId();
             }
 
@@ -277,10 +274,7 @@ class WorkoutController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $userId = -1;
-            if (isset($_SESSION['userPremiumObj'])) {
-                $userId = $_SESSION['userPremiumObj']->getId();
-            }
-            else if (isset($_SESSION['userObj'])){
+            if (isset($_SESSION['userObj'])) {
                 $userId = $_SESSION['userObj']->getId();
             }
 

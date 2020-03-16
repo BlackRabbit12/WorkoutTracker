@@ -16,7 +16,6 @@ class User
     private $_lastName;
     private $_userName;
     private $_password;
-    private $_id;
     //private $_date;
 
 

@@ -112,7 +112,6 @@ function addWorkouts() {
 
         //TODO: .post('/328/WorkoutTracker/log-workout') is hardcoded path that won't work for Tina's requirements, can we change it? or is it forced to be that way?
         $.post('/328/WorkoutTracker/log-workout', workoutLogData, function(result) {
-            $("#test").append(result);
         });
 
         $('#day-' + selectedDayNum + ' tbody').append(

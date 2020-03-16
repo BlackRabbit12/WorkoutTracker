@@ -37,6 +37,16 @@ class WorkoutController
             $workouts = $GLOBALS['db']->getAllWorkouts();
             $allMuscleGroups = $GLOBALS['db']->getAllMuscleGroups();
 
+            $userId = -1;
+            if (isset($_SESSION['userPremiumObj'])) {
+                $userId = $_SESSION['userPremiumObj']->getId();
+            }
+            else if (isset($_SESSION['userObj'])){
+                $userId = $_SESSION['userObj']->getId();
+            }
+
+            $dayPlans = $GLOBALS['db']->getUserDayPlans($userId);
+
             //muscle group workout javascript array
             $workoutMuscleGroups = [];
             //for all workouts,
@@ -57,8 +67,6 @@ class WorkoutController
                 }
             }
 
-            //TODO: are we continuing to create this from hardcode or database?
-            //days of the week for card titles
             $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago',
                         '4 Days Ago','5 Days Ago', '6 Days Ago'];
 
@@ -67,6 +75,7 @@ class WorkoutController
             $this->_f3->set('workouts', $workouts);
             $this->_f3->set('muscleGroups', $allMuscleGroups);
             $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
+            $this->_f3->set('dayPlans', $dayPlans);
 
             //render home page
             $view = new Template();
@@ -132,11 +141,11 @@ class WorkoutController
                     //create a user object
                     if ($userCred['isPro'] == 1) {
                         $_SESSION['userObj'] = new PremiumUser($userCred['first_name'], $userCred['last_name'],
-                            $userCred['handle'], $userCred['password'], $userCred['isPro']);
+                            $userCred['handle'], $userCred['password'], $userCred['isPro'], $userCred['user_id']);
                     }
                     else {
                         $_SESSION['userObj'] = new User($userCred['first_name'], $userCred['last_name'],
-                            $userCred['handle'], $userCred['password']);
+                            $userCred['handle'], $userCred['password'], $userCred['user_id']);
                     }
                     //route to home page
                     $this->_f3->reroute('/');
@@ -226,19 +235,25 @@ class WorkoutController
                     if ($_POST['is-pro'] == 'pro') {
                         $premium = $_POST['is-pro'];
                         //create a premium-user
-                        $_SESSION['userObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
-                        //get user's database id from query
-                        $userID = $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
-                        $_SESSION['userObj']->setID($userID);
+                        $premUser = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
+
+                        // Save premium user and retrieve Id
+                        $premUserId = $GLOBALS['db']->insertUser($premUser, 1);
+                        $premUser->setId($premUserId);
+
+                        $_SESSION['userObj'] = $premUser;
                     }
                 }
                 //not premium
                 else {
                     //create a user
-                    $_SESSION['userObj'] = new User($firstName, $lastName, $userName, $hashedPassword);
-                    //get user's database id from query
-                    $userID = $GLOBALS['db']->insertUser($_SESSION['userObj'], 0);
-                    $_SESSION['userObj']->setID($userID);
+                    $user = new User($firstName, $lastName, $userName, $hashedPassword);
+
+                    // Save user and retrieve Id
+                    $userId = $GLOBALS['db']->insertUser($user, 0);
+                    $user->setId($userId);
+
+                    $_SESSION['userObj'] = $user;
                 }
 
                 //route to home page
@@ -260,11 +275,15 @@ class WorkoutController
     public function logWorkout()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            //var_dump($_POST);
 
-            //TODO get userId from session
-            //$userId = $_SESSION['userId'];
-            $userId = 1;
+            $userId = -1;
+            if (isset($_SESSION['userPremiumObj'])) {
+                $userId = $_SESSION['userPremiumObj']->getId();
+            }
+            else if (isset($_SESSION['userObj'])){
+                $userId = $_SESSION['userObj']->getId();
+            }
+
             $workout = trim($_POST['workout']);
             $weight = $_POST['weight'];
             $reps = $_POST['reps'];

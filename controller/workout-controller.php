@@ -228,7 +228,7 @@ class WorkoutController
                         //create a premium-user
                         $_SESSION['userObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
                         //get user's database id from query
-                        $userID = $GLOBALS['db']->insertUser($_SESSION['userPremiumObj'], 1);
+                        $userID = $GLOBALS['db']->insertUser($_SESSION['userObj'], 1);
                         $_SESSION['userObj']->setID($userID);
                     }
                 }

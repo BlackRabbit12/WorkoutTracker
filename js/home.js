@@ -21,7 +21,7 @@ $('#add-weights-reps').on('click', addWorkouts);
 // Edit workout event
 $('#edit-workouts').on('click', editWorkouts);
 
-$('#delete-mode').on('click', toggleDeleteMode);
+$('.delete-mode').on('click', toggleDeleteMode);
 
 
 /**
@@ -189,7 +189,13 @@ function toggleDeleteMode() {
 
     // If in delete mode, exit delete mode
     if ($(this).hasClass('delete-mode-active')) {
+        // Remove blank th
+        $('#day-' + dayNum + ' thead>tr').children().last().remove();
 
+        // Remove X symbol on every row
+        $('#day-' + dayNum + ' tbody>tr').each(function () {
+            $(this).children().last().remove();
+        });
     }
     else { // Enter delete mode
 
@@ -200,9 +206,17 @@ function toggleDeleteMode() {
         $('#day-' + dayNum + ' tbody>tr').each(function () {
             $(this).append(`<td><button type="button" class="delete-log close text-danger">&times;</button></td>`);
         });
+
+        $('.delete-log').on('click', deleteWorkoutLog);
     }
-
-
-
     $(this).toggleClass('delete-mode-active');
+}
+
+function deleteWorkoutLog() {
+    let workoutLogId = $(this).parent().parent().data('log-id');
+
+    $.post('/328/WorkoutTracker/delete-workout', {workoutLogId: workoutLogId}, function(result) {
+    });
+
+    $('[data-log-id="' + workoutLogId + '"]').remove();
 }

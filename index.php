@@ -56,5 +56,10 @@ $f3->route('POST /edit-workout', function () {
     $GLOBALS['controller']->editWorkout();
 });
 
+// Deletes a workout log
+$f3->route('POST /delete-workout', function () {
+    $GLOBALS['controller']->deleteWorkout();
+});
+
 //Run FatFree Framework
 $f3->run();

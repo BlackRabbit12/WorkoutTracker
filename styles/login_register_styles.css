@@ -50,6 +50,8 @@ p {
 @media only screen and (max-width: 600px) {
     body {
         background-image: url("../images/freeWeights2.jpg");
+        overflow-y: scroll;
+        margin-bottom: 50px;
     }
 
     .spacers {

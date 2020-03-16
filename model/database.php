@@ -271,7 +271,7 @@ class Database
 
     function getWorkoutLogsForDayPlan($dayPlanId)
     {
-        $sql = 'SELECT workout_name, workout_log.workout_id, weight, repetitions
+        $sql = 'SELECT workout_log_id, workout_name, workout_log.workout_id, weight, repetitions
                 FROM workout_log
                     INNER JOIN workout ON workout_log.workout_id = workout.workout_id
                 WHERE day_plan_id = :dayPlanId';

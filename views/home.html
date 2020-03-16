@@ -42,10 +42,10 @@
                         </thead>
                         <tbody>
                             <repeat group="{{ @dayPlans[@ctr - 1] }}" value="{{ @currWorkoutLog }}">
-                                <tr>
-                                    <th>{{ @currWorkoutLog['workout_name'] }}</th>
-                                    <td>{{ @currWorkoutLog['weight'] }}</td>
-                                    <td>{{ @currWorkoutLog['repetitions'] }}</td>
+                                <tr data-log-id="{{ @currWorkoutLog['workout_log_id'] }}">
+                                    <th class="workout-name">{{ @currWorkoutLog['workout_name'] }}</th>
+                                    <td class="weight">{{ @currWorkoutLog['weight'] }}</td>
+                                    <td class="reps">{{ @currWorkoutLog['repetitions'] }}</td>
                                 </tr>
                             </repeat>
                         </tbody>
@@ -167,7 +167,18 @@
                 </div>
 
                 <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Workout</th>
+                            <th>Weight</th>
+                            <th>Repetitions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button id="edit-workouts" type="button" class="btn btn-primary" data-dismiss="modal"

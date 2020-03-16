@@ -18,6 +18,9 @@ $('.workout').on('click', addOrRemoveWorkoutToSelection);
 //add a workout with details
 $('#add-weights-reps').on('click', addWorkouts);
 
+// Edit workout event
+$('#edit-workouts').on('click', editWorkouts);
+
 
 /**
  * Controls the appearance of the workout selection modal.
@@ -28,11 +31,11 @@ $('#workout-modal').on('show.bs.modal', function (event) {
     let button = $(event.relatedTarget); // Button that triggered the modal
     let dayOfWeek = button.data('day');
 
-    // track day the modal is selecting workouts for
+    // Track day the modal is selecting workouts for
     selectedDayNum = button.data('day-num');
 
     let modal = $(this);
-    modal.find('#workout-modal-title').text('Add a workout for ' + dayOfWeek);
+    modal.find('#workout-modal-title').text('Add Workouts for ' + dayOfWeek);
 
     // Unselected all workouts
     $('.selected').toggleClass('btn-primary').toggleClass('btn-secondary').toggleClass('selected');
@@ -48,20 +51,56 @@ $('#workout-modal').on('show.bs.modal', function (event) {
  * Refreshes table and displays workouts with inputs.
  */
 $('#weight-reps-modal').on('show.bs.modal', function (event) {
+    let tbody = $('#weights-reps-modal-body tbody');
+
     // Refresh table
-    $('#weights-reps-modal-body tbody').html('');
+    tbody.html('');
 
     // Show each workout and inputs
     $('.selected').each(function() {
         let workout = $(this).text().trim();
         let workoutIdFormat = workout.toLowerCase().replace(' ', '-');
 
-        $('#weights-reps-modal-body tbody').append(
+        tbody.append(
             `<tr>
                 <th>` + workout + `</th>
                 <td><input id="` + workoutIdFormat + `-weight" type="number" class="form-control"></td>
                 <td><input id="` + workoutIdFormat + `-reps" type="number" class="form-control"></td>
-            </tr>`);
+            </tr>`
+        );
+    });
+});
+
+$('#edit-workout-modal').on('show.bs.modal', function (event) {
+
+    // Change modal heading to match day of week selected
+    let button = $(event.relatedTarget); // Button that triggered the modal
+    let dayOfWeek = button.data('day');
+
+    // Track day the modal is editing workouts for
+    selectedDayNum = button.data('day-num');
+
+    let modal = $(this);
+    modal.find('#edit-workout-modal-title').text('Edit Workouts for ' + dayOfWeek);
+
+    let tBody = $('#edit-workout-modal tbody');
+
+    // Refresh table
+    tBody.html('');
+
+    $('#day-' + selectedDayNum + ' tbody>tr').each(function() {
+        let workoutLogId = $(this).data('log-id');
+        let workout = $(this).find('.workout-name').text();
+        let weight = $(this).find('.weight').text();
+        let reps = $(this).find('.reps').text();
+
+        tBody.append(
+            `<tr data-log-id="` + workoutLogId + `">
+                <th>` + workout + `</th>
+                <td><input type="number" class="form-control" value="` + weight + `"></td>
+                <td><input type="number" class="form-control" value="` + reps + `"></td>
+            </tr>`
+        );
     });
 });
 
@@ -119,5 +158,13 @@ function addWorkouts() {
                 <td>` + weight + `</td>
                 <td>` + reps + `</td>
             </tr>`)
+    });
+}
+
+function editWorkouts() {
+    let rows = $('#edit-workout-modal tbody>tr');
+
+    rows.each(function() {
+
     });
 }

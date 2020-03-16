@@ -301,6 +301,7 @@ class WorkoutController
         //if the workouts are not in both arrays, then the user has not done that workout in awhile, make it a suggestion
         $workoutSuggest = array_diff($databaseWorkouts, $databaseDayPlans);
         var_dump($workoutSuggest);
+    }
 
     public function editWorkout()
     {

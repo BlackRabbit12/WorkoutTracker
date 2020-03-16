@@ -302,4 +302,17 @@ class WorkoutController
         $workoutSuggest = array_diff($databaseWorkouts, $databaseDayPlans);
         var_dump($workoutSuggest);
     }
+
+    public function getNotSelectedWorkouts()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $userId = -1;
+            if (isset($_SESSION['userObj'])) {
+                $userId = $_SESSION['userObj']->getId();
+            }
+
+            $NotSelectedWorkoutResults = $GLOBALS['db']->getWorkoutsNotSelected();
+        }
+    }
+
 }

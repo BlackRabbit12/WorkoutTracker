@@ -50,20 +50,30 @@
                         </thead>
                         <tbody>
                             <repeat group="{{ @dayPlans[@ctr - 1] }}" value="{{ @currWorkoutLog }}">
-                                <tr>
-                                    <th>{{ @currWorkoutLog['workout_name'] }}</th>
-                                    <td>{{ @currWorkoutLog['weight'] }}</td>
-                                    <td>{{ @currWorkoutLog['repetitions'] }}</td>
+                                <tr data-log-id="{{ @currWorkoutLog['workout_log_id'] }}">
+                                    <th class="workout-name">{{ @currWorkoutLog['workout_name'] }}</th>
+                                    <td class="weight">{{ @currWorkoutLog['weight'] }}</td>
+                                    <td class="reps">{{ @currWorkoutLog['repetitions'] }}</td>
                                 </tr>
                             </repeat>
                         </tbody>
                     </table>
-                    <div class="card-body text-center">
+                    <div class="card-body d-flex justify-content-around">
+                        <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal"
+                           data-target="#edit-workout-modal"
+                           data-day="{{ @currDayOfWeek }}"
+                           data-day-num="{{ @ctr - 1 }}">
+                            ✏️
+                        </a>
                         <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal"
                            data-target="#workout-modal"
                            data-day="{{ @currDayOfWeek }}"
                            data-day-num="{{ @ctr - 1 }}">
                             ➕
+                        </a>
+                        <a href="#" class="btn btn-primary rounded-circle delete-mode"
+                           data-day-num="{{ @ctr - 1 }}">
+                            ❌️
                         </a>
                     </div>
                 </div>
@@ -158,32 +168,70 @@
 
     <!-- Suggestion Modal -->
     <div class="modal fade" id="suggestion-modal" tabindex="-1" role="dialog" aria-hidden="true">
+
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
 
                 <div class="modal-header">
+
                     <h5 id="suggestion-modal-title">Suggested Workouts</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <hr class="mb-0">
 
                 <div id="workout-suggestion" class="modal-body pt-0">
                     <div class="justify-content-around">
-                    <repeat group="{{ @workouts }}" value="{{ @currWorkout }}">
-                        <button class="btn btn-secondary btn-sm mb-1"
-                                data-muscle-groups='{{ @workoutMuscleGroups[@currWorkout["workout_id"]] }}'>
-                            {{ @currWorkout['workout_name'] }}
-                        </button>
-                    </repeat>
+                        <repeat group="{{ @workouts }}" value="{{ @currWorkout }}">
+                            <button class="btn btn-secondary btn-sm mb-1"
+                                    data-muscle-groups='{{ @workoutMuscleGroups[@currWorkout["workout_id"]] }}'>
+                                {{ @currWorkout['workout_name'] }}
+                            </button>
+                        </repeat>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
+    </div>
     </div> <!-- suggestion-modal -->
+
+    <!-- Edit Workout Modal -->
+    <div class="modal fade" id="edit-workout-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 id="edit-workout-modal-title">Edit Workouts</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Workout</th>
+                            <th>Weight</th>
+                            <th>Repetitions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="edit-workouts" type="button" class="btn btn-primary" data-dismiss="modal"
+                            data-toggle="modal">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <!-- JS include footer -->

@@ -8,7 +8,7 @@
  * 2020-03-11
  * Last Updated: 2020-03-15
  */
-class PremiumUser extends User
+class Premium_User extends User
 {
     private $_premium;
 

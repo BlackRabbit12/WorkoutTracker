@@ -287,4 +287,19 @@ class WorkoutController
             $GLOBALS['db']->insertWorkoutLog($userId, $workout, $date, $weight, $reps);
         }
     }
+
+    public function suggestWorkout()
+    {
+        //get the workout array from database
+        $databaseWorkouts = $GLOBALS['db']->getAllWorkouts();
+        var_dump($databaseWorkouts);
+
+        //get all the user's workout logs inside their day plans via user_id
+        $databaseDayPlans = $GLOBALS['db']->getUserDayPlan($_SESSION['userObj']->getId());
+        var_dump($databaseDayPlans);
+
+        //if the workouts are not in both arrays, then the user has not done that workout in awhile, make it a suggestion
+        $workoutSuggest = array_diff($databaseWorkouts, $databaseDayPlans);
+        var_dump($workoutSuggest);
+    }
 }

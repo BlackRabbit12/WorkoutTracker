@@ -51,5 +51,10 @@ $f3->route('POST /log-workout', function () {
     $GLOBALS['controller']->logWorkout();
 });
 
+//TODO: explain route
+$f3->route('POST /suggestion', function () {
+   $GLOBALS['controller']->suggestWorkout();
+});
+
 //Run FatFree Framework
 $f3->run();

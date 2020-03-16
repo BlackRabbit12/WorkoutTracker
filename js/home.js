@@ -18,6 +18,8 @@ $('.workout').on('click', addOrRemoveWorkoutToSelection);
 //add a workout with details
 $('#add-weights-reps').on('click', addWorkouts);
 
+//get all workouts from database and subtract out previous two days of card's selected workouts
+$('#suggestion-modal').on('click', suggestWorkouts);
 
 /**
  * Controls the appearance of the workout selection modal.
@@ -119,5 +121,11 @@ function addWorkouts() {
                 <td>` + weight + `</td>
                 <td>` + reps + `</td>
             </tr>`)
+    });
+}
+
+function suggestWorkouts() {
+    $.post('{{ @BASE/suggest }}', function (result) {
+
     });
 }

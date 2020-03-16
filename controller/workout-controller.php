@@ -6,7 +6,7 @@
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-15
+ * Last Updated: 2020-03-16
  */
 
 class WorkoutController
@@ -288,6 +288,28 @@ class WorkoutController
         }
     }
 
+    /**
+     * Premium user's suggested workout link displays the workouts they have not done in the past few days.
+     * Then displays those to the premium user as a suggested workout.
+     */
+    public function suggestWorkout()
+    {
+        //get the workout array from database
+        $databaseWorkouts = $GLOBALS['db']->getAllWorkouts();
+        var_dump($databaseWorkouts);
+
+        //get all the user's workout logs inside their day plans via user_id
+        $databaseDayPlans = $GLOBALS['db']->getUserDayPlan($_SESSION['userObj']->getId());
+        var_dump($databaseDayPlans);
+
+        //if the workouts are not in both arrays, then the user has not done that workout in awhile, make it a suggestion
+        $workoutSuggest = array_diff($databaseWorkouts, $databaseDayPlans);
+        var_dump($workoutSuggest);
+    }
+
+    /**
+     * Allows user to edit the workouts they have put on their cards.
+     */
     public function editWorkout()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -299,6 +321,9 @@ class WorkoutController
         }
     }
 
+    /**
+     * Allows user to delete the workout they have put on their cards.
+     */
     public function deleteWorkout()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

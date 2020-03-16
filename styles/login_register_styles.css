@@ -3,7 +3,7 @@
  *
  * @author Bridget Black
  * @author Chad Drennan
- * Last Updated: 2020-03-15
+ * Last Updated: 2020-03-16
  */
 
 /* add image to body of login and register pages */
@@ -50,6 +50,8 @@ p {
 @media only screen and (max-width: 600px) {
     body {
         background-image: url("../images/freeWeights2.jpg");
+        overflow-y: scroll;
+        margin-bottom: 50px;
     }
 
     .spacers {

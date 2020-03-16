@@ -22,6 +22,7 @@
 <body>
 <!-- Navbar from /views/header.html -->
 <include href="/views/navbar.html"></include>
+
 <main>
     <div id="day-plans" class="mt-5">
 
@@ -157,6 +158,36 @@
             </div>
         </div>
     </div>
+
+    <!-- Suggestion Modal -->
+    <div class="modal fade" id="suggestion-modal" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 id="suggestion-modal-title">Suggested Workouts</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <hr class="mb-0">
+
+                <div id="workout-suggestion" class="modal-body pt-0">
+                    <div class="justify-content-around">
+                        <repeat group="{{ @workouts }}" value="{{ @currWorkout }}">
+                            <button class="btn btn-secondary btn-sm mb-1"
+                                    data-muscle-groups='{{ @workoutMuscleGroups[@currWorkout["workout_id"]] }}'>
+                                {{ @currWorkout['workout_name'] }}
+                            </button>
+                        </repeat>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div> <!-- suggestion-modal -->
 
     <!-- Edit Workout Modal -->
     <div class="modal fade" id="edit-workout-modal" tabindex="-1" role="dialog" aria-hidden="true">

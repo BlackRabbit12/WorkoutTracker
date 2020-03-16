@@ -6,7 +6,7 @@
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-13
+ * Last Updated: 2020-03-15
  */
 
 class WorkoutController
@@ -25,22 +25,20 @@ class WorkoutController
     }
 
     /**
-     * TODO: improve description
-     * Workout home page.
+     * Workout home page, displays 'workout cards' for today and the past 6 days. Allows users to update and edit
+     * their cards with choices of muscle groups and targeted workouts.
+     * Home page only accessible if logged in as a valid user.
      */
     public function homeRoute()
     {
         //test for if user is already logged in
-        if (isset($_SESSION['userObj']) || isset($_SESSION['userPremiumObj'])) {
-            //collect all workout names, muscle group names, and user's past week day plans
+        if (isset($_SESSION['userObj'])) {
+            //collect all workout names and muscle group names
             $workouts = $GLOBALS['db']->getAllWorkouts();
             $allMuscleGroups = $GLOBALS['db']->getAllMuscleGroups();
 
             $userId = -1;
-            if (isset($_SESSION['userPremiumObj'])) {
-                $userId = $_SESSION['userPremiumObj']->getId();
-            }
-            else if (isset($_SESSION['userObj'])){
+            if (isset($_SESSION['userObj'])) {
                 $userId = $_SESSION['userObj']->getId();
             }
 
@@ -76,6 +74,7 @@ class WorkoutController
             $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
             $this->_f3->set('dayPlans', $dayPlans);
 
+            //render home page
             $view = new Template();
             echo $view->render('views/home.html');
         }
@@ -86,8 +85,8 @@ class WorkoutController
     }
 
     /**
-     * TODO: improve description.
-     * Login page.
+     * Login page, only allows valid users to login to the home page of Workout Tracker. If a user is trying to
+     * access the home page without a session saved, user will be redirected here.
      */
     public function loginRoute()
     {
@@ -104,6 +103,7 @@ class WorkoutController
             $userPassword = $_POST['password'];
             $this->_f3->set("stickyPassword", $userPassword);
 
+            //validation for if one or both of the fields are empty
             if ($this->_val->validString($userName) == false && $this->_val->validString($userPassword) == false) {
                 $this->_f3->set("errors['password-login']", "Username and password empty");
             }
@@ -113,6 +113,7 @@ class WorkoutController
             else if ($this->_val->validString($userPassword) == false) {
                 $this->_f3->set("errors['password-login']", "password empty");
             }
+            //database queried and validation continues after both fields have input
             else {
                 //get an array that is filled with the correct username and password, OR get an
                 // empty array if they don't match any in the database
@@ -136,27 +137,27 @@ class WorkoutController
                 if ($isValid) {
                     //create a user object
                     if ($userCred['isPro'] == 1) {
-                        $_SESSION['userPremiumObj'] = new PremiumUser($userCred['first_name'], $userCred['last_name'],
+                        $_SESSION['userObj'] = new PremiumUser($userCred['first_name'], $userCred['last_name'],
                             $userCred['handle'], $userCred['password'], $userCred['isPro'], $userCred['user_id']);
                     }
                     else {
-                        $_SESSION['userObj'] = new User($userCred['first_name'],
-                            $userCred['last_name'], $userCred['handle'], $userCred['password'], $userCred['user_id']);
+                        $_SESSION['userObj'] = new User($userCred['first_name'], $userCred['last_name'],
+                            $userCred['handle'], $userCred['password'], $userCred['user_id']);
                     }
                     //route to home page
                     $this->_f3->reroute('/');
                 }
-
              }
         }
 
-        //else go back to login until credentials verified
+        //else the request was 'GET', go to login until credentials entered and verified
         echo \Template::instance()->render('views/login.html');
     }
 
     /**
      * TODO: improve description
-     * Registration page.
+     * Registration page inputs a new user to the database after their inputs have been validated. Once registered
+     * a user will be auto-directed to the home page.
      */
     public function registerRoute()
     {
@@ -173,12 +174,7 @@ class WorkoutController
             //make first name input sticky
             $this->_f3->set('stickyFirstName', $firstName);
             //validate first name
-            if ($this->_val->validString($firstName)) {
-                //TODO: edit all if statements to !nots
-                //start creating a user object
-                //$_SESSION['userObj']->setFirstName($firstName);
-            }
-            else {
+            if (!$this->_val->validString($firstName)) {
                 $isValid = false;
                 $this->_f3->set("errors['first-name']", "Please enter a valid name");
             }
@@ -186,10 +182,7 @@ class WorkoutController
             //get last name, repeat steps from above ^^
             $lastName = $_POST['last-name'];
             $this->_f3->set("stickyLastName", $lastName);
-            if ($this->_val->validString($lastName)) {
-                //$_SESSION['userObj']->setLastName($lastName);
-            }
-            else {
+            if (!$this->_val->validString($lastName)) {
                 $isValid = false;
                 $this->_f3->set("errors['last-name']", "Please enter a valid name");
             }
@@ -198,8 +191,7 @@ class WorkoutController
             $userName = $_POST['user-name'];
             $this->_f3->set("stickyUserName", $userName);
             if ($this->_val->validString($userName)) {
-                //$_SESSION['userObj']->setUserName();
-                //ensure the username is unique by querying the database to compare
+                //get username where it matches the user's input username
                 $userHandles = $GLOBALS['db']->uniqueUserName($userName);
 
                 //if the array was not empty, then the username is "in use"
@@ -218,7 +210,6 @@ class WorkoutController
             $password = $_POST['password'];
             $this->_f3->set("stickyPassword", $password);
             if ($this->_val->validString($password)) {
-                //$_SESSION['userObj']->setPassword();
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             }
             else {
@@ -247,20 +238,19 @@ class WorkoutController
                         $premUserId = $GLOBALS['db']->insertUser($premUser, 1);
                         $premUser->setId($premUserId);
 
-                        $_SESSION['userPremiumObj'] = $premUser;
-
-                        $this->_f3->set("isPremium", "yes");
+                        $_SESSION['userObj'] = $premUser;
                     }
                 }
+                //not premium
                 else {
                     //create a user
                     $user = new User($firstName, $lastName, $userName, $hashedPassword);
+
+                    // Save user and retrieve Id
                     $userId = $GLOBALS['db']->insertUser($user, 0);
                     $user->setId($userId);
 
                     $_SESSION['userObj'] = $user;
-
-                    $this->_f3->set("isPremium", "no");
                 }
 
                 //route to home page
@@ -272,15 +262,19 @@ class WorkoutController
         echo \Template::instance()->render('views/registration.html');
     }
 
+    /**
+     * Logs each workout a user does. This function retrieves the workout name, weight, and repetitions the user
+     * has selected and inserts it into the user's currently selected 'day plan' in the database, if no day plan
+     * exists in the database yet then one is created. Steps are completed through calls to: getWorkoutIdByName,
+     * getDayPlanId and insertDayPlan.
+     * @throws Exception
+     */
     public function logWorkout()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $userId = -1;
-            if (isset($_SESSION['userPremiumObj'])) {
-                $userId = $_SESSION['userPremiumObj']->getId();
-            }
-            else if (isset($_SESSION['userObj'])){
+            if (isset($_SESSION['userObj'])) {
                 $userId = $_SESSION['userObj']->getId();
             }
 

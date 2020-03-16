@@ -1,22 +1,21 @@
 <!--
 /**
- * TODO: update description and file associations
- * Splash page for home screen.
+ * Login page for Workout Tracker website. If a user is already a registered user, or if they are logged out, the
+ * user will come to this page to log in and use the website.
  *
  * @author Bridget Black
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-03-03
+ * Last Updated: 2020-03-15
  * File Name: login.html
- * File Associations:
  */
 -->
 
 <!-- CSS include header -->
 <include href="/views/header.html"></include>
 
-    <!-- CSS -->
+    <!-- CSS login styles -->
     <link rel="stylesheet" href="styles/login_register_styles.css">
     <title>Workout Tracker Login</title>
 </head>
@@ -26,6 +25,7 @@
         <div class="spacers col-3"></div>
 
         <div id="form-div" class="col-sm-12 col-md-6">
+            <h1 class="justify-content-center text-center mt-3 bg-dark text-white p-2">Login</h1>
             <!-- Formatted Username input field -->
             <form id="formatted-login" method="post" action="#">
                 <!-- username -->
@@ -49,6 +49,10 @@
                 <input id="show-password" type="checkbox" onclick="loginPasswordToggle()">
                 <label for="show-password">Show Password</label>
                 <br>
+                <!-- go to register for non-users -->
+                <hr>
+                <p class="reg-log-links text-center">Not a registered user? Go to <a href="{{ @BASE }}/register">Register here!</a></p>
+                <hr>
                 <!-- submit button -->
                 <input id="login-btn" class="btn-dark" type="submit" value="Login">
             </form>

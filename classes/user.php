@@ -6,7 +6,7 @@
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-13
+ * Last Updated: 2020-03-15
  */
 class User
 {
@@ -35,6 +35,15 @@ class User
         $this->_password = $password;
         $this->_id = $id;
         //$this->_date = $this->getMembershipEndDate();
+    }
+
+    /**
+     * Gets if the user is a "premium" or "normal" user.
+     * @return string
+     */
+    function typeOfMember()
+    {
+        return "normal";
     }
 
     /**
@@ -82,6 +91,10 @@ class User
         return $this->_lastName;
     }
 
+    /**
+     * Get the user's user name.
+     * @return mixed
+     */
    function getUserName()
    {
        return $this->_userName;
@@ -95,6 +108,7 @@ class User
     {
         return $this->_password;
     }
+
 
     /**
      * Set the user's first name.
@@ -114,6 +128,7 @@ class User
         $this->_lastName = $newLastName;
     }
 
+
     /**
      * Set the user's password.
      * @param $newPassword
@@ -123,6 +138,10 @@ class User
         $this->_password = $newPassword;
     }
 
+    /**
+     * Create the date the user joined.
+     * @return string
+     */
     function getMembershipEndDate()
     {
         /*
@@ -136,6 +155,13 @@ class User
         return $this->endCycle($startDate, $nMonths);
     }
 
+    /**
+     * Add months to the member's current sign up date, pairs with 'getMembershipEndDate()'
+     * @param $months
+     * @param DateTime $dateObject
+     * @return DateInterval|false
+     * @throws Exception
+     */
     function add_months($months, DateTime $dateObject)
     {
         $next = new DateTime($dateObject->format('Y-m-d'));
@@ -148,6 +174,13 @@ class User
         }
     }
 
+    /**
+     * Finds the end date of the member's current sign up date, pairs with 'getMembershipEndDate()'
+     * @param $d1
+     * @param $months
+     * @return string
+     * @throws Exception
+     */
     function endCycle($d1, $months)
     {
         $date = new DateTime($d1);

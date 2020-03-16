@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Premium User class.
+ * Premium User class extends the User class.
  *
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-13
+ * Last Updated: 2020-03-15
  */
 class PremiumUser extends User
 {
@@ -28,11 +28,11 @@ class PremiumUser extends User
     }
 
     /**
-     * Get user's premium status.
-     * @return mixed
+     * Gets if the user is a "premium" or "normal" user.
+     * @return string
      */
-    function getPremium()
+    function typeOfMember()
     {
-        return $this->_premium;
+        return "premium";
     }
 }

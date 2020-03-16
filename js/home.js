@@ -1,6 +1,10 @@
 /**
- * Controls actions and features of the dayplans (hame) page
- * Authors: Chad Drennan, Bridget Black
+ * Controls actions and features of the dayplans (home) page
+ *
+ * @author Chad Drennan
+ * @author Bridget Black
+ * @version 1.0
+ * Last Updated: 2020-03-15
  */
 
 let selectedDayNum;
@@ -8,13 +12,15 @@ let selectedDayNum;
 // Event to filter by muscle group
 $('.muscle-group').on('click', filterWorkouts);
 
+//Event to add or remove a workout
 $('.workout').on('click', addOrRemoveWorkoutToSelection);
 
+//add a workout with details
 $('#add-weights-reps').on('click', addWorkouts);
 
 
 /**
- * Controls the appearance of the workout selection modal
+ * Controls the appearance of the workout selection modal.
  */
 $('#workout-modal').on('show.bs.modal', function (event) {
 
@@ -38,7 +44,9 @@ $('#workout-modal').on('show.bs.modal', function (event) {
     $('#all-muscle-groups').addClass('btn-primary');
 });
 
-
+/**
+ * Refreshes table and displays workouts with inputs.
+ */
 $('#weight-reps-modal').on('show.bs.modal', function (event) {
     // Refresh table
     $('#weights-reps-modal-body tbody').html('');
@@ -58,7 +66,7 @@ $('#weight-reps-modal').on('show.bs.modal', function (event) {
 });
 
 /**
- * Filters all workouts buttons by the muscle group selected
+ * Filters all workouts buttons by the muscle group selected.
  */
 function filterWorkouts() {
     $('.muscle-group.btn-primary').removeClass('btn-primary');
@@ -83,12 +91,15 @@ function filterWorkouts() {
 }
 
 /**
- * Toggles a workout selection for a dayplan
+ * Toggles a workout selection for a day plan.
  */
 function addOrRemoveWorkoutToSelection() {
     $(this).toggleClass('selected').toggleClass('btn-primary').toggleClass('btn-secondary');
 }
 
+/**
+ * Adds a workout with the weight/rep details.
+ */
 function addWorkouts() {
     $('.selected').each(function() {
         let workout = $(this).text().trim();

@@ -5,35 +5,34 @@
  * @author Bridget Black
  * @author Chad Drennan
  * @version 1.0
- * Last Updated: 2020-03-11
+ * Last Updated: 2020-03-15
  */
 -->
 <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Workout Tracker</a>
+    <!-- display user's name and if they're premium give them a title -->
+    <check if="{{ @SESSION.userObj->typeOfMember() == 'premium' }}">
+        <true>
+            <p id="user_db_id" class="d-none">{{ @SESSION.userObj->getID() }}</p>
+            <p class="text-white mb-0">Pro: {{ @SESSION.userObj->getFullName() }}</p>
+        </true>
+        <false>
+            <p id="user_db_id" class="d-none">{{ @SESSION.userObj->getID() }}</p>
+            <p class="text-white mb-0">{{ @SESSION.userObj->getFullName() }}</p>
+        </false>
+    </check>
+
     <!-- hamburger nav -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
+    <!-- hamburger nav content -->
     <div class="collapse navbar-collapse text-right" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto float-right">
+            <!-- logout -->
             <li class="nav-item active">
-
-                    <check if='{{ @isPremium == "no" }}'>
-                        <p>{{ @isPremium }}</p>
-                        <true>
-                            <a class="nav-link disabled" href="#">Premium Perks<span class="sr-only">(current)</span></a>
-                        </true>
-                        <false>
-                            <a class="nav-link" href="/login">Premium Perks<span class="sr-only">(current)</span></a>
-                        </false>
-                    </check>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/workout/login">Logout<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ @BASE }}/login">Logout<span class="sr-only">(current)</span></a>
             </li>
         </ul>
-        <!-- logout -->
-
     </div>
 </nav>

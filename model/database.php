@@ -228,4 +228,51 @@ class Database
 
         $statement->execute();
     }
+
+    function getWorkoutLogsForDayPlan($dayPlanId)
+    {
+        $sql = 'SELECT workout_name, workout_log.workout_id, weight, repetitions
+                FROM workout_log
+                    INNER JOIN workout ON workout_log.workout_id = workout.workout_id
+                WHERE day_plan_id = :dayPlanId';
+
+        $statement = $this->_dbh->prepare($sql);
+
+        $statement->bindParam(':dayPlanId', $dayPlanId);
+
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
+    function getUserDayPlans($userId)
+    {
+        $dayPlans = [];
+        $dt = new DateTime();
+
+        // Get this week's day plans
+        for ($i = 0; $i < 7; $i++) {
+            $date = $dt->format('Y-m-d');
+
+            $sql = 'SELECT day_plan_id
+                    FROM day_plan
+                    WHERE user_id = :userId AND `date` = :date';
+
+            $statement = $this->_dbh->prepare($sql);
+
+            $statement->bindParam(':userId', $userId);
+            $statement->bindParam(':date', $date);
+
+            // Get previous day for next iteration
+            $dt->modify('-1 day');
+
+            $statement->execute();
+            $dayPlanIdResult = $statement->fetch();
+
+            if (isset($dayPlanIdResult)) {
+                $dayPlanId = $dayPlanIdResult['day_plan_id'];
+                $dayPlans[$i] = $this->getWorkoutLogsForDayPlan($dayPlanId);
+            }
+        }
+        return $dayPlans;
+    }
 }

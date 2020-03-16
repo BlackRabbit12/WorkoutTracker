@@ -40,6 +40,13 @@
                         </tr>
                         </thead>
                         <tbody>
+                            <repeat group="{{ @dayPlans[@ctr - 1] }}" value="{{ @currWorkoutLog }}">
+                                <tr>
+                                    <th>{{ @currWorkoutLog['workout_name'] }}</th>
+                                    <td>{{ @currWorkoutLog['weight'] }}</td>
+                                    <td>{{ @currWorkoutLog['repetitions'] }}</td>
+                                </tr>
+                            </repeat>
                         </tbody>
                     </table>
                     <div class="card-body text-center">

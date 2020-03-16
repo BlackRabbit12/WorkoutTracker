@@ -315,4 +315,20 @@ class Database
         }
         return $dayPlans;
     }
+
+    function updateWorkoutLog($workoutLogId, $weight, $reps)
+    {
+        $sql = 'UPDATE workout_log
+                SET weight = :weight,
+                    repetitions = :reps
+                WHERE workout_log_id = :workoutLogId';
+
+        $statement = $this->_dbh->prepare($sql);
+
+        $statement->bindParam(':workoutLogId', $workoutLogId);
+        $statement->bindParam(':weight', $weight);
+        $statement->bindParam(':reps', $reps);
+
+        $statement->execute();
+    }
 }

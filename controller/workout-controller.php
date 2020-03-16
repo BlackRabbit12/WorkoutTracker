@@ -291,4 +291,15 @@ class WorkoutController
             $GLOBALS['db']->insertWorkoutLog($userId, $workout, $date, $weight, $reps);
         }
     }
+
+    public function editWorkout()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $workoutLogId = $_POST['workoutLogId'];
+            $weight = $_POST['weight'];
+            $reps = $_POST['reps'];
+
+            $GLOBALS['db']->updateWorkoutLog($workoutLogId, $weight, $reps);
+        }
+    }
 }

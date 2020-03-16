@@ -331,4 +331,14 @@ class Database
 
         $statement->execute();
     }
+
+    function deleteWorkoutLog($workoutLogId)
+    {
+        $sql = 'DELETE FROM workout_log
+                WHERE workout_log_id = :workoutLogId';
+
+        $statement = $this->_dbh->prepare($sql);
+        $statement->bindParam(':workoutLogId', $workoutLogId);
+        $statement->execute();
+    }
 }

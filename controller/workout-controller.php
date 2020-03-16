@@ -298,4 +298,12 @@ class WorkoutController
             $GLOBALS['db']->updateWorkoutLog($workoutLogId, $weight, $reps);
         }
     }
+
+    public function deleteWorkout()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $workoutLogId = $_POST['workoutLogId'];
+            $GLOBALS['db']->deleteWorkoutLog($workoutLogId);
+        }
+    }
 }

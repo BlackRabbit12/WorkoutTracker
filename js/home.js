@@ -21,6 +21,8 @@ $('#add-weights-reps').on('click', addWorkouts);
 // Edit workout event
 $('#edit-workouts').on('click', editWorkouts);
 
+$('.delete-mode').on('click', toggleDeleteMode);
+
 
 /**
  * Controls the appearance of the workout selection modal.
@@ -177,7 +179,44 @@ function editWorkouts() {
         });
 
         let workoutLog = $('#day-' + selectedDayNum + ' [data-log-id="' + workoutLogId + '"]');
-        workoutLog.find(".weight").text(weight);
-        workoutLog.find(".reps").text(reps);
+        workoutLog.find('.weight').text(weight);
+        workoutLog.find('.reps').text(reps);
     });
+}
+
+function toggleDeleteMode() {
+    let dayNum = $(this).data('day-num');
+
+    // If in delete mode, exit delete mode
+    if ($(this).hasClass('delete-mode-active')) {
+        // Remove blank th
+        $('#day-' + dayNum + ' thead>tr').children().last().remove();
+
+        // Remove X symbol on every row
+        $('#day-' + dayNum + ' tbody>tr').each(function () {
+            $(this).children().last().remove();
+        });
+    }
+    else { // Enter delete mode
+
+        // Add blank th for correct formatting in thead
+        $('#day-' + dayNum + ' thead>tr').append('<th></th>');
+
+        // Add X symbol in body for every row
+        $('#day-' + dayNum + ' tbody>tr').each(function () {
+            $(this).append(`<td><button type="button" class="delete-log close text-danger">&times;</button></td>`);
+        });
+
+        $('.delete-log').on('click', deleteWorkoutLog);
+    }
+    $(this).toggleClass('delete-mode-active');
+}
+
+function deleteWorkoutLog() {
+    let workoutLogId = $(this).parent().parent().data('log-id');
+
+    $.post('/328/WorkoutTracker/delete-workout', {workoutLogId: workoutLogId}, function(result) {
+    });
+
+    $('[data-log-id="' + workoutLogId + '"]').remove();
 }

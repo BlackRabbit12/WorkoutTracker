@@ -131,7 +131,7 @@ class WorkoutController
                 if ($isValid) {
                     //create a user object
                     if ($userCred['isPro'] == 1) {
-                        $_SESSION['userObj'] = new PremiumUser($userCred['first_name'], $userCred['last_name'],
+                        $_SESSION['userObj'] = new Premium_User($userCred['first_name'], $userCred['last_name'],
                             $userCred['handle'], $userCred['password'], $userCred['isPro']);
                     }
                     else {
@@ -149,7 +149,6 @@ class WorkoutController
     }
 
     /**
-     * TODO: improve description
      * Registration page inputs a new user to the database after their inputs have been validated. Once registered
      * a user will be auto-directed to the home page.
      */
@@ -226,7 +225,7 @@ class WorkoutController
                     if ($_POST['is-pro'] == 'pro') {
                         $premium = $_POST['is-pro'];
                         //create a premium-user
-                        $_SESSION['userObj'] = new PremiumUser($firstName, $lastName, $userName, $hashedPassword, 1);
+                        $_SESSION['userObj'] = new Premium_User($firstName, $lastName, $userName, $hashedPassword, 1);
                         //get user's database id from query
                         $userID = $GLOBALS['db']->insertUser($_SESSION['userObj'], 1);
                         $_SESSION['userObj']->setID($userID);

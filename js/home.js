@@ -4,7 +4,7 @@
  * @author Chad Drennan
  * @author Bridget Black
  * @version 1.0
- * Last Updated: 2020-03-15
+ * Last Updated: 2020-03-16
  */
 
 let selectedDayNum;
@@ -18,16 +18,16 @@ $('.workout').on('click', addOrRemoveWorkoutToSelection);
 //add a workout with details
 $('#add-weights-reps').on('click', addWorkouts);
 
-<<<<<<< HEAD
+
 //get all workouts from database and subtract out previous two days of card's selected workouts
 $('#suggestion-modal').on('click', suggestWorkouts);
-=======
+
 // Edit workout event
 $('#edit-workouts').on('click', editWorkouts);
 
+//delete workout event
 $('.delete-mode').on('click', toggleDeleteMode);
 
->>>>>>> aae6db753755511037489ddd76de64e7de22d909
 
 /**
  * Controls the appearance of the workout selection modal.
@@ -78,6 +78,9 @@ $('#weight-reps-modal').on('show.bs.modal', function (event) {
     });
 });
 
+/**
+ * Edit the workout in current card via modal.
+ */
 $('#edit-workout-modal').on('show.bs.modal', function (event) {
 
     // Change modal heading to match day of week selected
@@ -169,6 +172,9 @@ function addWorkouts() {
     });
 }
 
+/**
+ * Edits the workout content inside modal.
+ */
 function editWorkouts() {
     let rows = $('#edit-workout-modal tbody>tr');
 
@@ -189,6 +195,9 @@ function editWorkouts() {
     });
 }
 
+/**
+ * Toggle the delete of a workout.
+ */
 function toggleDeleteMode() {
     let dayNum = $(this).data('day-num');
 
@@ -217,6 +226,9 @@ function toggleDeleteMode() {
     $(this).toggleClass('delete-mode-active');
 }
 
+/**
+ * Delete the log of a workout.
+ */
 function deleteWorkoutLog() {
     let workoutLogId = $(this).parent().parent().data('log-id');
 
@@ -226,8 +238,9 @@ function deleteWorkoutLog() {
     $('[data-log-id="' + workoutLogId + '"]').remove();
 }
 
-function suggestWorkouts() {
-    $.post('{{ @BASE/suggest }}', function (result) {
 
-    });
-}
+// function suggestWorkouts() {
+//     $.post('{{ @BASE/suggest }}', function (result) {
+//
+//     });
+// }

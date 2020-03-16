@@ -28,7 +28,7 @@ p {
     border: 1px solid black;
 }
 
-#formatted-login, #login-form {
+#formatted-login, #formatted-register, #login-form {
     padding-top: 15px;
     padding-bottom: 15px;
 }

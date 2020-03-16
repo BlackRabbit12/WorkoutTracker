@@ -50,12 +50,18 @@
                             </repeat>
                         </tbody>
                     </table>
-                    <div class="card-body text-center">
+                    <div class="card-body d-flex justify-content-around pl-5 pr-5">
                         <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal"
                            data-target="#workout-modal"
                            data-day="{{ @currDayOfWeek }}"
                            data-day-num="{{ @ctr - 1 }}">
                             ➕
+                        </a>
+                        <a href="#" class="btn btn-primary rounded-circle" data-toggle="modal"
+                           data-target="#edit-workout-modal"
+                           data-day="{{ @currDayOfWeek }}"
+                           data-day-num="{{ @ctr - 1 }}">
+                            ✏️
                         </a>
                     </div>
                 </div>
@@ -144,6 +150,32 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Workout Modal -->
+    <div class="modal fade" id="edit-workout-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 id="edit-workout-modal-title">Edit Workouts</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button id="edit-workouts" type="button" class="btn btn-primary" data-dismiss="modal"
+                            data-toggle="modal">
+                        Save
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>

@@ -32,9 +32,19 @@ class WorkoutController
     {
         //test for if user is already logged in
         if (isset($_SESSION['userObj']) || isset($_SESSION['userPremiumObj'])) {
-            //collect all workout names and muscle group names
+            //collect all workout names, muscle group names, and user's past week day plans
             $workouts = $GLOBALS['db']->getAllWorkouts();
             $allMuscleGroups = $GLOBALS['db']->getAllMuscleGroups();
+
+            $userId = -1;
+            if (isset($_SESSION['userPremiumObj'])) {
+                $userId = $_SESSION['userPremiumObj']->getId();
+            }
+            else if (isset($_SESSION['userObj'])){
+                $userId = $_SESSION['userObj']->getId();
+            }
+
+            $dayPlans = $GLOBALS['db']->getUserDayPlans($userId);
 
             //muscle group workout javascript array
             $workoutMuscleGroups = [];
@@ -56,15 +66,15 @@ class WorkoutController
                 }
             }
 
-        $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago',
-                    '4 Days Ago','5 Days Ago', '6 Days Ago'];
+            $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago',
+                        '4 Days Ago','5 Days Ago', '6 Days Ago'];
 
-        // Set hive variables
-        $this->_f3->set('daysOfWeek', $daysOfWeek);
-        $this->_f3->set('workouts', $workouts);
-        $this->_f3->set('muscleGroups', $allMuscleGroups);
-        $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
-
+            // Set hive variables
+            $this->_f3->set('daysOfWeek', $daysOfWeek);
+            $this->_f3->set('workouts', $workouts);
+            $this->_f3->set('muscleGroups', $allMuscleGroups);
+            $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
+            $this->_f3->set('dayPlans', $dayPlans);
 
             $view = new Template();
             echo $view->render('views/home.html');

@@ -1,7 +1,7 @@
 <?php
 
-require_once('/home/cdrennan/config-workout.php');
-//require_once('/home/bblackgr/config-workout.php');
+//require_once('/home/cdrennan/config-workout.php');
+require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. Handles all database queries.

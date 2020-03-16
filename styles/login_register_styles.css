@@ -1,9 +1,12 @@
 /**
- * Description:
- *     CSS for login and for sign-up forms.
- * Last Updated: 2020-03-14
+ * CSS for login and for sign-up forms.
+ *
+ * @author Bridget Black
+ * @author Chad Drennan
+ * Last Updated: 2020-03-15
  */
 
+/* add image to body of login and register pages */
 body {
     background-image: url("../images/freeWeights.jpg");
     background-repeat: no-repeat;
@@ -12,33 +15,38 @@ body {
     background-color: black;
 }
 
+/* paragraphs used for validation errors */
 p {
     color: darkred;
     font-size: small;
     text-transform: capitalize;
 }
 
+/* div holding login and register forms */
 #body-div {
     margin-top: 5%;
     padding: 15px;
 }
 
+/* decorate form div */
 #form-div {
     background-color: white;
     border: 1px solid black;
 }
 
+/* spacing the form inside div */
 #formatted-login, #formatted-register, #login-form {
     padding-top: 15px;
     padding-bottom: 15px;
 }
 
+/* override <p> element settings above */
 .reg-log-links {
     color: black;
     text-transform: none;
 }
 
-
+/* for small media, change body image and remove spacing divs */
 @media only screen and (max-width: 600px) {
     body {
         background-image: url("../images/freeWeights2.jpg");

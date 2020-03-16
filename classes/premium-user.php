@@ -1,17 +1,16 @@
 <?php
 
 /**
- * Premium User class.
+ * Premium User class extends the User class.
  *
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-13
+ * Last Updated: 2020-03-15
  */
 class PremiumUser extends User
 {
     private $_premium;
-    private $_id;
 
     /**
      * PremiumUser constructor.
@@ -35,14 +34,5 @@ class PremiumUser extends User
     function typeOfMember()
     {
         return "premium";
-    }
-
-    /**
-     * Get user's premium status.
-     * @return mixed
-     */
-    function getPremium()
-    {
-        return $this->_premium;
     }
 }

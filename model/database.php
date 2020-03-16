@@ -1,15 +1,15 @@
 <?php
 
-//require_once('/home/cdrennan/config-workout.php');
-require_once('/home/bblackgr/config-workout.php');
+require_once('/home/cdrennan/config-workout.php');
+//require_once('/home/bblackgr/config-workout.php');
 
 /**
- * Database class interactions with database and workout tracker. TODO: improve description.
+ * Database class interactions with database and workout tracker. Handles all database queries.
  *
  * @author Bridget Black
  * @author Chad Drennan
  * 2020-03-11
- * Last Updated: 2020-03-14
+ * Last Updated: 2020-03-15
  */
 class Database
 {
@@ -72,6 +72,12 @@ class Database
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Gets all columns from database for requested user IF the username being asked for exists in the database,
+     * if it does not exist, the returned array is null.
+     * @param $desiredUserName
+     * @return array
+     */
     function uniqueUserName($desiredUserName)
     {
         //query database
@@ -91,9 +97,10 @@ class Database
     }
 
     /**
-     * Insert a user into the database.
+     * Inserts a user into the database and returns their newly created user_id.
      * @param $user
      * @param $pro
+     * @return string
      */
     function insertUser($user, $pro)
     {
@@ -122,7 +129,10 @@ class Database
         return $this->_dbh->lastInsertId();
     }
 
-
+    /**
+     * Gets all of the muscle group names from the database.
+     * @return array
+     */
     function getAllMuscleGroups()
     {
         $sql = 'SELECT muscle_group_name
@@ -133,7 +143,13 @@ class Database
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
+    /**
+     * Gets all of the columns from database for requested user IF the username being asked for exists in the
+     * database, if not the returned array is null.
+     * @param $userName
+     * @param $userPassword
+     * @return mixed
+     */
     function getLoginCredentials($userName, $userPassword)
     {
         //define query
@@ -152,6 +168,11 @@ class Database
         return $statement->fetch();
     }
 
+    /**
+     * Gets the workout_id of the workout requested.
+     * @param $workoutName
+     * @return mixed
+     */
     function getWorkoutIdByName($workoutName)
     {
         $sql = 'SELECT workout_id
@@ -166,6 +187,12 @@ class Database
         return $statement->fetch();
     }
 
+    /**
+     * Get the day_plan_id of the date and user_id being requested.
+     * @param $userId
+     * @param $date
+     * @return mixed
+     */
     function getDayPlanId($userId, $date) {
         $sql = 'SELECT day_plan_id
                 FROM day_plan
@@ -180,6 +207,11 @@ class Database
         return $statement->fetch();
     }
 
+    /**
+     * Inserts a day plan into the database for a specific date for a single user_id.
+     * @param $userId
+     * @param $date
+     */
     function insertDayPlan($userId, $date)
     {
         $sql = 'INSERT INTO day_plan (user_id, `date`)
@@ -193,6 +225,15 @@ class Database
         $statement->execute();
     }
 
+    /**
+     * Inserts a workout log into the database after getting the workout_id, and day_plan_id.
+     * @param $userId
+     * @param $workoutName
+     * @param $date
+     * @param $weight
+     * @param $reps
+     * @return bool
+     */
     function insertWorkoutLog($userId, $workoutName, $date, $weight, $reps)
     {
         // Get workout Id

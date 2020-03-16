@@ -1,5 +1,5 @@
-/*
- * Client side validation with Javascript for Registration, finishes on login_validation.js
+/**
+ * Client side validation with Javascript for Registration, finishes on login_validation.js.
  *
  * @author Bridget Black
  * @author Chad Drennan
@@ -7,8 +7,13 @@
  * 2020-03-15
  */
 
+//grabs the registration form
 document.getElementById('formatted-register').onsubmit = validateRegister;
 
+/**
+ * Validates the registration form, uses login_validation.js for the username and password.
+ * @returns {boolean}
+ */
 function validateRegister() {
     //first name
     let first = document.getElementById('first-name').value;

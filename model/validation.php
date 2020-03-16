@@ -7,7 +7,7 @@
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-03-13
+ * Last Updated: 2020-03-15
  */
 
 class UserValidator
@@ -22,6 +22,12 @@ class UserValidator
         return !empty(trim($str));
     }
 
+    /**
+     * Tests if the password and password-confirmation match, validation already happened to the password.
+     * @param $password
+     * @param $confirmation
+     * @return bool
+     */
     function passwordMatch($password, $confirmation)
     {
         return strcmp($password, $confirmation) == 0;

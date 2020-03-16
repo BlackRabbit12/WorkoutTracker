@@ -8,7 +8,7 @@
  * @author Chad Drennan
  * @version 1.0
  * 2020-02-17
- * Last Updated: 2020-03-11
+ * Last Updated: 2020-03-15
  */
 
 //Error reporting
@@ -46,6 +46,7 @@ $f3->route('GET|POST /register', function () {
     $GLOBALS['controller']->registerRoute();
 });
 
+//TODO: explain route
 $f3->route('POST /log-workout', function () {
     $GLOBALS['controller']->logWorkout();
 });

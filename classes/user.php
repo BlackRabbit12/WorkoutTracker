@@ -11,11 +11,11 @@
 class User
 {
     //all Users have:
+    private $_id;
     private $_firstName;
     private $_lastName;
     private $_userName;
     private $_password;
-    private $_id;
     //private $_date;
 
 
@@ -33,6 +33,7 @@ class User
         $this->_lastName = $lastName;
         $this->_userName = $userName;
         $this->_password = $password;
+        $this->_id = $id;
         //$this->_date = $this->getMembershipEndDate();
     }
 
@@ -43,6 +44,24 @@ class User
     function typeOfMember()
     {
         return "normal";
+    }
+
+    /**
+     * Get the user's database id
+     * @return int Id of user
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * Set user's database id
+     * @param int $id to set for user
+     */
+    public function setId($id)
+    {
+        $this->_id = $id;
     }
 
     /**
@@ -90,14 +109,6 @@ class User
         return $this->_password;
     }
 
-    /**
-     * Get the user's ID.
-     * @return mixed
-     */
-    function getID()
-    {
-        return $this->_id;
-    }
 
     /**
      * Set the user's first name.
@@ -117,14 +128,6 @@ class User
         $this->_lastName = $newLastName;
     }
 
-    /**
-     * Set the user's ID with a value from the database.
-     * @param $id
-     */
-    function setID($id)
-    {
-        $this->_id = $id;
-    }
 
     /**
      * Set the user's password.

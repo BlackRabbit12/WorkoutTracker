@@ -301,6 +301,24 @@ class WorkoutController
         //if the workouts are not in both arrays, then the user has not done that workout in awhile, make it a suggestion
         $workoutSuggest = array_diff($databaseWorkouts, $databaseDayPlans);
         var_dump($workoutSuggest);
+
+    public function editWorkout()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $workoutLogId = $_POST['workoutLogId'];
+            $weight = $_POST['weight'];
+            $reps = $_POST['reps'];
+
+            $GLOBALS['db']->updateWorkoutLog($workoutLogId, $weight, $reps);
+        }
+    }
+
+    public function deleteWorkout()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $workoutLogId = $_POST['workoutLogId'];
+            $GLOBALS['db']->deleteWorkoutLog($workoutLogId);
+        }
     }
 
     public function getNotSelectedWorkouts()

@@ -46,7 +46,7 @@ $f3->route('GET|POST /register', function () {
     $GLOBALS['controller']->registerRoute();
 });
 
-//TODO: explain route
+// Inserts a workout log
 $f3->route('POST /log-workout', function () {
     $GLOBALS['controller']->logWorkout();
 });
@@ -54,6 +54,15 @@ $f3->route('POST /log-workout', function () {
 //TODO: explain route
 $f3->route('POST /suggestion', function () {
    $GLOBALS['controller']->suggestWorkout();
+
+// Updates a workout log
+$f3->route('POST /edit-workout', function () {
+    $GLOBALS['controller']->editWorkout();
+});
+
+// Deletes a workout log
+$f3->route('POST /delete-workout', function () {
+    $GLOBALS['controller']->deleteWorkout();
 });
 
 //Run FatFree Framework

@@ -18,8 +18,16 @@ $('.workout').on('click', addOrRemoveWorkoutToSelection);
 //add a workout with details
 $('#add-weights-reps').on('click', addWorkouts);
 
+<<<<<<< HEAD
 //get all workouts from database and subtract out previous two days of card's selected workouts
 $('#suggestion-modal').on('click', suggestWorkouts);
+=======
+// Edit workout event
+$('#edit-workouts').on('click', editWorkouts);
+
+$('.delete-mode').on('click', toggleDeleteMode);
+
+>>>>>>> aae6db753755511037489ddd76de64e7de22d909
 
 /**
  * Controls the appearance of the workout selection modal.
@@ -30,11 +38,11 @@ $('#workout-modal').on('show.bs.modal', function (event) {
     let button = $(event.relatedTarget); // Button that triggered the modal
     let dayOfWeek = button.data('day');
 
-    // track day the modal is selecting workouts for
+    // Track day the modal is selecting workouts for
     selectedDayNum = button.data('day-num');
 
     let modal = $(this);
-    modal.find('#workout-modal-title').text('Add a workout for ' + dayOfWeek);
+    modal.find('#workout-modal-title').text('Add Workouts for ' + dayOfWeek);
 
     // Unselected all workouts
     $('.selected').toggleClass('btn-primary').toggleClass('btn-secondary').toggleClass('selected');
@@ -50,20 +58,56 @@ $('#workout-modal').on('show.bs.modal', function (event) {
  * Refreshes table and displays workouts with inputs.
  */
 $('#weight-reps-modal').on('show.bs.modal', function (event) {
+    let tbody = $('#weights-reps-modal-body tbody');
+
     // Refresh table
-    $('#weights-reps-modal-body tbody').html('');
+    tbody.html('');
 
     // Show each workout and inputs
     $('.selected').each(function() {
         let workout = $(this).text().trim();
         let workoutIdFormat = workout.toLowerCase().replace(' ', '-');
 
-        $('#weights-reps-modal-body tbody').append(
+        tbody.append(
             `<tr>
                 <th>` + workout + `</th>
                 <td><input id="` + workoutIdFormat + `-weight" type="number" class="form-control"></td>
                 <td><input id="` + workoutIdFormat + `-reps" type="number" class="form-control"></td>
-            </tr>`);
+            </tr>`
+        );
+    });
+});
+
+$('#edit-workout-modal').on('show.bs.modal', function (event) {
+
+    // Change modal heading to match day of week selected
+    let button = $(event.relatedTarget); // Button that triggered the modal
+    let dayOfWeek = button.data('day');
+
+    // Track day the modal is editing workouts for
+    selectedDayNum = button.data('day-num');
+
+    let modal = $(this);
+    modal.find('#edit-workout-modal-title').text('Edit Workouts for ' + dayOfWeek);
+
+    let tBody = $('#edit-workout-modal tbody');
+
+    // Refresh table
+    tBody.html('');
+
+    $('#day-' + selectedDayNum + ' tbody>tr').each(function() {
+        let workoutLogId = $(this).data('log-id');
+        let workout = $(this).find('.workout-name').text();
+        let weight = $(this).find('.weight').text();
+        let reps = $(this).find('.reps').text();
+
+        tBody.append(
+            `<tr data-log-id="` + workoutLogId + `">
+                <th>` + workout + `</th>
+                <td><input type="number" class="form-control weight" value="` + weight + `"></td>
+                <td><input type="number" class="form-control reps" value="` + reps + `"></td>
+            </tr>`
+        );
     });
 });
 
@@ -120,8 +164,66 @@ function addWorkouts() {
                 <th>` + workout + `</th>
                 <td>` + weight + `</td>
                 <td>` + reps + `</td>
-            </tr>`)
+            </tr>`
+        );
     });
+}
+
+function editWorkouts() {
+    let rows = $('#edit-workout-modal tbody>tr');
+
+    rows.each(function() {
+        let currRow = $(this);
+        let workoutLogId = currRow.data('log-id');
+        let weight = currRow.find('.weight').val();
+        let reps = currRow.find('.reps').val();
+
+        let workoutLogData = {workoutLogId: workoutLogId, weight: weight, reps: reps};
+
+        $.post('/328/WorkoutTracker/edit-workout', workoutLogData, function(result) {
+        });
+
+        let workoutLog = $('#day-' + selectedDayNum + ' [data-log-id="' + workoutLogId + '"]');
+        workoutLog.find('.weight').text(weight);
+        workoutLog.find('.reps').text(reps);
+    });
+}
+
+function toggleDeleteMode() {
+    let dayNum = $(this).data('day-num');
+
+    // If in delete mode, exit delete mode
+    if ($(this).hasClass('delete-mode-active')) {
+        // Remove blank th
+        $('#day-' + dayNum + ' thead>tr').children().last().remove();
+
+        // Remove X symbol on every row
+        $('#day-' + dayNum + ' tbody>tr').each(function () {
+            $(this).children().last().remove();
+        });
+    }
+    else { // Enter delete mode
+
+        // Add blank th for correct formatting in thead
+        $('#day-' + dayNum + ' thead>tr').append('<th></th>');
+
+        // Add X symbol in body for every row
+        $('#day-' + dayNum + ' tbody>tr').each(function () {
+            $(this).append(`<td><button type="button" class="delete-log close text-danger">&times;</button></td>`);
+        });
+
+        $('.delete-log').on('click', deleteWorkoutLog);
+    }
+    $(this).toggleClass('delete-mode-active');
+}
+
+function deleteWorkoutLog() {
+    let workoutLogId = $(this).parent().parent().data('log-id');
+
+    $.post('/328/WorkoutTracker/delete-workout', {workoutLogId: workoutLogId}, function(result) {
+    });
+
+    $('[data-log-id="' + workoutLogId + '"]').remove();
 }
 
 function suggestWorkouts() {

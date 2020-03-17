@@ -32,6 +32,8 @@ $('#workout-modal').on('show.bs.modal', function (event) {
 
     // Change modal heading to match day of week selected
     let button = $(event.relatedTarget); // Button that triggered the modal
+    exitDeleteMode(button);
+
     let dayOfWeek = button.data('day');
 
     // Track day the modal is selecting workouts for
@@ -81,6 +83,8 @@ $('#edit-workout-modal').on('show.bs.modal', function (event) {
 
     // Change modal heading to match day of week selected
     let button = $(event.relatedTarget); // Button that triggered the modal
+    exitDeleteMode(button);
+
     let dayOfWeek = button.data('day');
 
     // Track day the modal is editing workouts for
@@ -109,6 +113,18 @@ $('#edit-workout-modal').on('show.bs.modal', function (event) {
         );
     });
 });
+
+/**
+ * Exits delete mode
+ * @param deleteModeBtnSibling sibling element of delete button
+ */
+function exitDeleteMode(deleteModeBtnSibling) {
+    let deleteModeBtn = $(deleteModeBtnSibling).siblings('.delete-mode');
+
+    if (deleteModeBtn.hasClass('delete-mode-active')) {
+        toggleDeleteModeHelper(deleteModeBtn);
+    }
+}
 
 
 /**
@@ -211,13 +227,21 @@ function editWorkouts() {
 }
 
 /**
- * Toggle the delete of a workout.
+ * Toggle the delete made for a dayplan.
  */
 function toggleDeleteMode() {
-    let dayNum = $(this).data('day-num');
+    toggleDeleteModeHelper($(this))
+}
+
+/**
+ * Toggles delete mode for a dayplan
+ * @param deleteModeBtn Button that puts dayplan into delete mode
+ */
+function toggleDeleteModeHelper(deleteModeBtn) {
+    let dayNum = deleteModeBtn.data('day-num');
 
     // If in delete mode, exit delete mode
-    if ($(this).hasClass('delete-mode-active')) {
+    if (deleteModeBtn.hasClass('delete-mode-active')) {
         // Remove blank th
         $('#day-' + dayNum + ' thead>tr').children().last().remove();
 
@@ -238,7 +262,7 @@ function toggleDeleteMode() {
 
         $('.delete-log').on('click', deleteWorkoutLog);
     }
-    $(this).toggleClass('delete-mode-active');
+    deleteModeBtn.toggleClass('delete-mode-active');
 }
 
 /**

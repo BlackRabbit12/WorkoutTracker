@@ -131,7 +131,8 @@ function exitDeleteMode(deleteModeBtnSibling) {
  * Shwos suggested workouts to the user by Using AJAX
  */
 $('#suggestion-modal').on('show.bs.modal', function (event) {
-    $.get('/328/WorkoutTracker/not-selected-workouts', function(result) {
+    //$.get('/328/WorkoutTracker/not-selected-workouts', function(result) {
+    $.get('/workout/not-selected-workouts', function(result) {
         let workouts = JSON.parse(result);
 
         // Refresh modal
@@ -190,7 +191,8 @@ function addWorkouts() {
 
         let workoutLogData = {workout: workout, dayAdjustment: selectedDayNum, weight: weight, reps: reps};
 
-        $.post('/328/WorkoutTracker/log-workout', workoutLogData, function(result) {
+        //$.post('/328/WorkoutTracker/log-workout', workoutLogData, function(result) {
+        $.post('/workout/log-workout', workoutLogData, function(result) {
         });
 
         $('#day-' + selectedDayNum + ' tbody').append(
@@ -217,7 +219,8 @@ function editWorkouts() {
 
         let workoutLogData = {workoutLogId: workoutLogId, weight: weight, reps: reps};
 
-        $.post('/328/WorkoutTracker/edit-workout', workoutLogData, function(result) {
+        // $.post('/328/WorkoutTracker/edit-workout', workoutLogData, function(result) {
+        $.post('/workout/edit-workout', workoutLogData, function(result) {
         });
 
         let workoutLog = $('#day-' + selectedDayNum + ' [data-log-id="' + workoutLogId + '"]');
@@ -271,7 +274,8 @@ function toggleDeleteModeHelper(deleteModeBtn) {
 function deleteWorkoutLog() {
     let workoutLogId = $(this).parent().parent().data('log-id');
 
-    $.post('/328/WorkoutTracker/delete-workout', {workoutLogId: workoutLogId}, function(result) {
+    // $.post('/328/WorkoutTracker/delete-workout', {workoutLogId: workoutLogId}, function(result) {
+    $.post('/workout/delete-workout', {workoutLogId: workoutLogId}, function(result) {
     });
 
     $('[data-log-id="' + workoutLogId + '"]').remove();

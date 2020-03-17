@@ -51,11 +51,6 @@ $f3->route('POST /log-workout', function () {
     $GLOBALS['controller']->logWorkout();
 });
 
-//TODO: explain route
-$f3->route('POST /suggestion', function () {
-   $GLOBALS['controller']->suggestWorkout();
-});
-
 // Updates a workout log
 $f3->route('POST /edit-workout', function () {
     $GLOBALS['controller']->editWorkout();
@@ -66,10 +61,7 @@ $f3->route('POST /delete-workout', function () {
     $GLOBALS['controller']->deleteWorkout();
 });
 
-$f3->route('POST /delete-workout', function () {
-    $GLOBALS['controller']->deleteWorkout();
-});
-
+// Gets workouts not chosen by the user
 $f3->route('GET /not-selected-workouts', function () {
     $GLOBALS['controller']->getNotSelectedWorkouts();
 });

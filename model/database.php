@@ -1,7 +1,7 @@
 <?php
 
-//require_once('/home/cdrennan/config-workout.php');
-require_once('/home/bblackgr/config-workout.php');
+require_once('/home/cdrennan/config-workout.php');
+//require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. Handles all database queries.
@@ -51,7 +51,7 @@ class Database
 
     /**
      * Gets the muscle groups for each workout.
-     * @param $workoutId
+     * @param $workoutId id of workout
      * @return array
      */
     function getWorkoutMuscleGroups($workoutId)
@@ -75,8 +75,8 @@ class Database
     /**
      * Gets all columns from database for requested user IF the username being asked for exists in the database,
      * if it does not exist, the returned array is null.
-     * @param $desiredUserName
-     * @return array
+     * @param $desiredUserName string username
+     * @return array query result
      */
     function uniqueUserName($desiredUserName)
     {
@@ -98,8 +98,8 @@ class Database
 
     /**
      * Inserts a user into the database and returns their newly created user_id.
-     * @param $user
-     * @param $pro
+     * @param $user user object
+     * @param $pro 1 if user is pro
      * @return id of user that was inserted
      */
     function insertUser($user, $pro)
@@ -131,7 +131,7 @@ class Database
 
     /**
      * Gets all of the muscle group names from the database.
-     * @return array
+     * @return array results of query
      */
     function getAllMuscleGroups()
     {
@@ -146,9 +146,9 @@ class Database
     /**
      * Gets all of the columns from database for requested user IF the username being asked for exists in the
      * database, if not the returned array is null.
-     * @param $userName
-     * @param $userPassword
-     * @return mixed
+     * @param $userName string handle of user
+     * @param $userPassword string password of user
+     * @return mixed results
      */
     function getLoginCredentials($userName, $userPassword)
     {
@@ -170,8 +170,8 @@ class Database
 
     /**
      * Gets the workout_id of the workout requested.
-     * @param $workoutName
-     * @return mixed
+     * @param $workoutName name of workout
+     * @return mixed querie result
      */
     function getWorkoutIdByName($workoutName)
     {
@@ -189,9 +189,9 @@ class Database
 
     /**
      * Get the day_plan_id of the date and user_id being requested.
-     * @param $userId
-     * @param $date
-     * @return mixed
+     * @param $userId number id of user
+     * @param $date string date of dayplan
+     * @return mixed querie result
      */
     function getDayPlanId($userId, $date) {
         $sql = 'SELECT day_plan_id
@@ -209,8 +209,8 @@ class Database
 
     /**
      * Inserts a day plan into the database for a specific date for a single user_id.
-     * @param $userId
-     * @param $date
+     * @param $userId number id of user
+     * @param $date string date of day plan
      */
     function insertDayPlan($userId, $date)
     {
@@ -227,11 +227,11 @@ class Database
 
     /**
      * Inserts a workout log into the database after getting the workout_id, and day_plan_id.
-     * @param $userId
-     * @param $workoutName
-     * @param $date
-     * @param $weight
-     * @param $reps
+     * @param $userId Id of user
+     * @param $workoutName string name of workout
+     * @param $date string date of workout log
+     * @param $weight number weight of workout log
+     * @param $reps number weight of workout log
      * @return bool
      */
     function insertWorkoutLog($userId, $workoutName, $date, $weight, $reps)
@@ -271,8 +271,8 @@ class Database
 
     /**
      * Get the user's workout logs and return them to the user's day plan.
-     * @param $dayPlanId
-     * @return array
+     * @param $dayPlanId number id of day plan to get  workout logs for
+     * @return array workout logs query results
      */
     function getWorkoutLogsForDayPlan($dayPlanId)
     {
@@ -291,8 +291,8 @@ class Database
 
     /**
      * Get the user's workout log and day plan.
-     * @param $userId
-     * @return array
+     * @param $userId Id of user to get day plans of
+     * @return array day plan query results
      * @throws Exception
      */
     function getUserDayPlans($userId)
@@ -329,9 +329,9 @@ class Database
 
     /**
      * Update the user's workout log after an edit.
-     * @param $workoutLogId
-     * @param $weight
-     * @param $reps
+     * @param $workoutLogId Id for workout_log table
+     * @param $weight number new weight to update with
+     * @param $reps number new repetitions to update with
      */
     function updateWorkoutLog($workoutLogId, $weight, $reps)
     {
@@ -351,7 +351,7 @@ class Database
 
     /**
      * Delete a workout log from a user's day plan.
-     * @param $workoutLogId
+     * @param $workoutLogId The id for the workout_log table
      */
     function deleteWorkoutLog($workoutLogId)
     {
@@ -363,19 +363,30 @@ class Database
         $statement->execute();
     }
 
+    /**
+     * Retrieves all workouts that the user has not done in the past week
+     * @param $userId Id of the user fetching workouts for
+     * @return array query results of workouts
+     * @throws exception
+     */
     function getWorkoutsNotSelected($userId)
     {
+        $dt = new DateTime();
+        $dt->modify('-6 day');
+        $date = $dt->format('Y-m-d');
+
         $sql = 'SELECT workout_name
                 FROM workout
                 WHERE workout_id NOT IN (
                     SELECT DISTINCT workout_id 
                     FROM workout_log
                         INNER JOIN day_plan ON workout_log.day_plan_id = day_plan.day_plan_id
-                    WHERE user_id = :userId
+                    WHERE user_id = :userId AND `date` > :date
                 )';
 
         $statement = $this->_dbh->prepare($sql);
         $statement->bindParam(':userId', $userId);
+        $statement->bindParam(':date', $date);
 
         $statement->execute();
         return $statement->fetchAll();

@@ -18,10 +18,6 @@ $('.workout').on('click', addOrRemoveWorkoutToSelection);
 //add a workout with details
 $('#add-weights-reps').on('click', addWorkouts);
 
-
-//get all workouts from database and subtract out previous two days of card's selected workouts
-$('#suggestion-modal').on('click', suggestWorkouts);
-
 // Edit workout event
 $('#edit-workouts').on('click', editWorkouts);
 
@@ -114,14 +110,33 @@ $('#edit-workout-modal').on('show.bs.modal', function (event) {
     });
 });
 
+
+/**
+ * Shwos suggested workouts to the user by Using AJAX
+ */
+$('#suggestion-modal').on('show.bs.modal', function (event) {
+    $.get('/328/WorkoutTracker/not-selected-workouts', function(result) {
+        let workouts = JSON.parse(result);
+
+        // Refresh modal
+        $('#workout-suggestion').html('');
+
+        $(workouts).each(function() {
+            $('#workout-suggestion').append('<button class="btn btn-secondary btn-sm mb-1">' + this + '</button>');
+        });
+
+    });
+});
+
 /**
  * Filters all workouts buttons by the muscle group selected.
  */
 function filterWorkouts() {
-    $('.muscle-group.btn-primary').removeClass('btn-primary');
-    $(this).addClass('btn-outline-primary');
 
-    $(this).toggleClass('btn-primary').toggleClass('btn-outline-primary');
+    // Highlight only selected muscle group filter
+    $('.muscle-group.btn-primary').removeClass('btn-primary').addClass('btn-outline-primary');
+    $(this).addClass('btn-primary').removeClass('btn-outline-primary');
+
 
     let selectedMuscleGroup = $(this).text().trim();
     let allWorkouts = $('.workout');
@@ -237,10 +252,3 @@ function deleteWorkoutLog() {
 
     $('[data-log-id="' + workoutLogId + '"]').remove();
 }
-
-
-// function suggestWorkouts() {
-//     $.post('{{ @BASE/suggest }}', function (result) {
-//
-//     });
-// }

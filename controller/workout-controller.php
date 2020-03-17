@@ -67,12 +67,14 @@ class WorkoutController
             $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago',
                         '4 Days Ago','5 Days Ago', '6 Days Ago'];
 
+
             // Set hive variables
             $this->_f3->set('daysOfWeek', $daysOfWeek);
             $this->_f3->set('workouts', $workouts);
             $this->_f3->set('muscleGroups', $allMuscleGroups);
             $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
             $this->_f3->set('dayPlans', $dayPlans);
+
 
             //render home page
             $view = new Template();
@@ -334,13 +336,24 @@ class WorkoutController
 
     public function getNotSelectedWorkouts()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $userId = -1;
-            if (isset($_SESSION['userObj'])) {
-                $userId = $_SESSION['userObj']->getId();
-            }
+        if ($_SESSION['userObj']->typeOfMember() == 'premium') {
+            $userId = $_SESSION['userObj']->getId();
 
-            $NotSelectedWorkoutResults = $GLOBALS['db']->getWorkoutsNotSelected();
+            $notSelectedWorkoutResults = $GLOBALS['db']->getWorkoutsNotSelected($userId);
+
+            // Make JSON array of workouts for AJAX response
+            if ($notSelectedWorkoutResults) {
+
+                $workouts = '[';
+                //concat them into a string
+                foreach ($notSelectedWorkoutResults as $currWorkout) {
+                    $workouts .= "\"{$currWorkout['workout_name']}\", ";
+                }
+                //trim extra chars on end of string
+                $workouts = rtrim($workouts, ', ') . ']';
+
+                echo $workouts;
+            }
         }
     }
 

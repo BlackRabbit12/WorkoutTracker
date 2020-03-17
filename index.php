@@ -53,7 +53,7 @@ $f3->route('POST /log-workout', function () {
 
 //TODO: explain route
 $f3->route('POST /suggestion', function () {
-    $GLOBALS['controller']->suggestWorkout();
+   $GLOBALS['controller']->suggestWorkout();
 });
 
 // Updates a workout log

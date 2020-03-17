@@ -14,11 +14,11 @@
     <check if="{{ @SESSION.userObj->typeOfMember() == 'premium' }}">
         <true>
             <p id="user_db_id" class="d-none">{{ @SESSION.userObj->getID() }}</p>
-            <p class="text-white mb-0">Pro: {{ @SESSION.userObj->getFullName() }}</p>
+            <p id="full-name" class="text-white mb-0">Pro: {{ @SESSION.userObj->getFullName() }}</p>
         </true>
         <false>
             <p id="user_db_id" class="d-none">{{ @SESSION.userObj->getID() }}</p>
-            <p class="text-white mb-0">{{ @SESSION.userObj->getFullName() }}</p>
+            <p id="full-name" class="text-white mb-0">{{ @SESSION.userObj->getFullName() }}</p>
         </false>
     </check>
 

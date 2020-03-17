@@ -92,6 +92,13 @@ a.rounded-circle {
     grid-gap: 10px;
 }
 
+/* Very small devices remove user's name from navbar */
+@media (max-width: 400px) {
+    #full-name {
+        display: none;
+    }
+}
+
 /* Small devices (landscape phones, 576px)*/
 @media (max-width: 576px) {
     body > main > #day-plans {
@@ -100,16 +107,16 @@ a.rounded-circle {
     }
 }
 
-/* Medium devices (tablets, 768px) */
-@media (max-width: 768px) {
+/* Medium devices (tablets, and smaller monitors 900px) */
+@media (max-width: 900px) {
     main > #day-plans {
         grid-template-columns: auto auto;
         grid-template-areas: 'day-0 day-0' 'day-1 day-2' 'day-3 day-4' 'day-5 day-6';
     }
 }
 
-/* Extra large devices (large desktops, 1200px) */
-@media (max-width: 1200px) {
+/* Extra large devices (large desktops, 901px+) */
+@media (min-width: 901px) {
     #day-plans {
         grid-template-columns: auto auto auto;
         grid-template-areas: '. day-0 .'

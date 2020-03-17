@@ -1,7 +1,7 @@
 <?php
 
-require_once('/home/cdrennan/config-workout.php');
-///require_once('/home/bblackgr/config-workout.php');
+//require_once('/home/cdrennan/config-workout.php');
+require_once('/home/bblackgr/config-workout.php');
 
 /**
  * Database class interactions with database and workout tracker. Handles all database queries.
@@ -269,6 +269,11 @@ class Database
         $statement->execute();
     }
 
+    /**
+     * Get the user's workout logs and return them to the user's day plan.
+     * @param $dayPlanId
+     * @return array
+     */
     function getWorkoutLogsForDayPlan($dayPlanId)
     {
         $sql = 'SELECT workout_log_id, workout_name, workout_log.workout_id, weight, repetitions
@@ -284,8 +289,8 @@ class Database
         return $statement->fetchAll();
     }
 
-
     /**
+     * Get the user's workout log and day plan.
      * @param $userId
      * @return array
      * @throws Exception
@@ -322,6 +327,12 @@ class Database
         return $dayPlans;
     }
 
+    /**
+     * Update the user's workout log after an edit.
+     * @param $workoutLogId
+     * @param $weight
+     * @param $reps
+     */
     function updateWorkoutLog($workoutLogId, $weight, $reps)
     {
         $sql = 'UPDATE workout_log
@@ -338,6 +349,10 @@ class Database
         $statement->execute();
     }
 
+    /**
+     * Delete a workout log from a user's day plan.
+     * @param $workoutLogId
+     */
     function deleteWorkoutLog($workoutLogId)
     {
         $sql = 'DELETE FROM workout_log

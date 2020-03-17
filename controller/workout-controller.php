@@ -331,4 +331,17 @@ class WorkoutController
             $GLOBALS['db']->deleteWorkoutLog($workoutLogId);
         }
     }
+
+    public function getNotSelectedWorkouts()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $userId = -1;
+            if (isset($_SESSION['userObj'])) {
+                $userId = $_SESSION['userObj']->getId();
+            }
+
+            $NotSelectedWorkoutResults = $GLOBALS['db']->getWorkoutsNotSelected();
+        }
+    }
+
 }

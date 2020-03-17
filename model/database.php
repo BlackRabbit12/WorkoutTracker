@@ -362,4 +362,22 @@ class Database
         $statement->bindParam(':workoutLogId', $workoutLogId);
         $statement->execute();
     }
+
+    function getWorkoutsNotSelected($userId)
+    {
+        $sql = 'SELECT workout_name
+                FROM workout
+                WHERE workout_id NOT IN (
+                    SELECT DISTINCT workout_id 
+                    FROM workout_log
+                        INNER JOIN day_plan ON workout_log.day_plan_id = day_plan.day_plan_id
+                    WHERE user_id = :userId
+                )';
+
+        $statement = $this->_dbh->prepare($sql);
+        $statement->bindParam(':userId', $userId);
+
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 }

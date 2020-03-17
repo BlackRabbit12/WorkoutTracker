@@ -284,6 +284,12 @@ class Database
         return $statement->fetchAll();
     }
 
+
+    /**
+     * @param $userId
+     * @return array
+     * @throws Exception
+     */
     function getUserDayPlans($userId)
     {
         $dayPlans = [];
@@ -342,19 +348,29 @@ class Database
         $statement->execute();
     }
 
+    /**
+     * @param $userId
+     * @return array
+     * @throws exception
+     */
     function getWorkoutsNotSelected($userId)
     {
+        $dt = new DateTime();
+        $dt->modify('-6 day');
+        $date = $dt->format('Y-m-d');
+
         $sql = 'SELECT workout_name
                 FROM workout
                 WHERE workout_id NOT IN (
                     SELECT DISTINCT workout_id 
                     FROM workout_log
                         INNER JOIN day_plan ON workout_log.day_plan_id = day_plan.day_plan_id
-                    WHERE user_id = :userId
+                    WHERE user_id = :userId AND `date` > :date
                 )';
 
         $statement = $this->_dbh->prepare($sql);
         $statement->bindParam(':userId', $userId);
+        $statement->bindParam(':date', $date);
 
         $statement->execute();
         return $statement->fetchAll();

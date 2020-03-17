@@ -86,6 +86,12 @@ a.rounded-circle {
     grid-gap: 10px;
 }
 
+#workout-suggestion {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
 /* Small devices (landscape phones, 576px)*/
 @media (max-width: 576px) {
     body > main > #day-plans {

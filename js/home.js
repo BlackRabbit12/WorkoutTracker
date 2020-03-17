@@ -18,16 +18,14 @@ $('.workout').on('click', addOrRemoveWorkoutToSelection);
 //add a workout with details
 $('#add-weights-reps').on('click', addWorkouts);
 
-<<<<<<< HEAD
 //get all workouts from database and subtract out previous two days of card's selected workouts
 $('#suggestion-modal').on('click', suggestWorkouts);
-=======
+
 // Edit workout event
 $('#edit-workouts').on('click', editWorkouts);
 
 $('.delete-mode').on('click', toggleDeleteMode);
 
->>>>>>> aae6db753755511037489ddd76de64e7de22d909
 
 /**
  * Controls the appearance of the workout selection modal.
@@ -115,10 +113,11 @@ $('#edit-workout-modal').on('show.bs.modal', function (event) {
  * Filters all workouts buttons by the muscle group selected.
  */
 function filterWorkouts() {
-    $('.muscle-group.btn-primary').removeClass('btn-primary');
-    $(this).addClass('btn-outline-primary');
 
-    $(this).toggleClass('btn-primary').toggleClass('btn-outline-primary');
+    // Highlight only selected muscle group filter
+    $('.muscle-group.btn-primary').removeClass('btn-primary').addClass('btn-outline-primary');
+    $(this).addClass('btn-primary').removeClass('btn-outline-primary');
+
 
     let selectedMuscleGroup = $(this).text().trim();
     let allWorkouts = $('.workout');

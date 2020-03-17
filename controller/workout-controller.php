@@ -67,12 +67,19 @@ class WorkoutController
             $daysOfWeek = ['Today', 'Yesterday', '2 Days Ago', '3 Days Ago',
                         '4 Days Ago','5 Days Ago', '6 Days Ago'];
 
+            // Get suggested workouts if premium member
+            if ($_SESSION['userObj']->typeOfMember() == 'premium') {
+                $notSelectedWorkouts = $GLOBALS['db']->getWorkoutsNotSelected($userId);
+                $this->_f3->set('notSelectedWorkouts', $notSelectedWorkouts);
+            }
+
             // Set hive variables
             $this->_f3->set('daysOfWeek', $daysOfWeek);
             $this->_f3->set('workouts', $workouts);
             $this->_f3->set('muscleGroups', $allMuscleGroups);
             $this->_f3->set('workoutMuscleGroups', $workoutMuscleGroups);
             $this->_f3->set('dayPlans', $dayPlans);
+
 
             //render home page
             $view = new Template();

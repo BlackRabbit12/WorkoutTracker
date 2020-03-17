@@ -66,5 +66,13 @@ $f3->route('POST /delete-workout', function () {
     $GLOBALS['controller']->deleteWorkout();
 });
 
+$f3->route('POST /delete-workout', function () {
+    $GLOBALS['controller']->deleteWorkout();
+});
+
+$f3->route('GET /not-selected-workouts', function () {
+    $GLOBALS['controller']->getNotSelectedWorkouts();
+});
+
 //Run FatFree Framework
 $f3->run();

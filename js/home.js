@@ -109,6 +109,20 @@ $('#edit-workout-modal').on('show.bs.modal', function (event) {
     });
 });
 
+$('#suggestion-modal').on('show.bs.modal', function (event) {
+    $.get('/328/WorkoutTracker/not-selected-workouts', function(result) {
+        let workouts = JSON.parse(result);
+
+        // Refresh modal
+        $('#workout-suggestion').html('');
+
+        $(workouts).each(function() {
+            $('#workout-suggestion').append('<button class="btn btn-secondary btn-sm mb-1">' + this + '</button>');
+        });
+
+    });
+});
+
 /**
  * Filters all workouts buttons by the muscle group selected.
  */

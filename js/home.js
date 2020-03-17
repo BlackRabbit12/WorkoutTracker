@@ -18,9 +18,6 @@ $('.workout').on('click', addOrRemoveWorkoutToSelection);
 //add a workout with details
 $('#add-weights-reps').on('click', addWorkouts);
 
-//get all workouts from database and subtract out previous two days of card's selected workouts
-$('#suggestion-modal').on('click', suggestWorkouts);
-
 // Edit workout event
 $('#edit-workouts').on('click', editWorkouts);
 
@@ -113,6 +110,10 @@ $('#edit-workout-modal').on('show.bs.modal', function (event) {
     });
 });
 
+
+/**
+ * Shwos suggested workouts to the user by Using AJAX
+ */
 $('#suggestion-modal').on('show.bs.modal', function (event) {
     $.get('/328/WorkoutTracker/not-selected-workouts', function(result) {
         let workouts = JSON.parse(result);
@@ -251,10 +252,3 @@ function deleteWorkoutLog() {
 
     $('[data-log-id="' + workoutLogId + '"]').remove();
 }
-
-
-// function suggestWorkouts() {
-//     $.post('{{ @BASE/suggest }}', function (result) {
-//
-//     });
-// }

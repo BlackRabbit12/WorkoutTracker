@@ -279,34 +279,21 @@ class WorkoutController
             $workout = trim($_POST['workout']);
             $weight = $_POST['weight'];
             $reps = $_POST['reps'];
+            $dayAdjustment = $_POST['dayAdjustment'];
+
+
+            if (!$this->_val->isInteger($dayAdjustment) || !$this->_val->isInteger($weight)
+                    || !$this->_val->isInteger($reps)) {
+                return;
+            }
 
             // Get date of day plan
-            $dayAdjustment = $_POST['dayAdjustment'];
             $dt = new DateTime();
             $dt->modify('-' . $dayAdjustment . ' day');
             $date = $dt->format('Y-m-d');
 
             $GLOBALS['db']->insertWorkoutLog($userId, $workout, $date, $weight, $reps);
         }
-    }
-
-    /**
-     * Premium user's suggested workout link displays the workouts they have not done in the past few days.
-     * Then displays those to the premium user as a suggested workout.
-     */
-    public function suggestWorkout()
-    {
-        //get the workout array from database
-        $databaseWorkouts = $GLOBALS['db']->getAllWorkouts();
-        var_dump($databaseWorkouts);
-
-        //get all the user's workout logs inside their day plans via user_id
-        $databaseDayPlans = $GLOBALS['db']->getUserDayPlan($_SESSION['userObj']->getId());
-        var_dump($databaseDayPlans);
-
-        //if the workouts are not in both arrays, then the user has not done that workout in awhile, make it a suggestion
-        $workoutSuggest = array_diff($databaseWorkouts, $databaseDayPlans);
-        var_dump($workoutSuggest);
     }
 
     /**
@@ -319,6 +306,11 @@ class WorkoutController
             $weight = $_POST['weight'];
             $reps = $_POST['reps'];
 
+            if (!$this->_val->isInteger($workoutLogId) || !$this->_val->isInteger($weight)
+                    || !$this->_val->isInteger($reps)) {
+                return;
+            }
+
             $GLOBALS['db']->updateWorkoutLog($workoutLogId, $weight, $reps);
         }
     }
@@ -330,10 +322,17 @@ class WorkoutController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $workoutLogId = $_POST['workoutLogId'];
+
+            if (!$this->_val->isInteger($workoutLogId)) {
+                return;
+            }
             $GLOBALS['db']->deleteWorkoutLog($workoutLogId);
         }
     }
 
+    /**
+     * Gets workouts that the user has not chosen in the recent past
+     */
     public function getNotSelectedWorkouts()
     {
         if ($_SESSION['userObj']->typeOfMember() == 'premium') {

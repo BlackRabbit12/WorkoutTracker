@@ -32,4 +32,8 @@ class UserValidator
     {
         return strcmp($password, $confirmation) == 0;
     }
+
+    function isInteger($str) {
+        return ctype_digit($str);
+    }
 }
